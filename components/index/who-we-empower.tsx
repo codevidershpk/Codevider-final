@@ -102,11 +102,15 @@ export default function WhoWeEmpower() {
 											alwaysOn
 											borderRadius={12}
 											backgroundColor="color-mix(in srgb, var(--dash-brand) 6%, var(--bg))"
-											glowColor="221 100 57"
-											colors={["#2469ff", "#32fcb6", "#6b9bff"]}
+											glowColor={isDark ? "221 62 58" : "221 100 57"}
+											colors={
+												isDark
+													? ["#1852e6", "#76f9d3", "#7a9feb"]
+													: ["#2469ff", "#32fcb6", "#6b9bff"]
+											}
 											glowRadius={isDark ? 40 : 52}
-											glowIntensity={isDark ? 1 : 1.75}
-											fillOpacity={isDark ? 0.5 : 0.7}
+											glowIntensity={isDark ? 0.85 : 1.75}
+											fillOpacity={isDark ? 0.48 : 0.7}
 										>
 											{body}
 										</BorderGlow>

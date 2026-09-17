@@ -98,7 +98,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 	);
 	const [isThemeTransitioning, setIsThemeTransitioning] = useState(false);
 	const themeRef = useRef(theme);
-	const isTransitioning = useRef(false);
+	const transitionGeneration = useRef(0);
+	const activeTransition = useRef<ViewTransition | null>(null);
+	const activeRevealAnimation = useRef<Animation | null>(null);
 	themeRef.current = theme;
 
 	useEffect(() => {
@@ -114,8 +116,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 	}, []);
 
 	const toggleTheme = useCallback((coords?: ThemeCoords) => {
-		if (isTransitioning.current) return;
-
 		const nextTheme = themeRef.current === "dark" ? "light" : "dark";
 		const prefersReducedMotion = window.matchMedia(
 			"(prefers-reduced-motion: reduce)",
@@ -130,22 +130,48 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 		};
 
 		if (!canAnimate) {
+			activeRevealAnimation.current?.cancel();
+			activeRevealAnimation.current = null;
+			if (activeTransition.current) {
+				try {
+					activeTransition.current.skipTransition();
+				} catch {
+					/* ignore */
+				}
+				activeTransition.current = null;
+			}
 			updateTheme();
+			setIsThemeTransitioning(false);
 			return;
 		}
 
-		isTransitioning.current = true;
+		// Interrupt any in-flight reveal so the next press applies immediately.
+		activeRevealAnimation.current?.cancel();
+		activeRevealAnimation.current = null;
+		if (activeTransition.current) {
+			try {
+				activeTransition.current.skipTransition();
+			} catch {
+				// Already finished or unsupported — safe to ignore.
+			}
+			activeTransition.current = null;
+		}
+
+		const generation = ++transitionGeneration.current;
 		setIsThemeTransitioning(true);
 
 		const finish = () => {
+			if (generation !== transitionGeneration.current) return;
 			releaseThemeSwitching();
-			isTransitioning.current = false;
+			activeTransition.current = null;
+			activeRevealAnimation.current = null;
 			setIsThemeTransitioning(false);
 		};
 
 		const transition = document.startViewTransition(() => {
 			updateTheme(true);
 		});
+		activeTransition.current = transition;
 
 		const x = coords?.x ?? window.innerWidth / 2;
 		const y = coords?.y ?? window.innerHeight / 2;
@@ -153,8 +179,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 		transition.ready
 			.then(() => {
+				if (generation !== transitionGeneration.current) return;
+
 				requestAnimationFrame(() => {
-					document.documentElement.animate(
+					if (generation !== transitionGeneration.current) return;
+
+					activeRevealAnimation.current = document.documentElement.animate(
 						{
 							clipPath: [
 								`circle(0px at ${x}px ${y}px)`,

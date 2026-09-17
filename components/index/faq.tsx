@@ -76,7 +76,7 @@ function FaqItem({
 				aria-expanded={isOpen}
 				aria-controls={panelId}
 				onClick={onToggle}
-				whileTap={shouldReduceMotion ? undefined : { scale: 0.98 }}
+				whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
 			>
 				<span className="min-w-0">{question}</span>
 				<motion.span

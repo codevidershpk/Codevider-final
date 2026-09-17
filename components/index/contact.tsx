@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useCopy } from "@/lib/copy";
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
 	TurnstileWidget,
@@ -31,7 +31,7 @@ import {
 import SectionHead from "./section-head";
 
 const inputClassName =
-	"w-full rounded-[10px] border-[1.5px] border-(--border) bg-(--bg) px-4 py-3.5 text-inherit placeholder:text-(--text)/55 transition-[border-color,box-shadow] focus:border-(--dash-brand) focus:outline-none focus-visible:ring-[3px] focus-visible:ring-(--dash-brand)/15";
+	"w-full rounded-[10px] border-[1.5px] border-(--border) bg-(--bg) px-4 py-3.5 text-inherit placeholder:text-(--text-subtle) transition-[border-color,box-shadow] focus:border-(--dash-brand) focus:outline-none focus-visible:ring-[3px] focus-visible:ring-(--dash-brand)/15";
 
 const inputErrorClassName =
 	"border-(--dash-warning) focus:border-(--dash-warning) focus-visible:ring-(--dash-warning)/15";
@@ -82,12 +82,7 @@ export default function Contact() {
 	const [submitted, setSubmitted] = useState(false);
 	const [submitError, setSubmitError] = useState<string | null>(null);
 	const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
-	const [hasMounted, setHasMounted] = useState(false);
 	const turnstileRef = useRef<TurnstileWidgetHandle>(null);
-
-	useEffect(() => {
-		setHasMounted(true);
-	}, []);
 
 	const contactSchema = useMemo(
 		() =>
@@ -328,7 +323,8 @@ export default function Contact() {
 
 							<button
 								type="submit"
-								disabled={isSubmitting || (hasMounted && !turnstileToken)}
+								disabled={isSubmitting}
+								aria-busy={isSubmitting}
 								className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-(--dash-brand-solid) py-3.5 pl-6 pr-5 text-base font-semibold text-(--on-brand) transition-[background-color,transform] duration-150 ease-out hover:bg-(--dash-brand-solid-hover) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-ring) active:scale-[0.96] motion-reduce:active:scale-100 disabled:cursor-not-allowed disabled:opacity-60"
 							>
 								{isSubmitting ? t("form_submitting") : t("form_submit")}

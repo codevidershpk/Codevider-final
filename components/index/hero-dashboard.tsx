@@ -13,6 +13,9 @@ const BAR_MIN_HEIGHT_PX = 8;
 
 const instantTransition = { duration: 0 } as const;
 
+const HIDDEN = { opacity: 0, y: 10 } as const;
+const SHOWN = { opacity: 1, y: 0 } as const;
+
 /**
  * Calculates bar height in pixels.
  *
@@ -102,34 +105,43 @@ export default function HeroDashboard({ lite = false }: { lite?: boolean }) {
 	const mounted = useMounted();
 	const shouldReduceMotion = useReducedMotion();
 
-	const animate = mounted && !shouldReduceMotion && !lite;
+	const reveal = mounted && !shouldReduceMotion;
+	const settle = reveal || Boolean(shouldReduceMotion);
 
-	const shellTransition = animate
-		? { duration: 0.65, ease: appleRevealEase, delay: 0.36 }
-		: instantTransition;
+	const baseDelay = lite ? 0.12 : 0.32;
+	const step = lite ? 0.06 : 0.08;
 
-	const cardTransition = (index: number) =>
-		animate
-			? { duration: 0.45, ease: appleRevealEase, delay: 0.5 + index * 0.06 }
+	const revealTransition = (delay: number, duration = lite ? 0.42 : 0.52) =>
+		reveal
+			? { duration, ease: appleRevealEase, delay }
 			: instantTransition;
 
-	const chartTransition = animate
-		? { duration: 0.45, ease: appleRevealEase, delay: 0.74 }
-		: instantTransition;
-
 	const barTransition = (index: number) =>
-		animate
-			? { duration: 0.5, ease: appleRevealEase, delay: 0.82 + index * 0.03 }
+		reveal
+			? {
+					duration: lite ? 0.5 : 0.65,
+					ease: appleRevealEase,
+					delay: baseDelay + step * 6 + index * (lite ? 0.03 : 0.04),
+				}
 			: instantTransition;
 
 	return (
 		<motion.div
 			className="hero-dash-window relative w-full overflow-hidden rounded-2xl border border-(--dash-border) bg-(--dash-canvas) shadow-(--dash-shadow)"
-			initial={animate ? { opacity: 0 } : false}
-			animate={{ opacity: 1 }}
-			transition={shellTransition}
+			initial={false}
+			animate={
+				settle
+					? { opacity: 1, y: 0, scale: 1 }
+					: { opacity: 0, y: 16, scale: 0.98 }
+			}
+			transition={revealTransition(baseDelay, lite ? 0.5 : 0.62)}
 		>
-			<div className="hero-dash-titlebar flex items-center gap-3 border-b border-(--dash-border) px-4 py-2.5">
+			<motion.div
+				className="hero-dash-titlebar flex items-center gap-3 border-b border-(--dash-border) px-4 py-2.5"
+				initial={false}
+				animate={settle ? SHOWN : HIDDEN}
+				transition={revealTransition(baseDelay + step)}
+			>
 				<div className="flex items-center gap-1.5" aria-hidden>
 					<span className="size-2.5 rounded-full bg-[#ff5f57]" />
 					<span className="size-2.5 rounded-full bg-[#febc2e]" />
@@ -138,7 +150,7 @@ export default function HeroDashboard({ lite = false }: { lite?: boolean }) {
 				<div className="min-w-0 flex-1 truncate rounded-md bg-(--dash-surface) px-3 py-1 text-center font-(family-name:--mono) text-[0.68rem] text-(--dash-muted)">
 					{t("window_url")}
 				</div>
-			</div>
+			</motion.div>
 
 			<div className="space-y-3 p-4">
 				<div className="grid grid-cols-2 gap-2.5">
@@ -149,9 +161,11 @@ export default function HeroDashboard({ lite = false }: { lite?: boolean }) {
 								<motion.div
 									key={key}
 									className="hero-dash-surface rounded-xl p-3"
-									initial={animate ? { opacity: 0 } : false}
-									animate={{ opacity: 1 }}
-									transition={cardTransition(index)}
+									initial={false}
+									animate={settle ? SHOWN : HIDDEN}
+									transition={revealTransition(
+										baseDelay + step * (2 + index),
+									)}
 								>
 									<MetricCard
 										label={t(key)}
@@ -167,52 +181,61 @@ export default function HeroDashboard({ lite = false }: { lite?: boolean }) {
 
 				<motion.div
 					className="hero-dash-surface rounded-xl p-3.5"
-					initial={animate ? { opacity: 0, y: 12 } : false}
-					animate={{ opacity: 1, y: 0 }}
-					transition={chartTransition}
+					initial={false}
+					animate={settle ? SHOWN : { opacity: 0, y: 14 }}
+					transition={revealTransition(baseDelay + step * 6)}
 				>
-					<div className="flex items-baseline justify-between gap-2">
+					<motion.div
+						className="flex items-baseline justify-between gap-2"
+						initial={false}
+						animate={settle ? SHOWN : HIDDEN}
+						transition={revealTransition(baseDelay + step * 6.4)}
+					>
 						<p className="text-sm font-semibold text-(--dash-text)">
 							{t("revenue_overview")}
 						</p>
 						<span className="text-[0.7rem] text-(--dash-muted)">
 							{t("revenue_period")}
 						</span>
-					</div>
+					</motion.div>
 
 					<div
 						className="hero-dash-chart mt-3 flex h-28 items-end gap-1.5"
-						style={
-							{
-								"--hero-dash-chart-h": `${CHART_HEIGHT_PX}px`,
-							} as React.CSSProperties
-						}
 						role="img"
 						aria-label={t("revenue_chart_label")}
 					>
-						{REVENUE_BARS.map((value, index) => (
-							<motion.div
-								key={index}
-								className={`hero-dash-bar flex-1 origin-bottom rounded-t-[4px]${
-									index === PEAK_BAR_INDEX ? " hero-dash-bar--peak" : ""
-								}${index === LATEST_BAR_INDEX ? " hero-dash-bar--latest" : ""}`}
-								style={
-									{
-										"--hero-dash-bar-h": `${barHeightPx(value)}px`,
-									} as React.CSSProperties
-								}
-								initial={animate ? { scaleY: 0 } : false}
-								animate={{ scaleY: 1 }}
-								transition={barTransition(index)}
-							/>
-						))}
+						{REVENUE_BARS.map((value, index) => {
+							const height = barHeightPx(value);
+							return (
+								<motion.div
+									key={index}
+									className={`hero-dash-bar flex-1 origin-bottom rounded-t-[4px]${
+										index === PEAK_BAR_INDEX ? " hero-dash-bar--peak" : ""
+									}${index === LATEST_BAR_INDEX ? " hero-dash-bar--latest" : ""}`}
+									initial={false}
+									animate={{
+										height: settle ? height : 0,
+										opacity: settle ? 1 : 0,
+									}}
+									transition={barTransition(index)}
+								/>
+							);
+						})}
 					</div>
 
-					<div className="mt-2 flex justify-between font-(family-name:--mono) text-[0.65rem] text-(--dash-muted)">
+					<motion.div
+						className="mt-2 flex justify-between font-(family-name:--mono) text-[0.65rem] text-(--dash-muted)"
+						initial={false}
+						animate={settle ? SHOWN : HIDDEN}
+						transition={revealTransition(
+							baseDelay + step * 6 + REVENUE_BARS.length * 0.03,
+							lite ? 0.35 : 0.4,
+						)}
+					>
 						<span>{t("week_1")}</span>
 						<span>{t("week_6")}</span>
 						<span>{t("week_12")}</span>
-					</div>
+					</motion.div>
 				</motion.div>
 			</div>
 		</motion.div>

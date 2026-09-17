@@ -53,6 +53,12 @@ export default function Footer() {
 							{t("careers")}
 						</Link>
 						<Link
+							href="/blogs"
+							className="block py-1.5 text-[15px] transition-colors hover:text-white"
+						>
+							{t("blog")}
+						</Link>
+						<Link
 							href="/privacy"
 							className="block py-1.5 text-[15px] transition-colors hover:text-white"
 						>

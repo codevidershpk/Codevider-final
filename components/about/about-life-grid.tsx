@@ -10,7 +10,7 @@ type LifeGridPhoto = {
 	src: string;
 	altKey: string;
 	variant: "human" | "office";
-	span: 2 | 3;
+	span: 1 | 2;
 };
 
 const PHOTOS: LifeGridPhoto[] = [
@@ -18,25 +18,25 @@ const PHOTOS: LifeGridPhoto[] = [
 		src: "/images/members/members1.jpg",
 		altKey: "photo_alt_1",
 		variant: "human",
-		span: 3,
+		span: 2,
 	},
 	{
 		src: "/images/office/zyra9.jpg",
 		altKey: "office_alt_1",
 		variant: "office",
-		span: 2,
+		span: 1,
 	},
 	{
 		src: "/images/office/zyra10.jpg",
 		altKey: "office_alt_2",
 		variant: "office",
-		span: 2,
+		span: 1,
 	},
 	{
 		src: "/images/members/members2.jpg",
 		altKey: "photo_alt_2",
 		variant: "human",
-		span: 3,
+		span: 2,
 	},
 ];
 
@@ -75,11 +75,11 @@ export default function AboutLifeGrid() {
 								src={src}
 								alt={t(altKey)}
 								fill
-								sizes={
-									span === 3
-										? "(max-width: 768px) 100vw, 60vw"
-										: "(max-width: 768px) 100vw, 40vw"
-								}
+							sizes={
+								span === 2
+									? "(max-width: 768px) 100vw, 66vw"
+									: "(max-width: 768px) 100vw, 33vw"
+							}
 								className="object-cover"
 							/>
 						</motion.div>

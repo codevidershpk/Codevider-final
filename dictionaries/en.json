@@ -21,6 +21,15 @@
 			"title_with_role": "{title} — Apply — Codevider",
 			"description": "Review the role details and apply to join the Codevider team."
 		},
+		"blog": {
+			"title": "Blog — Codevider",
+			"description": "Insights on software development, product engineering, AI, and building reliable systems from the Codevider team."
+		},
+		"blog_post": {
+			"title": "Article — Codevider",
+			"title_with_post": "{title} — Blog — Codevider",
+			"description": "Read the latest thinking from Codevider on software, product, and engineering."
+		},
 		"privacy": {
 			"title": "Privacy Policy — Codevider",
 			"description": "Learn how Codevider collects, uses, retains, and protects personal data under GDPR, CCPA/CPRA, and global privacy frameworks."
@@ -600,6 +609,7 @@
 		"about": "About Us",
 		"services": "Services",
 		"careers": "Careers",
+		"blog": "Blogs",
 		"privacy": "Privacy Policy",
 		"terms": "Terms of Service",
 		"address_heading": "Address",
@@ -677,6 +687,7 @@
 	"navbar": {
 		"home": "Home",
 		"career": "Career",
+		"blog": "Blogs",
 		"about": "About",
 		"services": "Services",
 		"book_a_call": "Book a call",
@@ -686,6 +697,8 @@
 		"dark_mode": "Dark",
 		"open_menu": "Open menu",
 		"close_menu": "Close menu",
+		"mobile_menu": "Mobile navigation",
+		"skip_to_content": "Skip to main content",
 		"theme": "Theme"
 	},
 	"career": {
@@ -848,6 +861,71 @@
 					"description": "If we're a great match, we'll extend a competitive offer, guide you through every detail, and support you through onboarding so you step into your role with confidence."
 				}
 			}
+		}
+	},
+	"blog": {
+		"hero": {
+			"eyebrow": "Blogs",
+			"headline": "What we learn while shipping real systems",
+			"lead": "Delivery, architecture, AI, and product craft from the Codevider team."
+		},
+		"list": {
+			"eyebrow": "Latest writing",
+			"headline": "Latest from the team",
+			"headline_empty": "No posts yet",
+			"description": "Field notes and takeaways from engineers and product partners shipping real systems.",
+			"description_empty": "New articles are on the way. Check back soon for notes from the Codevider team.",
+			"loading": "Loading articles…",
+			"error": "We couldn't load articles right now. Please try again in a moment.",
+			"latest": "Latest article",
+			"meta_label": "Article details",
+			"read_more": "Read article",
+			"read_post": "Read {title}",
+			"search_label": "Search articles",
+			"search_placeholder": "Search articles",
+			"search_clear": "Clear search",
+			"no_matches": "No articles match your search. Try a different keyword.",
+			"results_status": "{count} articles",
+			"results_status_one": "1 article",
+			"pagination_label": "Blog posts pagination",
+			"previous": "Previous",
+			"next": "Next",
+			"previous_page": "Go to previous page",
+			"next_page": "Go to next page",
+			"page_status": "Page {current} of {total}"
+		},
+		"post": {
+			"eyebrow": "Article",
+			"back": "Back to blogs",
+			"loading": "Loading article…",
+			"error": "We couldn't load this article right now. Please try again.",
+			"retry": "Try again",
+			"empty_body": "This article doesn't have published content yet.",
+			"meta_label": "Article details",
+			"toc_label": "On this page",
+			"toc_nav": "Article sections",
+			"progress_label": "Reading progress",
+			"progress_status": "{percent}% read",
+			"progress_hint": "Keep scrolling — this fills up when you reach the end.",
+			"progress_done": "You've reached the end of this article.",
+			"share_label": "Share this article",
+			"share_hint": "Found this useful? Pass it on.",
+			"share_message": "Check out this article by Codevider titled: {title}",
+			"share_facebook": "Share this article on Facebook",
+			"share_x": "Share this article on X",
+			"share_linkedin": "Share this article on LinkedIn",
+			"share_copy": "Copy the share message and link",
+			"share_facebook_short": "Facebook",
+			"share_x_short": "X",
+			"share_linkedin_short": "LinkedIn",
+			"share_copy_short": "Copy link",
+			"share_copied": "Share message copied — ready to paste anywhere",
+			"share_copied_short": "Copied",
+			"related_label": "Related articles",
+			"related_headline": "More articles",
+			"related_loading": "Loading related articles…",
+			"related_cta": "Read article",
+			"related_read": "Read {title}"
 		}
 	},
 	"services": {

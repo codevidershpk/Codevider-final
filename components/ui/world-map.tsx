@@ -23,7 +23,7 @@ const MAP_STYLES = {
 		pointRadius: 4.5,
 	},
 	dark: {
-		line: "#38d4ff",
+		line: "#4ec4e0",
 		strokeWidth: 2.2,
 		glowStrokeWidth: 4.5,
 		pointRadius: 4,

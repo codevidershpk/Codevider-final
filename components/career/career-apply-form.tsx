@@ -28,7 +28,7 @@ import {
 import type { JobDetail } from "@/lib/types/recruit";
 
 const inputClassName =
-	"w-full rounded-[10px] border-[1.5px] border-(--border) bg-(--bg) px-4 py-3.5 text-inherit placeholder:text-(--text)/55 transition-[border-color,box-shadow] focus:border-(--dash-brand) focus:outline-none focus-visible:ring-[3px] focus-visible:ring-(--dash-brand)/15";
+	"w-full rounded-[10px] border-[1.5px] border-(--border) bg-(--bg) px-4 py-3.5 text-inherit placeholder:text-(--text-subtle) transition-[border-color,box-shadow] focus:border-(--dash-brand) focus:outline-none focus-visible:ring-[3px] focus-visible:ring-(--dash-brand)/15";
 
 const inputErrorClassName =
 	"border-(--dash-warning) focus:border-(--dash-warning) focus-visible:ring-(--dash-warning)/15";

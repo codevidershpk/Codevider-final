@@ -26,6 +26,7 @@ export const SITE_ROUTES = [
 	"/about",
 	"/services",
 	"/career",
+	"/blogs",
 	"/privacy",
 	"/terms",
 ] as const;
@@ -36,6 +37,7 @@ export const OG_PAGES = [
 	"about",
 	"services",
 	"career",
+	"blog",
 	"privacy",
 	"terms",
 ] as const;
@@ -49,6 +51,7 @@ const OG_PAGE_TO_ROUTE: Record<OgPage, (typeof SITE_ROUTES)[number]> = {
 	about: "/about",
 	services: "/services",
 	career: "/career",
+	blog: "/blogs",
 	privacy: "/privacy",
 	terms: "/terms",
 };
