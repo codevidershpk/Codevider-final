@@ -29,8 +29,26 @@ function formatPayPeriod(t: CopyTranslator, period: string) {
 }
 
 function formatPayType(t: CopyTranslator, payType: string) {
-	const key = `pay_type_${payType}` as const;
+	const normalized = payType.trim().toLowerCase().replace(/\s+/g, "_");
+	const key = `pay_type_${normalized}` as const;
 	return t.has(key) ? t(key) : payType;
+}
+
+/** CRM descriptions may include pasted HTML; show readable plain text. */
+function toPlainDescription(value: string): string {
+	return value
+		.replace(/<\s*br\s*\/?\s*>/gi, "\n")
+		.replace(/<\/\s*p\s*>/gi, "\n")
+		.replace(/<\s*p(?:\s[^>]*)?>/gi, "")
+		.replace(/<[^>]+>/g, "")
+		.replace(/&nbsp;/gi, " ")
+		.replace(/&amp;/gi, "&")
+		.replace(/&lt;/gi, "<")
+		.replace(/&gt;/gi, ">")
+		.replace(/&quot;/gi, '"')
+		.replace(/&#39;/gi, "'")
+		.replace(/\n{3,}/g, "\n\n")
+		.trim();
 }
 
 export default function CareerApply() {
@@ -237,7 +255,7 @@ export default function CareerApply() {
 						>
 							{job.job_description ? (
 								<p className="career-apply-page__description whitespace-pre-wrap">
-									{job.job_description}
+									{toPlainDescription(job.job_description)}
 								</p>
 							) : null}
 
