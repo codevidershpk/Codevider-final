@@ -4,7 +4,13 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCopy } from "@/lib/copy";
 import { useTheme } from "@/components/providers/ThemeProvider";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CodeviderLogo } from "./CodeviderLogo";
@@ -237,9 +243,7 @@ function DesktopNavLinks({ appearance }: { appearance: NavAppearance }) {
 						height: pill.height,
 						opacity: 1,
 					}}
-					transition={
-						shouldReduceMotion ? { duration: 0 } : navPillSpring
-					}
+					transition={shouldReduceMotion ? { duration: 0 } : navPillSpring}
 				/>
 			) : null}
 

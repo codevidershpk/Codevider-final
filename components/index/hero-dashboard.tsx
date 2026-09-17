@@ -112,9 +112,7 @@ export default function HeroDashboard({ lite = false }: { lite?: boolean }) {
 	const step = lite ? 0.06 : 0.08;
 
 	const revealTransition = (delay: number, duration = lite ? 0.42 : 0.52) =>
-		reveal
-			? { duration, ease: appleRevealEase, delay }
-			: instantTransition;
+		reveal ? { duration, ease: appleRevealEase, delay } : instantTransition;
 
 	const barTransition = (index: number) =>
 		reveal
@@ -163,9 +161,7 @@ export default function HeroDashboard({ lite = false }: { lite?: boolean }) {
 									className="hero-dash-surface rounded-xl p-3"
 									initial={false}
 									animate={settle ? SHOWN : HIDDEN}
-									transition={revealTransition(
-										baseDelay + step * (2 + index),
-									)}
+									transition={revealTransition(baseDelay + step * (2 + index))}
 								>
 									<MetricCard
 										label={t(key)}

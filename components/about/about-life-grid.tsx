@@ -75,11 +75,11 @@ export default function AboutLifeGrid() {
 								src={src}
 								alt={t(altKey)}
 								fill
-							sizes={
-								span === 2
-									? "(max-width: 768px) 100vw, 66vw"
-									: "(max-width: 768px) 100vw, 33vw"
-							}
+								sizes={
+									span === 2
+										? "(max-width: 768px) 100vw, 66vw"
+										: "(max-width: 768px) 100vw, 33vw"
+								}
 								className="object-cover"
 							/>
 						</motion.div>

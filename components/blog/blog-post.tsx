@@ -92,7 +92,11 @@ function scanRenderedHeadings(root: HTMLElement): ArticleTocEntry[] {
 		if (!label) return;
 
 		let id = el.id.trim();
-		if (!id || used.has(id) || document.querySelectorAll(`#${CSS.escape(id)}`).length > 1) {
+		if (
+			!id ||
+			used.has(id) ||
+			document.querySelectorAll(`#${CSS.escape(id)}`).length > 1
+		) {
 			const base = slugifyHeading(label);
 			let candidate = `article-${base}`;
 			let n = 2;
@@ -215,8 +219,7 @@ function BlogTocNav({
 				if (overLeft < -4 || overRight > 4) {
 					list.scrollTo({
 						left:
-							list.scrollLeft +
-							(overLeft < -4 ? overLeft - 8 : overRight + 8),
+							list.scrollLeft + (overLeft < -4 ? overLeft - 8 : overRight + 8),
 						behavior: smooth ? "smooth" : "auto",
 					});
 				}
@@ -227,8 +230,7 @@ function BlogTocNav({
 			const overBottom = linkRect.bottom - listRect.bottom;
 			if (overTop < -4 || overBottom > 4) {
 				list.scrollTo({
-					top:
-						list.scrollTop + (overTop < -4 ? overTop - 8 : overBottom + 8),
+					top: list.scrollTop + (overTop < -4 ? overTop - 8 : overBottom + 8),
 					behavior: smooth ? "smooth" : "auto",
 				});
 			}
@@ -289,17 +291,12 @@ function BlogTocNav({
 							height: highlight.height,
 							opacity: 1,
 						}}
-						transition={
-							shouldReduceMotion
-								? { duration: 0 }
-								: tocSpring
-						}
+						transition={shouldReduceMotion ? { duration: 0 } : tocSpring}
 					/>
 				) : null}
 
 				{toc.map((entry) => {
-					const isScrollActive =
-						!hoveredId && activeTocId === entry.id;
+					const isScrollActive = !hoveredId && activeTocId === entry.id;
 					const isHot = hoveredId === entry.id;
 
 					return (
@@ -608,7 +605,10 @@ export default function BlogPost() {
 						<span className="sr-only">{t("loading")}</span>
 						<div className="blog-skel blog-skel--meta" aria-hidden />
 						<div className="blog-skel blog-skel--article-title" aria-hidden />
-						<div className="blog-skel blog-skel--article-title-sm" aria-hidden />
+						<div
+							className="blog-skel blog-skel--article-title-sm"
+							aria-hidden
+						/>
 						<div className="blog-skel blog-skel--excerpt" aria-hidden />
 						<div className="blog-skel blog-skel--cover" aria-hidden />
 						<div className="blog-skel blog-skel--line" aria-hidden />
@@ -647,9 +647,7 @@ export default function BlogPost() {
 							)}
 
 							<h1 className="blog-article__title">{post.title}</h1>
-							{excerpt ? (
-								<p className="blog-article__lead">{excerpt}</p>
-							) : null}
+							{excerpt ? <p className="blog-article__lead">{excerpt}</p> : null}
 						</motion.header>
 
 						<motion.figure
@@ -689,31 +687,31 @@ export default function BlogPost() {
 											: { duration: 0.45, ease: revealEase, delay: 0.12 }
 									}
 								>
-								<div
-									className="blog-toc-progress"
-									role="progressbar"
-									aria-valuemin={0}
-									aria-valuemax={100}
-									aria-valuenow={readPercent}
-									aria-label={t("progress_label")}
-								>
 									<div
-										className="blog-toc-progress__fill"
-										style={{ height: `${readPercent}%` }}
-										aria-hidden="true"
+										className="blog-toc-progress"
+										role="progressbar"
+										aria-valuemin={0}
+										aria-valuemax={100}
+										aria-valuenow={readPercent}
+										aria-label={t("progress_label")}
+									>
+										<div
+											className="blog-toc-progress__fill"
+											style={{ height: `${readPercent}%` }}
+											aria-hidden="true"
+										/>
+										<span className="sr-only">
+											{t("progress_status", { percent: readPercent })}
+										</span>
+									</div>
+									<BlogTocNav
+										toc={toc}
+										activeTocId={activeTocId}
+										onSelect={selectTocEntry}
+										label={t("toc_label")}
+										navLabel={t("toc_nav")}
 									/>
-									<span className="sr-only">
-										{t("progress_status", { percent: readPercent })}
-									</span>
-								</div>
-								<BlogTocNav
-									toc={toc}
-									activeTocId={activeTocId}
-									onSelect={selectTocEntry}
-									label={t("toc_label")}
-									navLabel={t("toc_nav")}
-								/>
-							</motion.aside>
+								</motion.aside>
 							) : null}
 
 							<motion.div

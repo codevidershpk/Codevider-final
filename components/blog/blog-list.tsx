@@ -36,13 +36,7 @@ const initialMeta: PaginatedMeta = {
 	hasPreviousPage: false,
 };
 
-function PostMeta({
-	post,
-	metaLabel,
-}: {
-	post: Article;
-	metaLabel: string;
-}) {
+function PostMeta({ post, metaLabel }: { post: Article; metaLabel: string }) {
 	const dateLabel = formatArticleDate(getArticleDateValue(post));
 
 	if (!dateLabel) return null;
@@ -300,7 +294,10 @@ export default function BlogList() {
 				) : null}
 
 				{showEmptyState ? (
-					<div className="blog-empty" role={status === "error" ? "alert" : undefined}>
+					<div
+						className="blog-empty"
+						role={status === "error" ? "alert" : undefined}
+					>
 						<p className="blog-empty__text">
 							{status === "error" ? t("error") : t("description_empty")}
 						</p>
@@ -398,7 +395,9 @@ export default function BlogList() {
 														tabIndex={-1}
 														aria-hidden
 													>
-														<span className="blog-media-title">{post.title}</span>
+														<span className="blog-media-title">
+															{post.title}
+														</span>
 													</Link>
 												)}
 
@@ -435,10 +434,7 @@ export default function BlogList() {
 				) : null}
 
 				{showPagination ? (
-					<nav
-						className="blog-pagination"
-						aria-label={t("pagination_label")}
-					>
+					<nav className="blog-pagination" aria-label={t("pagination_label")}>
 						<button
 							type="button"
 							className="blog-pagination__btn"

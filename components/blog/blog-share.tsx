@@ -52,9 +52,7 @@ export default function BlogShare({ title }: BlogShareProps) {
 	// Client component, so `window` is available on first render. The heading
 	// hash is stripped so shares land on the article top.
 	const [pageUrl] = useState(() =>
-		typeof window === "undefined"
-			? ""
-			: window.location.href.split("#")[0],
+		typeof window === "undefined" ? "" : window.location.href.split("#")[0],
 	);
 	const [copied, setCopied] = useState(false);
 
@@ -141,9 +139,7 @@ export default function BlogShare({ title }: BlogShareProps) {
 				<li>
 					<button
 						type="button"
-						className={
-							copied ? "blog-share__btn is-copied" : "blog-share__btn"
-						}
+						className={copied ? "blog-share__btn is-copied" : "blog-share__btn"}
 						aria-label={copied ? t("share_copied") : t("share_copy")}
 						aria-live="polite"
 						disabled={!pageUrl}

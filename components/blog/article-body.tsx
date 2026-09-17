@@ -284,7 +284,7 @@ function ArticleBody({ markdown }: ArticleBodyProps) {
 				{children}
 			</h4>
 		),
-			p: ({ children }) => {
+		p: ({ children }) => {
 			// Standalone images become figures (no <p> wrapper).
 			const kids = Children.toArray(children);
 			const only = kids.length === 1 ? kids[0] : null;

@@ -47,9 +47,7 @@ export async function fetchArticleBySlugOrId(
 	slugOrId: string | number,
 ): Promise<Article> {
 	const key =
-		typeof slugOrId === "number"
-			? String(slugOrId)
-			: String(slugOrId).trim();
+		typeof slugOrId === "number" ? String(slugOrId) : String(slugOrId).trim();
 
 	if (!key) {
 		throw new Error("Missing article id or slug");

@@ -41,4 +41,3 @@ export type ArticlesQuery = {
 	limit?: number;
 	search?: string;
 };
-

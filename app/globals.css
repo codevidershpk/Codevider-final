@@ -4382,7 +4382,6 @@ code {
 	}
 }
 
-
 /* ============================================================
    BLOG
    ============================================================ */
@@ -5346,7 +5345,11 @@ code {
 	top: 0;
 	z-index: 0;
 	border-radius: 10px;
-	background: color-mix(in srgb, var(--brand-blue) 10%, var(--home-surface-muted));
+	background: color-mix(
+		in srgb,
+		var(--brand-blue) 10%,
+		var(--home-surface-muted)
+	);
 	box-shadow: var(--shadow-sm);
 	will-change: transform, height;
 }
@@ -5981,8 +5984,7 @@ code {
 	position: absolute;
 	top: 0.7rem;
 	right: 0.95rem;
-	font-family:
-		ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+	font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 	font-size: 0.6875rem;
 	font-weight: 600;
 	letter-spacing: 0.1em;
@@ -6015,8 +6017,7 @@ code {
 }
 
 .blog-codeblock__lang {
-	font-family:
-		ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+	font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 	font-size: 0.6875rem;
 	font-weight: 600;
 	letter-spacing: 0.1em;
@@ -6033,8 +6034,7 @@ code {
 	border-radius: 8px;
 	background: transparent;
 	color: #c6cdd8;
-	font-family:
-		ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+	font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 	font-size: 0.75rem;
 	font-weight: 500;
 	line-height: 1.2;
@@ -6213,11 +6213,7 @@ code {
 }
 
 .blog-mermaid--error {
-	border-color: color-mix(
-		in srgb,
-		var(--brand-blue) 45%,
-		var(--border-subtle)
-	);
+	border-color: color-mix(in srgb, var(--brand-blue) 45%, var(--border-subtle));
 }
 
 .blog-hr {
