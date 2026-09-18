@@ -215,6 +215,7 @@
 			"proof_year": "2019",
 			"proof_description": "Mature process, sharp engineering, and a delivery model built for product teams under real deadline pressure.",
 			"proof_aside": "45+ projects across time zones. Full IP ownership — yours from day one.",
+			"cta": "Contact Us",
 			"pillars": {
 				"collaboration": {
 					"title": "Seamless collaboration",
@@ -753,11 +754,6 @@
 			"pay_type": "Pay type",
 			"application_period": "Application period",
 			"application_period_range": "{start} – {end}",
-			"requirements_heading": "What you'll need to apply",
-			"requirement_photo": "Profile photo",
-			"requirement_resume": "Resume / CV",
-			"requirement_dob": "Date of birth",
-			"requirement_gender": "Gender",
 			"pay_type_salary": "Salary",
 			"pay_type_hourly": "Hourly",
 			"pay_type_contract": "Contract",
@@ -817,8 +813,34 @@
 					"rate_limit": "Too many requests. Please wait a moment and try again.",
 					"server_config": "Applications are temporarily unavailable. Please try again later.",
 					"submit": "Something went wrong. Please try again.",
-					"turnstile": "Please complete the security check before submitting."
-				}
+					"turnstile": "Please complete the security check before submitting.",
+					"experience_company_required": "Company is required",
+					"experience_position_required": "Position is required",
+					"experience_date_invalid": "Enter a valid date",
+					"experience_description_max": "Description must be 2,000 characters or fewer",
+					"education_institution_required": "Institution is required",
+					"education_degree_required": "Degree is required",
+					"education_date_invalid": "Enter a valid date",
+					"project_name_required": "Project name is required",
+					"project_url_invalid": "Enter a valid URL",
+					"project_description_max": "Description must be 2,000 characters or fewer"
+				},
+				"experience_title": "Work Experience",
+				"add_experience": "Add experience",
+				"company_name": "Company",
+				"position": "Position",
+				"start_date": "Start date",
+				"end_date": "End date",
+				"description": "Description",
+				"remove_entry": "Remove entry",
+				"education_title": "Education",
+				"add_education": "Add education",
+				"institution_name": "Institution",
+				"degree": "Degree",
+				"projects_title": "Projects",
+				"add_project": "Add project",
+				"project_name": "Project name",
+				"project_url": "Project URL"
 			}
 		},
 		"why_join": {

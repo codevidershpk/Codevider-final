@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, Check, Loader2, X } from "lucide-react";
-import { useCopy } from "@/lib/copy";
 import {
 	type KeyboardEvent,
 	type ReactNode,
@@ -11,7 +10,8 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
+import CareerApplyEntrySections from "@/components/career/career-apply-entry-sections";
 import {
 	TurnstileWidget,
 	type TurnstileWidgetHandle,
@@ -21,6 +21,7 @@ import {
 	submitJobApplication,
 	uploadJobApplicationFiles,
 } from "@/lib/api/job-application";
+import { useCopy } from "@/lib/copy";
 import {
 	createJobApplicationSchema,
 	type JobApplicationFormValues,
@@ -33,12 +34,7 @@ const inputClassName =
 const inputErrorClassName =
 	"border-(--dash-warning) focus:border-(--dash-warning) focus-visible:ring-(--dash-warning)/15";
 
-const GENDER_OPTIONS = [
-	"male",
-	"female",
-	"non_binary",
-	"prefer_not_to_say",
-] as const;
+const GENDER_OPTIONS = ["male", "female"] as const;
 
 function FormLabel({
 	htmlFor,
@@ -262,6 +258,18 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 					bioMax: t("errors.bio_max"),
 					coverLetterMax: t("errors.cover_letter_max"),
 					skillsMax: t("errors.skills_max"),
+					experienceCompanyRequired: t("errors.experience_company_required"),
+					experiencePositionRequired: t("errors.experience_position_required"),
+					experienceDateInvalid: t("errors.experience_date_invalid"),
+					experienceDescriptionMax: t("errors.experience_description_max"),
+					educationInstitutionRequired: t(
+						"errors.education_institution_required",
+					),
+					educationDegreeRequired: t("errors.education_degree_required"),
+					educationDateInvalid: t("errors.education_date_invalid"),
+					projectNameRequired: t("errors.project_name_required"),
+					projectUrlInvalid: t("errors.project_url_invalid"),
+					projectDescriptionMax: t("errors.project_description_max"),
 				},
 			),
 		[job.is_dob_required, job.is_gender_required, t],
@@ -272,6 +280,7 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 		handleSubmit,
 		control,
 		formState: { errors, isSubmitting },
+		watch,
 		reset,
 	} = useForm<JobApplicationFormValues>({
 		resolver: zodResolver(schema),
@@ -284,8 +293,15 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 			bio: "",
 			cover_letter: "",
 			skills: "",
+			experiences: [],
+			educations: [],
+			projects: [],
 		},
 	});
+
+	const experienceFields = useFieldArray({ control, name: "experiences" });
+	const educationFields = useFieldArray({ control, name: "educations" });
+	const projectFields = useFieldArray({ control, name: "projects" });
 
 	const resolveSubmitError = (error: unknown) => {
 		if (error instanceof JobApplicationError) {
@@ -328,6 +344,25 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 
 			const skills = parseSkills(data.skills ?? "");
 
+			const experiences = (data.experiences ?? []).map((entry) => ({
+				company_name: entry.company_name.trim(),
+				position: entry.position.trim(),
+				start_date: entry.start_date?.trim() || undefined,
+				end_date: entry.end_date?.trim() || undefined,
+				description: entry.description?.trim() || undefined,
+			}));
+			const educations = (data.educations ?? []).map((entry) => ({
+				institution_name: entry.institution_name.trim(),
+				degree: entry.degree.trim(),
+				start_date: entry.start_date?.trim() || undefined,
+				end_date: entry.end_date?.trim() || undefined,
+			}));
+			const projects = (data.projects ?? []).map((entry) => ({
+				project_name: entry.project_name.trim(),
+				project_url: entry.project_url.trim(),
+				description: entry.description?.trim() || undefined,
+			}));
+
 			await submitJobApplication(
 				{
 					full_name: data.full_name,
@@ -341,9 +376,9 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 					bio: data.bio?.trim() || undefined,
 					cover_letter: data.cover_letter?.trim() || undefined,
 					skills: skills.length ? skills : undefined,
-					experiences: [],
-					educations: [],
-					projects: [],
+					experiences,
+					educations,
+					projects,
 				},
 				turnstileToken,
 			);
@@ -423,75 +458,127 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 					<FieldError id="apply-email-error" message={errors.email?.message} />
 				</div>
 
-				<div>
-					<FormLabel htmlFor="apply-phone" optional={t("optional")}>
-						{t("phone")}
-					</FormLabel>
-					<input
-						id="apply-phone"
-						type="tel"
-						autoComplete="tel"
-						placeholder={t("phone_placeholder")}
-						className={`${inputClassName}${errors.phone ? ` ${inputErrorClassName}` : ""}`}
-						aria-invalid={errors.phone ? true : undefined}
-						aria-describedby={errors.phone ? "apply-phone-error" : undefined}
-						{...register("phone")}
-					/>
-					<FieldError id="apply-phone-error" message={errors.phone?.message} />
-				</div>
-
-				{job.is_dob_required ? (
+				<div className="career-apply-form__trio">
 					<div>
-						<FormLabel htmlFor="apply-dob" required>
-							{t("date_of_birth")}
+						<FormLabel htmlFor="apply-phone" optional={t("optional")}>
+							{t("phone")}
 						</FormLabel>
 						<input
-							id="apply-dob"
-							type="date"
-							className={`${inputClassName}${errors.date_of_birth ? ` ${inputErrorClassName}` : ""}`}
-							aria-invalid={errors.date_of_birth ? true : undefined}
-							aria-describedby={
-								errors.date_of_birth ? "apply-dob-error" : undefined
-							}
-							{...register("date_of_birth")}
+							id="apply-phone"
+							type="tel"
+							autoComplete="tel"
+							placeholder={t("phone_placeholder")}
+							className={`${inputClassName}${errors.phone ? ` ${inputErrorClassName}` : ""}`}
+							aria-invalid={errors.phone ? true : undefined}
+							aria-describedby={errors.phone ? "apply-phone-error" : undefined}
+							{...register("phone")}
 						/>
 						<FieldError
-							id="apply-dob-error"
-							message={errors.date_of_birth?.message}
+							id="apply-phone-error"
+							message={errors.phone?.message}
 						/>
 					</div>
-				) : null}
 
-				{job.is_gender_required ? (
-					<div>
-						<FormLabel htmlFor="apply-gender" required>
-							{t("gender")}
-						</FormLabel>
-						<select
-							id="apply-gender"
-							className={`${inputClassName}${errors.gender ? ` ${inputErrorClassName}` : ""}`}
-							aria-invalid={errors.gender ? true : undefined}
-							aria-describedby={
-								errors.gender ? "apply-gender-error" : undefined
-							}
-							defaultValue=""
-							{...register("gender")}
-						>
-							<option value="" disabled>
-								{t("gender_placeholder")}
-							</option>
-							{GENDER_OPTIONS.map((option) => (
-								<option key={option} value={option}>
-									{t(`gender_${option}`)}
+					{job.is_dob_required ? (
+						<div>
+							<FormLabel htmlFor="apply-dob" required>
+								{t("date_of_birth")}
+							</FormLabel>
+							<input
+								id="apply-dob"
+								type="date"
+								className={`${inputClassName}${errors.date_of_birth ? ` ${inputErrorClassName}` : ""}`}
+								aria-invalid={errors.date_of_birth ? true : undefined}
+								aria-describedby={
+									errors.date_of_birth ? "apply-dob-error" : undefined
+								}
+								{...register("date_of_birth")}
+							/>
+							<FieldError
+								id="apply-dob-error"
+								message={errors.date_of_birth?.message}
+							/>
+						</div>
+					) : (
+						<div>
+							<FormLabel htmlFor="apply-dob" optional={t("optional")}>
+								{t("date_of_birth")}
+							</FormLabel>
+							<input
+								id="apply-dob"
+								type="date"
+								className={`${inputClassName}${errors.date_of_birth ? ` ${inputErrorClassName}` : ""}`}
+								aria-invalid={errors.date_of_birth ? true : undefined}
+								aria-describedby={
+									errors.date_of_birth ? "apply-dob-error" : undefined
+								}
+								{...register("date_of_birth")}
+							/>
+							<FieldError
+								id="apply-dob-error"
+								message={errors.date_of_birth?.message}
+							/>
+						</div>
+					)}
+
+					{job.is_gender_required ? (
+						<div>
+							<FormLabel htmlFor="apply-gender" required>
+								{t("gender")}
+							</FormLabel>
+							<select
+								id="apply-gender"
+								className={`${inputClassName}${errors.gender ? ` ${inputErrorClassName}` : ""}`}
+								aria-invalid={errors.gender ? true : undefined}
+								aria-describedby={
+									errors.gender ? "apply-gender-error" : undefined
+								}
+								defaultValue=""
+								{...register("gender")}
+							>
+								<option value="" disabled>
+									{t("gender_placeholder")}
 								</option>
-							))}
-						</select>
-						<FieldError
-							id="apply-gender-error"
-							message={errors.gender?.message}
-						/>
-					</div>
-				) : null}
+								{GENDER_OPTIONS.map((option) => (
+									<option key={option} value={option}>
+										{t(`gender_${option}`)}
+									</option>
+								))}
+							</select>
+							<FieldError
+								id="apply-gender-error"
+								message={errors.gender?.message}
+							/>
+						</div>
+					) : (
+						<div>
+							<FormLabel htmlFor="apply-gender" optional={t("optional")}>
+								{t("gender")}
+							</FormLabel>
+							<select
+								id="apply-gender"
+								className={`${inputClassName}${errors.gender ? ` ${inputErrorClassName}` : ""}`}
+								aria-invalid={errors.gender ? true : undefined}
+								aria-describedby={
+									errors.gender ? "apply-gender-error" : undefined
+								}
+								defaultValue=""
+								{...register("gender")}
+							>
+								<option value="">{t("gender_placeholder")}</option>
+								{GENDER_OPTIONS.map((option) => (
+									<option key={option} value={option}>
+										{t(`gender_${option}`)}
+									</option>
+								))}
+							</select>
+							<FieldError
+								id="apply-gender-error"
+								message={errors.gender?.message}
+							/>
+						</div>
+					)}
+				</div>
 			</div>
 
 			<div className="career-apply-form__files">
@@ -620,6 +707,16 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 					message={errors.cover_letter?.message}
 				/>
 			</div>
+
+			<CareerApplyEntrySections
+				register={register}
+				watch={watch}
+				errors={errors}
+				experienceFields={experienceFields}
+				educationFields={educationFields}
+				projectFields={projectFields}
+				t={t}
+			/>
 
 			<div className="career-apply-form__turnstile">
 				<TurnstileWidget ref={turnstileRef} onTokenChange={setTurnstileToken} />

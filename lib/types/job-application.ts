@@ -14,27 +14,26 @@ export type JobApplicationUploadResponse = {
 
 /** Type representing work experience for a job application. */
 export type JobApplicationExperience = {
-	start_date: string;
-	end_date: string | null;
 	company_name: string;
 	position: string;
-	description: string;
+	start_date?: string;
+	end_date?: string;
+	description?: string;
 };
 
 /** Type representing education history for a job application. */
 export type JobApplicationEducation = {
-	start_date: string;
-	end_date: string;
 	institution_name: string;
 	degree: string;
-	field_of_study: string;
+	start_date?: string;
+	end_date?: string;
 };
 
 /** Type representing a project for a job application. */
 export type JobApplicationProject = {
-	name: string;
-	repo: string;
-	public_link: string;
+	project_name: string;
+	project_url: string;
+	description?: string;
 };
 
 /** Full payload for submitting a job application to the backend. */

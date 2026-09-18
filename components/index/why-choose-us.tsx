@@ -1,6 +1,8 @@
 "use client";
 
+import { ArrowUpRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
+import Link from "next/link";
 import { useCopy } from "@/lib/copy";
 import {
 	sectionItemTransition,
@@ -50,7 +52,25 @@ export default function WhyChooseUs() {
 							{t("proof_year")}
 						</p>
 						<p className="why-choose-proof__lede">{t("proof_description")}</p>
-						<p className="why-choose-proof__aside">{t("proof_aside")}</p>
+						<p className="why-choose-proof__aside min-[960px]:mt-5!">
+							{t("proof_aside")}
+						</p>
+						<div className="mt-6 self-stretch min-[960px]:mt-auto min-[960px]:pt-8">
+							<Link
+								href="https://calendly.com/codevider/pasho"
+								className="svc-cta__btn group w-full min-h-12 justify-center py-3.5 pl-7 pr-6.5 text-[15px]"
+							>
+								{t("cta")}
+								<ArrowUpRight
+									className={
+										shouldReduceMotion
+											? "size-4 shrink-0"
+											: "size-4 shrink-0 transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+									}
+									aria-hidden
+								/>
+							</Link>
+						</div>
 					</motion.aside>
 
 					<div className="why-choose-pillars" role="list">

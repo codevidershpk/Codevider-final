@@ -697,7 +697,7 @@ export default function BlogPost() {
 									>
 										<div
 											className="blog-toc-progress__fill"
-											style={{ height: `${readPercent}%` }}
+											style={{ transform: `scaleY(${readPercent / 100})` }}
 											aria-hidden="true"
 										/>
 										<span className="sr-only">

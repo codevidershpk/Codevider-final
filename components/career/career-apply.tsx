@@ -186,23 +186,6 @@ export default function CareerApply() {
 		return rows;
 	}, [formatDate, job, t]);
 
-	const requirements = useMemo(() => {
-		if (!job) return [];
-
-		return [
-			job.is_photo_required
-				? { key: "photo", label: t("requirement_photo") }
-				: null,
-			job.is_resume_required
-				? { key: "resume", label: t("requirement_resume") }
-				: null,
-			job.is_dob_required ? { key: "dob", label: t("requirement_dob") } : null,
-			job.is_gender_required
-				? { key: "gender", label: t("requirement_gender") }
-				: null,
-		].filter((item): item is { key: string; label: string } => item !== null);
-	}, [job, t]);
-
 	return (
 		<section className="career-apply-page">
 			<div className="home-wrap career-apply-page__inner">
@@ -218,6 +201,11 @@ export default function CareerApply() {
 					<h1 className="career-apply-page__title">
 						{job ? job.title : t("loading_title")}
 					</h1>
+					{job?.job_description ? (
+						<p className="career-apply-page__description whitespace-pre-wrap">
+							{toPlainDescription(job.job_description)}
+						</p>
+					) : null}
 					{job && !job.job_description ? (
 						<p className="career-apply-page__subtitle career-apply-page__subtitle--empty">
 							{t("no_description")}
@@ -253,12 +241,6 @@ export default function CareerApply() {
 							className="career-apply-page__content"
 							{...reveal(0.12)}
 						>
-							{job.job_description ? (
-								<p className="career-apply-page__description whitespace-pre-wrap">
-									{toPlainDescription(job.job_description)}
-								</p>
-							) : null}
-
 							<section
 								className="career-apply-page__section"
 								aria-labelledby="career-apply-details"
@@ -278,25 +260,6 @@ export default function CareerApply() {
 									))}
 								</dl>
 							</section>
-
-							{requirements.length > 0 ? (
-								<section
-									className="career-apply-page__section"
-									aria-labelledby="career-apply-requirements"
-								>
-									<h2
-										id="career-apply-requirements"
-										className="career-apply-page__section-title"
-									>
-										{t("requirements_heading")}
-									</h2>
-									<ul className="career-apply-page__requirements">
-										{requirements.map((item) => (
-											<li key={item.key}>{item.label}</li>
-										))}
-									</ul>
-								</section>
-							) : null}
 						</motion.div>
 					) : null}
 				</div>
