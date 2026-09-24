@@ -1,9 +1,6 @@
-"use client";
-
 import { Activity, Target, TrendingUp, Users } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import type { CSSProperties } from "react";
 import { useCopy } from "@/lib/copy";
-import { appleRevealEase, useMounted } from "@/hooks/use-section-reveal";
 
 const REVENUE_BARS = [38, 52, 44, 58, 49, 64, 55, 71, 63, 77, 68, 84] as const;
 const PEAK_BAR_INDEX = REVENUE_BARS.findIndex((bar) => bar === 84);
@@ -11,10 +8,10 @@ const LATEST_BAR_INDEX = REVENUE_BARS.length - 1;
 const CHART_HEIGHT_PX = 112;
 const BAR_MIN_HEIGHT_PX = 8;
 
-const instantTransition = { duration: 0 } as const;
-
-const HIDDEN = { opacity: 0, y: 10 } as const;
-const SHOWN = { opacity: 1, y: 0 } as const;
+/** Stagger slot for the CSS entrance (see `.hero-dash-stage` in globals.css). */
+function stage(index: number): CSSProperties {
+	return { "--i": index } as CSSProperties;
+}
 
 /**
  * Calculates bar height in pixels.
@@ -93,52 +90,25 @@ function MetricCard({
 }
 
 /**
- * Hero dashboard component with animated metrics and revenue chart.
+ * Hero dashboard mockup with metrics and a revenue chart.
+ *
+ * The staged entrance is pure CSS (@starting-style), so the card paints
+ * straight from the static HTML instead of waiting for hydration, and the
+ * bars grow with a compositor-only scaleY rather than animating height.
  */
-export default function HeroDashboard({ lite = false }: { lite?: boolean }) {
+export default function HeroDashboard() {
 	const t = useCopy("home.dashboard");
 	const tHome = useCopy("home");
 	const currency = tHome("base_currency");
 	const currencyAfter = tHome("base_currency_position") === "after";
 	const fmt = (amount: string) =>
 		currencyAfter ? `${amount}${currency}` : `${currency}${amount}`;
-	const mounted = useMounted();
-	const shouldReduceMotion = useReducedMotion();
-
-	const reveal = mounted && !shouldReduceMotion;
-	const settle = reveal || Boolean(shouldReduceMotion);
-
-	const baseDelay = lite ? 0.12 : 0.32;
-	const step = lite ? 0.06 : 0.08;
-
-	const revealTransition = (delay: number, duration = lite ? 0.42 : 0.52) =>
-		reveal ? { duration, ease: appleRevealEase, delay } : instantTransition;
-
-	const barTransition = (index: number) =>
-		reveal
-			? {
-					duration: lite ? 0.5 : 0.65,
-					ease: appleRevealEase,
-					delay: baseDelay + step * 6 + index * (lite ? 0.03 : 0.04),
-				}
-			: instantTransition;
 
 	return (
-		<motion.div
-			className="hero-dash-window relative w-full overflow-hidden rounded-2xl border border-(--dash-border) bg-(--dash-canvas) shadow-(--dash-shadow)"
-			initial={false}
-			animate={
-				settle
-					? { opacity: 1, y: 0, scale: 1 }
-					: { opacity: 0, y: 16, scale: 0.98 }
-			}
-			transition={revealTransition(baseDelay, lite ? 0.5 : 0.62)}
-		>
-			<motion.div
-				className="hero-dash-titlebar flex items-center gap-3 border-b border-(--dash-border) px-4 py-2.5"
-				initial={false}
-				animate={settle ? SHOWN : HIDDEN}
-				transition={revealTransition(baseDelay + step)}
+		<div className="hero-dash-window relative w-full overflow-hidden rounded-2xl border border-(--dash-border) bg-(--dash-canvas) shadow-(--dash-shadow)">
+			<div
+				className="hero-dash-stage hero-dash-titlebar flex items-center gap-3 border-b border-(--dash-border) px-4 py-2.5"
+				style={stage(1)}
 			>
 				<div className="flex items-center gap-1.5" aria-hidden>
 					<span className="size-2.5 rounded-full bg-[#ff5f57]" />
@@ -148,44 +118,35 @@ export default function HeroDashboard({ lite = false }: { lite?: boolean }) {
 				<div className="min-w-0 flex-1 truncate rounded-md bg-(--dash-surface) px-3 py-1 text-center font-(family-name:--mono) text-[0.68rem] text-(--dash-muted)">
 					{t("window_url")}
 				</div>
-			</motion.div>
+			</div>
 
 			<div className="space-y-3 p-4">
 				<div className="grid grid-cols-2 gap-2.5">
 					{METRICS_BASE.map(
-						({ key, amount, useCurrency, deltaKey, icon }, index) => {
-							const value = useCurrency ? fmt(amount) : amount;
-							return (
-								<motion.div
-									key={key}
-									className="hero-dash-surface rounded-xl p-3"
-									initial={false}
-									animate={settle ? SHOWN : HIDDEN}
-									transition={revealTransition(baseDelay + step * (2 + index))}
-								>
-									<MetricCard
-										label={t(key)}
-										value={value}
-										delta={t(deltaKey)}
-										icon={icon}
-									/>
-								</motion.div>
-							);
-						},
+						({ key, amount, useCurrency, deltaKey, icon }, index) => (
+							<div
+								key={key}
+								className="hero-dash-stage hero-dash-surface rounded-xl p-3"
+								style={stage(2 + index)}
+							>
+								<MetricCard
+									label={t(key)}
+									value={useCurrency ? fmt(amount) : amount}
+									delta={t(deltaKey)}
+									icon={icon}
+								/>
+							</div>
+						),
 					)}
 				</div>
 
-				<motion.div
-					className="hero-dash-surface rounded-xl p-3.5"
-					initial={false}
-					animate={settle ? SHOWN : { opacity: 0, y: 14 }}
-					transition={revealTransition(baseDelay + step * 6)}
+				<div
+					className="hero-dash-stage hero-dash-surface rounded-xl p-3.5"
+					style={stage(6)}
 				>
-					<motion.div
-						className="flex items-baseline justify-between gap-2"
-						initial={false}
-						animate={settle ? SHOWN : HIDDEN}
-						transition={revealTransition(baseDelay + step * 6.4)}
+					<div
+						className="hero-dash-stage flex items-baseline justify-between gap-2"
+						style={stage(6.4)}
 					>
 						<p className="text-sm font-semibold text-(--dash-text)">
 							{t("revenue_overview")}
@@ -193,47 +154,39 @@ export default function HeroDashboard({ lite = false }: { lite?: boolean }) {
 						<span className="text-[0.7rem] text-(--dash-muted)">
 							{t("revenue_period")}
 						</span>
-					</motion.div>
+					</div>
 
 					<div
 						className="hero-dash-chart mt-3 flex h-28 items-end gap-1.5"
 						role="img"
 						aria-label={t("revenue_chart_label")}
 					>
-						{REVENUE_BARS.map((value, index) => {
-							const height = barHeightPx(value);
-							return (
-								<motion.div
-									key={index}
-									className={`hero-dash-bar flex-1 origin-bottom rounded-t-[4px]${
-										index === PEAK_BAR_INDEX ? " hero-dash-bar--peak" : ""
-									}${index === LATEST_BAR_INDEX ? " hero-dash-bar--latest" : ""}`}
-									initial={false}
-									animate={{
-										height: settle ? height : 0,
-										opacity: settle ? 1 : 0,
-									}}
-									transition={barTransition(index)}
-								/>
-							);
-						})}
+						{REVENUE_BARS.map((value, index) => (
+							<div
+								key={index}
+								className={`hero-dash-bar flex-1 rounded-t-[4px]${
+									index === PEAK_BAR_INDEX ? " hero-dash-bar--peak" : ""
+								}${index === LATEST_BAR_INDEX ? " hero-dash-bar--latest" : ""}`}
+								style={
+									{
+										height: barHeightPx(value),
+										"--bar": index,
+									} as CSSProperties
+								}
+							/>
+						))}
 					</div>
 
-					<motion.div
-						className="mt-2 flex justify-between font-(family-name:--mono) text-[0.65rem] text-(--dash-muted)"
-						initial={false}
-						animate={settle ? SHOWN : HIDDEN}
-						transition={revealTransition(
-							baseDelay + step * 6 + REVENUE_BARS.length * 0.03,
-							lite ? 0.35 : 0.4,
-						)}
+					<div
+						className="hero-dash-stage hero-dash-stage--axis mt-2 flex justify-between font-(family-name:--mono) text-[0.65rem] text-(--dash-muted)"
+						style={stage(6 + REVENUE_BARS.length * 0.375)}
 					>
 						<span>{t("week_1")}</span>
 						<span>{t("week_6")}</span>
 						<span>{t("week_12")}</span>
-					</motion.div>
-				</motion.div>
+					</div>
+				</div>
 			</div>
-		</motion.div>
+		</div>
 	);
 }

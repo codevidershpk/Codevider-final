@@ -11,8 +11,8 @@
 		"deploy-html-prod": "s3-deploy './out/**/*.html' --cwd out/ --profile codevider --region us-east-1 --bucket landing-codevier.com --noCache",
 		"deploy-prod": "s3-deploy './out/**' --cwd out/ --profile codevider --region us-east-1 --bucket landing-codevier.com",
 		"start": "next start",
-		"lint": "biome lint .",
-		"format": "biome format --write .",
+		"lint": "biome lint app components data dictionaries hooks",
+		"format": "biome format --write app components data dictionaries hooks",
 		"check": "biome check --write .",
 		"clean": "rm -rf .next out"
 	},
@@ -24,7 +24,6 @@
 		"mermaid": "^12.0.0",
 		"motion": "^12.40.0",
 		"next": "16.2.9",
-		"ogl": "^1.0.11",
 		"react": "19.2.4",
 		"react-dom": "19.2.4",
 		"react-hook-form": "^7.80.0",

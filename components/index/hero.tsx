@@ -3,8 +3,8 @@
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useReducedMotion } from "motion/react";
 import Link from "next/link";
-import { useCopy } from "@/lib/copy";
 import { useEffect, useState } from "react";
+import { useCopy } from "@/lib/copy";
 import HeroBlobs from "./hero-blobs";
 import HeroDashboard from "./hero-dashboard";
 import RotatingWord from "./rotating-word";
@@ -60,13 +60,8 @@ export default function Hero() {
 
 	return (
 		<section className="home-hero relative isolate flex min-h-svh items-center overflow-hidden py-28 lg:py-32">
-			<div className="home-hero__system-form" aria-hidden>
-				<div className="home-hero__system-static home-hero__system-form-canvas" />
-			</div>
-
 			<div className="home-hero__veil" aria-hidden />
 
-			{/* Floating blurred organic blobs directly behind the hero text */}
 			<HeroBlobs paused={reducedMotion ?? false} />
 
 			<div className="home-wrap relative z-10">
@@ -121,7 +116,7 @@ export default function Hero() {
 					</div>
 
 					<div className="hero-reveal hero-reveal-5 hero-dash-bleed relative w-full min-w-0 lg:min-w-md xl:min-w-lg">
-						<HeroDashboard lite={liteMotion} />
+						<HeroDashboard />
 					</div>
 				</div>
 			</div>

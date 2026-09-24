@@ -30,6 +30,8 @@ export type JobApplicationFormMessages = {
 type JobRequirementFlags = {
 	isDobRequired: boolean;
 	isGenderRequired: boolean;
+	isPhotoRequired: boolean;
+	isResumeRequired: boolean;
 };
 
 const optionalDate = (message: string) =>
@@ -112,15 +114,36 @@ export function createJobApplicationSchema(
 				.min(1, messages.emailRequired)
 				.email(messages.emailInvalid),
 			phone: z.string().trim().max(30, messages.phoneMax).optional(),
-			date_of_birth: z.string().optional(),
-			gender: z.string().optional(),
+			date_of_birth: z
+				.string()
+				.trim()
+				.refine((value) => !value || !Number.isNaN(new Date(value).getTime()), {
+					message: messages.experienceDateInvalid,
+				})
+				.optional(),
+			gender: z
+				.string()
+				.trim()
+				.refine((value) => !value || value === "male" || value === "female", {
+					message: messages.genderRequired,
+				})
+				.optional(),
 			bio: z.string().trim().max(2000, messages.bioMax).optional(),
 			cover_letter: z
 				.string()
 				.trim()
 				.max(5000, messages.coverLetterMax)
 				.optional(),
-			skills: z.string().trim().max(500, messages.skillsMax).optional(),
+			skills: z
+				.string()
+				.trim()
+				.max(500, messages.skillsMax)
+				.refine(
+					(value) =>
+						value.split(",").every((skill) => skill.trim().length <= 100),
+					messages.skillsMax,
+				)
+				.optional(),
 			experiences: z
 				.array(
 					schemas.experience.transform((row) =>
@@ -185,7 +208,7 @@ export function createJobApplicationSchema(
 				.optional(),
 		})
 		.superRefine((data, ctx) => {
-			if (!data.profile_image) {
+			if (flags.isPhotoRequired && !data.profile_image) {
 				ctx.addIssue({
 					code: "custom",
 					path: ["profile_image"],
@@ -193,7 +216,7 @@ export function createJobApplicationSchema(
 				});
 			}
 
-			if (!data.resume) {
+			if (flags.isResumeRequired && !data.resume) {
 				ctx.addIssue({
 					code: "custom",
 					path: ["resume"],

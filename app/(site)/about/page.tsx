@@ -8,6 +8,8 @@ import AboutMeetTeam from "@/components/about/about-meet-team";
 import AboutWhoWeAre from "@/components/about/about-who-we-are";
 import { StructuredData } from "@/components/seo/structured-data";
 import { createPageMetadata, getOgImageUrl, getPageUrl } from "@/lib/site";
+import "@/app/styles/inner-pages.css";
+import "@/app/styles/about.css";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = getCopy();

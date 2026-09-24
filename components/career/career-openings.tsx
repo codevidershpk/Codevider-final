@@ -11,10 +11,10 @@ import {
 	Loader2,
 } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { useCopy } from "@/lib/copy";
-import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { fetchOpenJobs } from "@/lib/api/recruit-jobs";
+import { useCopy } from "@/lib/copy";
 import type { OpenJob, PaginatedMeta } from "@/lib/types/recruit";
 
 const revealEase = [0.22, 1, 0.36, 1] as const;
@@ -185,10 +185,12 @@ export default function CareerOpenings() {
 															className="career-job-card__meta"
 															aria-label={t("meta_label")}
 														>
-															<li>
-																<Building2 className="size-4" aria-hidden />
-																<span>{job.department.name}</span>
-															</li>
+															{job.department?.name ? (
+																<li>
+																	<Building2 className="size-4" aria-hidden />
+																	<span>{job.department.name}</span>
+																</li>
+															) : null}
 															<li>
 																<Clock3 className="size-4" aria-hidden />
 																<span>{job.job_type.job_type}</span>

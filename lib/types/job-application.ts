@@ -6,10 +6,13 @@ export type UploadedFile = {
 	size: number;
 };
 
-/** Response type from file upload endpoint for job application. */
+/**
+ * Response type from file upload endpoint for job application.
+ * A field is `null` when that file was not part of the upload.
+ */
 export type JobApplicationUploadResponse = {
-	profile_image: UploadedFile;
-	resume: UploadedFile;
+	profile_image: UploadedFile | null;
+	resume: UploadedFile | null;
 };
 
 /** Type representing work experience for a job application. */
@@ -44,8 +47,8 @@ export type JobApplicationPayload = {
 	phone?: string;
 	date_of_birth?: string;
 	gender?: string;
-	photo: UploadedFile;
-	resume: UploadedFile;
+	photo?: UploadedFile;
+	resume?: UploadedFile;
 	bio?: string;
 	cover_letter?: string;
 	skills?: string[];

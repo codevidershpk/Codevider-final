@@ -1,6 +1,12 @@
 "use client";
 
-import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import {
+	forwardRef,
+	useEffect,
+	useImperativeHandle,
+	useRef,
+	useState,
+} from "react";
 import { getTurnstileSiteKey } from "@/lib/turnstile";
 
 type TurnstileRenderOptions = {
@@ -92,15 +98,22 @@ export type TurnstileWidgetHandle = {
 
 type TurnstileWidgetProps = {
 	onTokenChange: (token: string | null) => void;
+	/**
+	 * Message shown when the Turnstile script fails to load (ad-blocker,
+	 * network issue, bad site key). Without this the forms stay
+	 * unsubmittable with no explanation.
+	 */
+	errorMessage?: string;
 };
 
 export const TurnstileWidget = forwardRef<
 	TurnstileWidgetHandle,
 	TurnstileWidgetProps
->(function TurnstileWidget({ onTokenChange }, ref) {
+>(function TurnstileWidget({ onTokenChange, errorMessage }, ref) {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const widgetIdRef = useRef<string | null>(null);
 	const onTokenChangeRef = useRef(onTokenChange);
+	const [loadFailed, setLoadFailed] = useState(false);
 
 	onTokenChangeRef.current = onTokenChange;
 
@@ -142,6 +155,9 @@ export const TurnstileWidget = forwardRef<
 				}
 			})
 			.catch(() => {
+				if (!cancelled) {
+					setLoadFailed(true);
+				}
 				onTokenChangeRef.current(null);
 			});
 
@@ -162,5 +178,14 @@ export const TurnstileWidget = forwardRef<
 		},
 	}));
 
-	return <div ref={containerRef} className="w-full min-w-0" />;
+	return (
+		<>
+			<div ref={containerRef} className="w-full min-w-0" />
+			{loadFailed && errorMessage ? (
+				<p className="mt-1.5 text-sm text-(--dash-warning)" role="alert">
+					{errorMessage}
+				</p>
+			) : null}
+		</>
+	);
 });

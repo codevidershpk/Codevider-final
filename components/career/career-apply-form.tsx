@@ -244,6 +244,8 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 				{
 					isDobRequired: job.is_dob_required,
 					isGenderRequired: job.is_gender_required,
+					isPhotoRequired: job.is_photo_required,
+					isResumeRequired: job.is_resume_required,
 				},
 				{
 					fullNameRequired: t("errors.full_name_required"),
@@ -272,7 +274,13 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 					projectDescriptionMax: t("errors.project_description_max"),
 				},
 			),
-		[job.is_dob_required, job.is_gender_required, t],
+		[
+			job.is_dob_required,
+			job.is_gender_required,
+			job.is_photo_required,
+			job.is_resume_required,
+			t,
+		],
 	);
 
 	const {
@@ -305,6 +313,11 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 
 	const resolveSubmitError = (error: unknown) => {
 		if (error instanceof JobApplicationError) {
+			// Prefer backend-provided validation messages when available so
+			// users see the actual problem instead of a generic notice.
+			if (error.status === 400 && error.details.length > 0) {
+				return error.details.join(" ");
+			}
 			switch (error.status) {
 				case 400:
 					return t("errors.validation");
@@ -327,7 +340,11 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 	const onSubmit = async (data: JobApplicationFormValues) => {
 		setSubmitError(null);
 
-		if (!data.profile_image || !data.resume) {
+		if (job.is_photo_required && !data.profile_image) {
+			return;
+		}
+
+		if (job.is_resume_required && !data.resume) {
 			return;
 		}
 
@@ -337,10 +354,12 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 		}
 
 		try {
-			const upload = await uploadJobApplicationFiles(
-				data.profile_image,
-				data.resume,
-			);
+			// The upload endpoint rejects empty requests; jobs that require
+			// neither file can still be applied to without attachments.
+			const upload =
+				data.profile_image || data.resume
+					? await uploadJobApplicationFiles(data.profile_image, data.resume)
+					: { profile_image: null, resume: null };
 
 			const skills = parseSkills(data.skills ?? "");
 
@@ -371,8 +390,8 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 					phone: data.phone?.trim() || undefined,
 					date_of_birth: data.date_of_birth?.trim() || undefined,
 					gender: data.gender?.trim() || undefined,
-					photo: upload.profile_image,
-					resume: upload.resume,
+					...(upload.profile_image ? { photo: upload.profile_image } : {}),
+					...(upload.resume ? { resume: upload.resume } : {}),
 					bio: data.bio?.trim() || undefined,
 					cover_letter: data.cover_letter?.trim() || undefined,
 					skills: skills.length ? skills : undefined,
@@ -583,7 +602,11 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 
 			<div className="career-apply-form__files">
 				<div>
-					<FormLabel htmlFor="apply-profile-image" required>
+					<FormLabel
+						htmlFor="apply-profile-image"
+						required={job.is_photo_required}
+						optional={job.is_photo_required ? undefined : t("optional")}
+					>
 						{t("profile_image")}
 					</FormLabel>
 					<Controller
@@ -612,7 +635,11 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 				</div>
 
 				<div>
-					<FormLabel htmlFor="apply-resume" required>
+					<FormLabel
+						htmlFor="apply-resume"
+						required={job.is_resume_required}
+						optional={job.is_resume_required ? undefined : t("optional")}
+					>
 						{t("resume")}
 					</FormLabel>
 					<Controller
@@ -719,7 +746,11 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 			/>
 
 			<div className="career-apply-form__turnstile">
-				<TurnstileWidget ref={turnstileRef} onTokenChange={setTurnstileToken} />
+				<TurnstileWidget
+					ref={turnstileRef}
+					onTokenChange={setTurnstileToken}
+					errorMessage={t("errors.turnstile")}
+				/>
 			</div>
 
 			{submitError ? (

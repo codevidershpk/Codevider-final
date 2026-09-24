@@ -2,12 +2,12 @@
 
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useCopy, type CopyTranslator } from "@/lib/copy";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import CareerApplyForm from "@/components/career/career-apply-form";
-import Link from "next/link";
 import { fetchJobById } from "@/lib/api/recruit-jobs";
+import { type CopyTranslator, useCopy } from "@/lib/copy";
 import type { JobDetail } from "@/lib/types/recruit";
 
 const revealEase = [0.22, 1, 0.36, 1] as const;
@@ -147,28 +147,45 @@ export default function CareerApply() {
 			value: t("openings_count", { count: job.remaining_openings }),
 		});
 
-		rows.push({
-			key: "pay_type",
-			label: t("pay_type"),
-			value: formatPayType(t, job.pay_type),
-		});
+		if (job.pay_type?.trim()) {
+			rows.push({
+				key: "pay_type",
+				label: t("pay_type"),
+				value: formatPayType(t, job.pay_type),
+			});
+		}
 
 		if (job.start_amount !== null) {
 			const period = formatPayPeriod(t, job.pay_according_to);
+			const currency =
+				typeof job.currency === "string" ? job.currency.trim() : "";
 			rows.push({
 				key: "compensation",
 				label: t("compensation"),
 				value:
 					job.end_amount !== null
-						? t("compensation_range", {
-								start: job.start_amount,
-								end: job.end_amount,
-								period,
-							})
-						: t("compensation_single", {
-								amount: job.start_amount,
-								period,
-							}),
+						? currency
+							? t("compensation_range_with_currency", {
+									start: job.start_amount,
+									end: job.end_amount,
+									currency,
+									period,
+								})
+							: t("compensation_range", {
+									start: job.start_amount,
+									end: job.end_amount,
+									period,
+								})
+						: currency
+							? t("compensation_single_with_currency", {
+									amount: job.start_amount,
+									currency,
+									period,
+								})
+							: t("compensation_single", {
+									amount: job.start_amount,
+									period,
+								}),
 			});
 		}
 
@@ -185,6 +202,14 @@ export default function CareerApply() {
 
 		return rows;
 	}, [formatDate, job, t]);
+
+	const skills = useMemo(() => {
+		if (!job || !Array.isArray(job.skills)) return [];
+
+		return job.skills
+			.map((skill) => (typeof skill === "string" ? skill.trim() : ""))
+			.filter((skill) => skill.length > 0);
+	}, [job]);
 
 	return (
 		<section className="career-apply-page">
@@ -259,6 +284,26 @@ export default function CareerApply() {
 										</div>
 									))}
 								</dl>
+								{skills.length > 0 ? (
+									<div className="career-apply-page__skills">
+										<p className="career-apply-page__skills-label">
+											{t("skills")}
+										</p>
+										<ul
+											className="career-apply-page__skill-list"
+											aria-label={t("skills")}
+										>
+											{skills.map((skill, index) => (
+												<li
+													key={`${skill}-${index}`}
+													className="career-apply-page__skill"
+												>
+													{skill}
+												</li>
+											))}
+										</ul>
+									</div>
+								) : null}
 							</section>
 						</motion.div>
 					) : null}

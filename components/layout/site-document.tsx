@@ -16,6 +16,13 @@ const libreBaskerville = Libre_Baskerville({
 	style: ["normal", "italic"],
 });
 
+/**
+ * Applies the saved (or system) theme before first paint so dark-mode visitors
+ * never see a light flash followed by a full-page restyle after hydration.
+ * Mirrors the resolution order in ThemeProvider.
+ */
+const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";if(t==="dark")document.documentElement.classList.add("dark")}catch(e){}})()`;
+
 /** Props for SiteDocument. */
 type Props = {
 	children: ReactNode;
@@ -33,6 +40,7 @@ export function SiteDocument({ children }: Props) {
 			className={`${alexandria.variable} ${libreBaskerville.variable} h-full antialiased`}
 		>
 			<head>
+				<script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
 				<meta name="apple-mobile-web-app-title" content="Codevider" />
 				<meta
 					name="google-site-verification"

@@ -22,13 +22,13 @@
 			"description": "Review the role details and apply to join the Codevider team."
 		},
 		"blog": {
-			"title": "Blog — Codevider",
-			"description": "Insights on software development, product engineering, AI, and building reliable systems from the Codevider team."
+			"title": "Blogs — Codevider",
+			"description": "Ideas on tech, work, people, and culture — from engineering, AI, and product craft to HR, teamwork, career growth, and the psychology of great work."
 		},
 		"blog_post": {
 			"title": "Article — Codevider",
 			"title_with_post": "{title} — Blog — Codevider",
-			"description": "Read the latest thinking from Codevider on software, product, and engineering."
+			"description": "Read the latest from Codevider on tech, people, work culture, careers, and building great products."
 		},
 		"privacy": {
 			"title": "Privacy Policy — Codevider",
@@ -747,7 +747,10 @@
 			"compensation": "Compensation",
 			"compensation_single": "{amount, number} / {period}",
 			"compensation_range": "{start, number} – {end, number} / {period}",
+			"compensation_single_with_currency": "{amount, number} {currency} / {period}",
+			"compensation_range_with_currency": "{start, number} – {end, number} {currency} / {period}",
 			"details_heading": "Role details",
+			"skills": "Skills",
 			"job_type": "Employment type",
 			"department": "Department",
 			"total_positions": "Total positions",
@@ -888,14 +891,14 @@
 	"blog": {
 		"hero": {
 			"eyebrow": "Blogs",
-			"headline": "What we learn while shipping real systems",
-			"lead": "Delivery, architecture, AI, and product craft from the Codevider team."
+			"headline": "Notes on tech, work, and people",
+			"lead": "Engineering, AI, and product craft — plus HR, teamwork, career growth, and the psychology of building great software together."
 		},
 		"list": {
-			"eyebrow": "Latest writing",
+			"eyebrow": "Tech • People • Culture • Careers",
 			"headline": "Latest from the team",
 			"headline_empty": "No posts yet",
-			"description": "Field notes and takeaways from engineers and product partners shipping real systems.",
+			"description": "Field notes on technology, teamwork, culture, careers, and the human side of work — from engineers, HR, and product partners.",
 			"description_empty": "New articles are on the way. Check back soon for notes from the Codevider team.",
 			"loading": "Loading articles…",
 			"error": "We couldn't load articles right now. Please try again in a moment.",
@@ -904,7 +907,7 @@
 			"read_more": "Read article",
 			"read_post": "Read {title}",
 			"search_label": "Search articles",
-			"search_placeholder": "Search articles",
+			"search_placeholder": "Search topics, e.g. AI, teamwork, careers…",
 			"search_clear": "Clear search",
 			"no_matches": "No articles match your search. Try a different keyword.",
 			"results_status": "{count} articles",

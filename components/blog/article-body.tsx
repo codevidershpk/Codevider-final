@@ -11,19 +11,45 @@ import {
 	useState,
 } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
+import "katex/dist/katex.min.css";
 import rehypeKatex from "rehype-katex";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import MermaidDiagram from "@/components/blog/mermaid-diagram";
-import { resolveArticleImageUrl } from "@/lib/blog/article-utils";
 import { slugifyHeading } from "@/lib/blog/article-markdown";
+import { resolveArticleImageUrl } from "@/lib/blog/article-utils";
 import { darkCodeTheme } from "@/lib/code-theme";
 
 const CodeHighlighter = dynamic(
 	() => import("@/components/ui/code-highlighter"),
 	{ ssr: false },
 );
+
+/**
+ * Raw HTML is allowed in CRM-authored markdown (via rehype-raw), so drop
+ * elements that can run script, restyle/hijack the page, or submit data.
+ * react-markdown already strips unsafe URLs; `iframe srcdoc`, `<style>`,
+ * `<base>` and forms are not covered by that. GFM task lists need `input`.
+ */
+const DISALLOWED_ELEMENTS = [
+	"script",
+	"style",
+	"link",
+	"meta",
+	"base",
+	"iframe",
+	"frame",
+	"frameset",
+	"object",
+	"embed",
+	"form",
+	"button",
+	"textarea",
+	"select",
+	"template",
+	"noscript",
+];
 
 type ArticleBodyProps = {
 	/** Raw markdown source from the article API. */
@@ -403,6 +429,7 @@ function ArticleBody({ markdown }: ArticleBodyProps) {
 					[rehypeKatex, { strict: false, throwOnError: false }],
 				]}
 				components={components}
+				disallowedElements={DISALLOWED_ELEMENTS}
 			>
 				{markdown}
 			</ReactMarkdown>

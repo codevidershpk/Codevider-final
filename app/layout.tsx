@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import "katex/dist/katex.min.css";
 import { SiteDocument } from "@/components/layout/site-document";
 
 /**

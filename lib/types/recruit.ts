@@ -13,6 +13,9 @@ export type JobType = {
 	updated_at?: string;
 };
 
+/** Backend `RecruitJobStatus`; public endpoints only return `ACTIVE`. */
+export type JobStatus = "DRAFT" | "ACTIVE" | "PAUSED" | "CLOSED";
+
 /** Type representing an open job position for the public listing. */
 export type OpenJob = {
 	id: number;
@@ -22,17 +25,19 @@ export type OpenJob = {
 	total_positions: number;
 	remaining_openings: number;
 	pay_according_to: string;
-	pay_type: string;
+	pay_type: string | null;
 	start_amount: number | null;
 	end_amount: number | null;
-	start_date: string;
-	end_date: string;
-	status: boolean;
+	currency?: string | null;
+	skills?: string[] | null;
+	start_date: string | null;
+	end_date: string | null;
+	status: JobStatus;
 	is_photo_required: boolean;
 	is_resume_required: boolean;
 	is_dob_required: boolean;
 	is_gender_required: boolean;
-	department: JobDepartment;
+	department: JobDepartment | null;
 	job_type: JobType;
 };
 
@@ -99,15 +104,16 @@ export type JobDetail = {
 	job_description: string | null;
 	total_positions: number;
 	remaining_openings: number;
-	department_id: number;
+	department_id: number | null;
 	job_type_id: number;
 	pay_according_to: string;
-	pay_type: string;
+	pay_type: string | null;
 	start_amount: number | null;
 	end_amount: number | null;
-	start_date: string;
-	end_date: string;
-	status: boolean;
+	currency?: string | null;
+	start_date: string | null;
+	end_date: string | null;
+	status: JobStatus;
 	meta_details: string;
 	is_photo_required: boolean;
 	is_resume_required: boolean;
@@ -115,4 +121,5 @@ export type JobDetail = {
 	is_gender_required: boolean;
 	department?: JobDepartment;
 	job_type?: JobType;
+	skills?: string[] | null;
 };

@@ -4,6 +4,8 @@ import BlogHero from "@/components/blog/blog-hero";
 import BlogList from "@/components/blog/blog-list";
 import { StructuredData } from "@/components/seo/structured-data";
 import { createPageMetadata, getOgImageUrl, getPageUrl } from "@/lib/site";
+import "@/app/styles/inner-pages.css";
+import "@/app/styles/blog.css";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = getCopy();

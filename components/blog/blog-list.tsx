@@ -54,6 +54,75 @@ function SkeletonBlock({ className }: { className?: string }) {
 	return <div className={`blog-skel ${className ?? ""}`} aria-hidden />;
 }
 
+function ArticleCard({
+	post,
+	variant,
+	metaLabel,
+	badgeLabel,
+	readMoreLabel,
+	readPostLabel,
+}: {
+	post: Article;
+	variant: "hero" | "side" | "standard";
+	metaLabel: string;
+	badgeLabel: string;
+	readMoreLabel: string;
+	readPostLabel: string;
+}) {
+	const excerpt = getArticleExcerpt(post);
+	const cover = getArticleCoverUrl(post.cover_image);
+	const articleClass =
+		variant === "hero"
+			? "blog-card blog-card--wide"
+			: variant === "side"
+				? "blog-card blog-card--side"
+				: "blog-card";
+
+	return (
+		<article className={articleClass}>
+			{cover ? (
+				<Link
+					href={articleHref(post)}
+					className="blog-card__media"
+					tabIndex={-1}
+					aria-hidden
+				>
+					{/* eslint-disable-next-line @next/next/no-img-element */}
+					<img src={cover} alt="" loading="lazy" />
+				</Link>
+			) : (
+				<Link
+					href={articleHref(post)}
+					className="blog-card__media blog-card__media--fallback"
+					tabIndex={-1}
+					aria-hidden
+				>
+					<span className="blog-media-title">{post.title}</span>
+				</Link>
+			)}
+
+			<div className="blog-card__body">
+				{variant === "hero" ? (
+					<p className="blog-card__badge">{badgeLabel}</p>
+				) : null}
+				<PostMeta post={post} metaLabel={metaLabel} />
+				<h3 className="blog-card__title">
+					<Link href={articleHref(post)}>{post.title}</Link>
+				</h3>
+				{excerpt ? <p className="blog-card__excerpt">{excerpt}</p> : null}
+				<Link
+					href={articleHref(post)}
+					className="blog-read-link blog-read-link--compact"
+					aria-label={readPostLabel}
+				>
+					{readMoreLabel}
+					<ArrowUpRight className="size-4" aria-hidden />
+				</Link>
+			</div>
+		</article>
+	);
+}
+
 export default function BlogList() {
 	const t = useCopy("blog.list");
 	const ref = useRef<HTMLElement>(null);
@@ -162,9 +231,10 @@ export default function BlogList() {
 	const showNoMatches =
 		status === "ready" && posts.length === 0 && hasActiveFilters;
 
-	const showLatest = hasPosts && meta.page === 1 && !hasActiveFilters;
-	const latest = showLatest ? posts[0] : null;
-	const rest = showLatest ? posts.slice(1) : hasPosts ? posts : [];
+	const isLatestSpan = hasPosts && meta.page === 1 && !hasActiveFilters;
+	/** Latest = 2×2 hero; two side cards (1+1); remaining as 1 1 1 below. */
+	const sidePosts = isLatestSpan ? posts.slice(1, 3) : [];
+	const gridPosts = isLatestSpan ? posts.slice(3) : posts;
 
 	const resultsLabel =
 		meta.total === 1
@@ -265,19 +335,34 @@ export default function BlogList() {
 				{status === "loading" ? (
 					<div className="blog-index__loading" aria-live="polite" aria-busy>
 						<span className="sr-only">{t("loading")}</span>
-						<article className="blog-featured blog-featured--skel">
-							<SkeletonBlock className="blog-featured__media-skel" />
-							<div className="blog-featured__body">
-								<SkeletonBlock className="blog-skel--meta" />
-								<SkeletonBlock className="blog-skel--title" />
-								<SkeletonBlock className="blog-skel--title-sm" />
-								<SkeletonBlock className="blog-skel--excerpt" />
-								<SkeletonBlock className="blog-skel--excerpt-sm" />
-								<SkeletonBlock className="blog-skel--excerpt-sm" />
+						<div className="blog-top" aria-hidden>
+							<div className="blog-top__hero">
+								<div className="blog-card blog-card--wide blog-card--skel">
+									<SkeletonBlock className="blog-card__media-skel" />
+									<div className="blog-card__body">
+										<SkeletonBlock className="blog-skel--meta" />
+										<SkeletonBlock className="blog-skel--title" />
+										<SkeletonBlock className="blog-skel--title-sm" />
+										<SkeletonBlock className="blog-skel--excerpt" />
+										<SkeletonBlock className="blog-skel--excerpt-sm" />
+									</div>
+								</div>
 							</div>
-						</article>
+							{[0, 1].map((i) => (
+								<div
+									key={i}
+									className="blog-card blog-card--skel blog-card--side"
+								>
+									<SkeletonBlock className="blog-card__media-skel" />
+									<div className="blog-card__body">
+										<SkeletonBlock className="blog-skel--meta" />
+										<SkeletonBlock className="blog-skel--title-sm" />
+									</div>
+								</div>
+							))}
+						</div>
 						<ul className="blog-grid">
-							{Array.from({ length: 4 }).map((_, i) => (
+							{Array.from({ length: 6 }).map((_, i) => (
 								<li key={i}>
 									<div className="blog-card blog-card--skel">
 										<SkeletonBlock className="blog-card__media-skel" />
@@ -316,112 +401,54 @@ export default function BlogList() {
 						aria-busy={isPageLoading}
 						aria-live="polite"
 					>
-						{latest ? (
-							<motion.article className="blog-featured" {...itemReveal(0)}>
-								{getArticleCoverUrl(latest.cover_image) ? (
-									<Link
-										href={articleHref(latest)}
-										className="blog-featured__media"
-										tabIndex={-1}
-										aria-hidden
-									>
-										{/* eslint-disable-next-line @next/next/no-img-element */}
-										<img
-											src={getArticleCoverUrl(latest.cover_image) as string}
-											alt=""
-											loading="eager"
+						{isLatestSpan && posts[0] ? (
+							<div className="blog-top">
+								<motion.div className="blog-top__hero" {...itemReveal(0)}>
+									<ArticleCard
+										post={posts[0]}
+										variant="hero"
+										metaLabel={t("meta_label")}
+										badgeLabel={t("latest")}
+										readMoreLabel={t("read_more")}
+										readPostLabel={t("read_post", {
+											title: posts[0].title,
+										})}
+									/>
+								</motion.div>
+								{sidePosts.map((post, index) => (
+									<motion.div key={post.id} {...itemReveal(index + 1)}>
+										<ArticleCard
+											post={post}
+											variant="side"
+											metaLabel={t("meta_label")}
+											badgeLabel={t("latest")}
+											readMoreLabel={t("read_more")}
+											readPostLabel={t("read_post", {
+												title: post.title,
+											})}
 										/>
-									</Link>
-								) : (
-									<Link
-										href={articleHref(latest)}
-										className="blog-featured__media blog-featured__media--fallback"
-										tabIndex={-1}
-										aria-hidden
-									>
-										<span className="blog-media-title">{latest.title}</span>
-									</Link>
-								)}
-
-								<div className="blog-featured__body">
-									<p className="blog-featured__label">{t("latest")}</p>
-									<PostMeta post={latest} metaLabel={t("meta_label")} />
-									<h3 className="blog-featured__title">
-										<Link href={articleHref(latest)}>{latest.title}</Link>
-									</h3>
-									{getArticleExcerpt(latest) ? (
-										<p className="blog-featured__excerpt">
-											{getArticleExcerpt(latest)}
-										</p>
-									) : null}
-									<Link
-										href={articleHref(latest)}
-										className="blog-read-link"
-										aria-label={t("read_post", { title: latest.title })}
-									>
-										{t("read_more")}
-										<ArrowUpRight className="size-4" aria-hidden />
-									</Link>
-								</div>
-							</motion.article>
+									</motion.div>
+								))}
+							</div>
 						) : null}
 
-						{rest.length > 0 ? (
+						{gridPosts.length > 0 ? (
 							<ul className="blog-grid">
-								{rest.map((post, index) => {
-									const excerpt = getArticleExcerpt(post);
-									const cover = getArticleCoverUrl(post.cover_image);
-
-									return (
-										<motion.li
-											key={post.id}
-											{...itemReveal(latest ? index + 1 : index)}
-										>
-											<article className="blog-card">
-												{cover ? (
-													<Link
-														href={articleHref(post)}
-														className="blog-card__media"
-														tabIndex={-1}
-														aria-hidden
-													>
-														{/* eslint-disable-next-line @next/next/no-img-element */}
-														<img src={cover} alt="" loading="lazy" />
-													</Link>
-												) : (
-													<Link
-														href={articleHref(post)}
-														className="blog-card__media blog-card__media--fallback"
-														tabIndex={-1}
-														aria-hidden
-													>
-														<span className="blog-media-title">
-															{post.title}
-														</span>
-													</Link>
-												)}
-
-												<div className="blog-card__body">
-													<PostMeta post={post} metaLabel={t("meta_label")} />
-													<h3 className="blog-card__title">
-														<Link href={articleHref(post)}>{post.title}</Link>
-													</h3>
-													{excerpt ? (
-														<p className="blog-card__excerpt">{excerpt}</p>
-													) : null}
-													<Link
-														href={articleHref(post)}
-														className="blog-read-link blog-read-link--compact"
-														aria-label={t("read_post", { title: post.title })}
-													>
-														{t("read_more")}
-														<ArrowUpRight className="size-4" aria-hidden />
-													</Link>
-												</div>
-											</article>
-										</motion.li>
-									);
-								})}
+								{gridPosts.map((post, index) => (
+									<motion.li
+										key={post.id}
+										{...itemReveal(isLatestSpan ? index + 3 : index)}
+									>
+										<ArticleCard
+											post={post}
+											variant="standard"
+											metaLabel={t("meta_label")}
+											badgeLabel={t("latest")}
+											readMoreLabel={t("read_more")}
+											readPostLabel={t("read_post", { title: post.title })}
+										/>
+									</motion.li>
+								))}
 							</ul>
 						) : null}
 

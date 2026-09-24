@@ -312,6 +312,7 @@ export default function Contact() {
 								<TurnstileWidget
 									ref={turnstileRef}
 									onTokenChange={setTurnstileToken}
+									errorMessage={t("form_error_turnstile")}
 								/>
 							</div>
 

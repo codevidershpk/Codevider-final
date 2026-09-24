@@ -6,6 +6,7 @@ import ServicesHero from "@/components/services/services-hero";
 import ServicesProcess from "@/components/services/services-process";
 import ServicesTechStack from "@/components/services/services-tech-stack";
 import { createPageMetadata, getOgImageUrl, getPageUrl } from "@/lib/site";
+import "@/app/styles/inner-pages.css";
 
 export async function generateMetadata(): Promise<Metadata> {
 	const t = getCopy();

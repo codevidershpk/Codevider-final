@@ -2,9 +2,12 @@
  * Regenerates static world-map SVGs for light/dark + compact/default.
  * Run: node scripts/generate-world-maps.mjs
  */
-import DottedMap from "dotted-map";
+import DottedMapModule from "dotted-map";
 import fs from "node:fs";
 import path from "node:path";
+
+// dotted-map is CommonJS; its class lands on `.default` under ESM interop.
+const DottedMap = DottedMapModule.default ?? DottedMapModule;
 
 const styles = {
 	light: { radius: 0.3, color: "#1e3280" },
