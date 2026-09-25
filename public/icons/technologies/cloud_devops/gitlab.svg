@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg
+<svg fill="#2469ff" color="#2469ff"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -30,7 +30,7 @@
   <defs
      id="defs74">
     <style
-       id="style72">.cls-1{fill:#e24329;}.cls-2{fill:#fc6d26;}.cls-3{fill:#fca326;}</style>
+       id="style72">.cls-1{fill:#2469ff;}.cls-2{fill:#2469ff;}.cls-3{fill:#9cbcff;}</style>
   </defs>
   <g
      id="LOGO"

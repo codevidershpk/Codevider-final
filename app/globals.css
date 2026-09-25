@@ -164,7 +164,7 @@ html.theme-switching * {
 	--home-section-alt: #e7f0ff;
 	--home-section-alt-border: #c0d0ea;
 	--home-surface-muted: #f3f7ff;
-	/* Must match the light `knockout` in scripts/generate-duotone-icons.mjs. */
+	/* Must match the light knockout colour baked into the tech icons. */
 	--svc-tech-icon-bg: #ebf1ff;
 
 	/* --- Layout spacing --- */
@@ -239,7 +239,7 @@ html.theme-switching * {
 	--accent: var(--brand-blue);
 	--accent-bg: var(--brand-blue-soft);
 	--accent-border: rgba(122, 159, 235, 0.4);
-	/* Must match the dark `knockout` in scripts/generate-duotone-icons.mjs. */
+	/* Must match the dark knockout colour baked into the tech icons. */
 	--svc-tech-icon-bg: #1c1f2a; /* design.md --surface (dark) */
 	--brand-primary: var(--brand-blue-deep);
 	--brand-primary-hover: #2469ff;

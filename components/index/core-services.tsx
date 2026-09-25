@@ -466,7 +466,6 @@ function PipelineDemo() {
 	const [running, setRunning] = useState(false);
 	const [doneCount, setDoneCount] = useState(0);
 	const [activeStage, setActiveStage] = useState(-1);
-	const [status, setStatus] = useState(t("idle"));
 	const [live, setLive] = useState(false);
 	const { ref, isRevealed } = useSectionReveal<HTMLDivElement>();
 	const started = useRef(false);
@@ -494,7 +493,6 @@ function PipelineDemo() {
 			}
 			if (step < stages.length) {
 				setActiveStage(step);
-				setStatus(t(`status_${stages[step]}`));
 				step += 1;
 				window.setTimeout(next, 800);
 			} else {

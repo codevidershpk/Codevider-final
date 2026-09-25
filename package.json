@@ -14,8 +14,7 @@
 		"lint": "biome lint app components data dictionaries hooks",
 		"format": "biome format --write app components data dictionaries hooks",
 		"check": "biome check --write .",
-		"clean": "rm -rf .next out",
-		"icons:duotone": "node scripts/generate-duotone-icons.mjs"
+		"clean": "rm -rf .next out"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.4.0",
