@@ -14,7 +14,7 @@ export default function Footer() {
 	const t = useCopy("footer");
 
 	return (
-		<footer className="bg-[#0f1424] home-inline-x py-[clamp(54px,7vw,84px)] pb-[30px] text-blue-100/70">
+		<footer className="bg-[#0f1424] home-inline-x py-[clamp(54px,7vw,84px)] pb-[96px] navbar:pb-[30px] text-blue-100/70">
 			<div className="mx-auto max-w-[1200px]">
 				<div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
 					<div>

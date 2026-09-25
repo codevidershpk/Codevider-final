@@ -18,6 +18,11 @@ const SERVICE_IDS = [
 
 type ServiceId = (typeof SERVICE_IDS)[number];
 
+/** DOM id for a service block, e.g. `services-3` (also the URL hash). */
+function serviceDomId(id: ServiceId) {
+	return `services-${SERVICE_IDS.indexOf(id) + 1}`;
+}
+
 const revealEase = [0.22, 1, 0.36, 1] as const;
 
 function ServiceList({
@@ -75,7 +80,8 @@ function ServiceBlock({
 	return (
 		<motion.article
 			ref={ref}
-			id={id}
+			id={serviceDomId(id)}
+			data-service={id}
 			className="svc-block"
 			initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
 			animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
@@ -128,7 +134,7 @@ export default function ServicesCapabilities() {
 	const observerRef = useRef<IntersectionObserver | null>(null);
 
 	const handleNavClick = useCallback((id: ServiceId) => {
-		const el = document.getElementById(id);
+		const el = document.getElementById(serviceDomId(id));
 		if (el) {
 			el.scrollIntoView({ behavior: "smooth", block: "start" });
 		}
@@ -143,15 +149,17 @@ export default function ServicesCapabilities() {
 					.filter((entry) => entry.isIntersecting)
 					.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
 
-				if (visible[0]?.target.id) {
-					setActiveId(visible[0].target.id as ServiceId);
+				const service = (visible[0]?.target as HTMLElement | undefined)?.dataset
+					.service as ServiceId | undefined;
+				if (service) {
+					setActiveId(service);
 				}
 			},
 			{ rootMargin: "-35% 0px -45% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
 		);
 
 		SERVICE_IDS.forEach((id) => {
-			const el = document.getElementById(id);
+			const el = document.getElementById(serviceDomId(id));
 			if (el) observerRef.current?.observe(el);
 		});
 
@@ -169,7 +177,7 @@ export default function ServicesCapabilities() {
 							return (
 								<a
 									key={id}
-									href={`#${id}`}
+									href={`#${serviceDomId(id)}`}
 									aria-current={isActive ? "true" : undefined}
 									className={`svc-index__link ${isActive ? "svc-index__link--active" : ""}`}
 									onClick={(event) => {

@@ -21,7 +21,7 @@ export default function ServicesProcess() {
 	const shouldReduceMotion = useReducedMotion();
 
 	return (
-		<section ref={ref} className="svc-process">
+		<section ref={ref} id="how-we-work" className="svc-process">
 			<div className="home-wrap">
 				<SectionHead
 					eyebrow={t("eyebrow")}

@@ -40,6 +40,7 @@ export default function CareerOpenings() {
 	);
 	const [meta, setMeta] = useState<PaginatedMeta>(initialMeta);
 	const [isPageLoading, setIsPageLoading] = useState(false);
+	const [attempt, setAttempt] = useState(0);
 
 	const emailHref = `mailto:info@codevider.com?subject=${encodeURIComponent(t("email_subject"))}`;
 
@@ -52,6 +53,7 @@ export default function CareerOpenings() {
 		setMeta(response.meta);
 	}, []);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: `attempt` re-runs the fetch on retry
 	useEffect(() => {
 		let cancelled = false;
 
@@ -78,6 +80,11 @@ export default function CareerOpenings() {
 		return () => {
 			cancelled = true;
 		};
+	}, [attempt]);
+
+	const retry = useCallback(() => {
+		setStatus("loading");
+		setAttempt((n) => n + 1);
 	}, []);
 
 	const goToPage = useCallback(
@@ -296,19 +303,27 @@ export default function CareerOpenings() {
 							className="text-balance text-[clamp(1.75rem,4.6vw,2.75rem)] leading-[1.08] tracking-[-0.02em] text-(--text-h)"
 							{...headReveal(0)}
 						>
-							{t("headline")}
+							{status === "error" ? t("error_headline") : t("headline")}
 						</motion.h2>
 						<motion.p className="career-openings__lead" {...headReveal(0.1)}>
 							{status === "error" ? t("error") : t("description")}
 						</motion.p>
-						<motion.a
-							href={emailHref}
-							className="svc-cta__btn mt-[clamp(1.75rem,3vw,2.25rem)]"
-							{...headReveal(0.2)}
-						>
-							{t("cta")}
-							<ArrowRight className="size-4" aria-hidden />
-						</motion.a>
+						<motion.div className="career-empty__actions" {...headReveal(0.2)}>
+							{status === "error" ? (
+								<button type="button" onClick={retry} className="svc-cta__btn">
+									{t("retry")}
+								</button>
+							) : null}
+							<a
+								href={emailHref}
+								className={
+									status === "error" ? "career-empty__link" : "svc-cta__btn"
+								}
+							>
+								{t("cta")}
+								<ArrowRight className="size-4" aria-hidden />
+							</a>
+						</motion.div>
 					</div>
 				) : null}
 			</div>

@@ -2,9 +2,9 @@
 
 import { BarChart3, FileCheck, Users } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { useCopy } from "@/lib/copy";
 import { useRef } from "react";
 import SectionHead from "@/components/index/section-head";
+import { useCopy } from "@/lib/copy";
 
 const VALUE_IDS = ["ownership", "growth", "culture"] as const;
 

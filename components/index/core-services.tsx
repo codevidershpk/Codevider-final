@@ -653,8 +653,9 @@ function FeatureSection({
 	return (
 		<article
 			ref={ref}
+			id={`core-services-${index + 1}`}
 			aria-labelledby={headlineId}
-			className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16 [&_.home-demo]:w-full"
+			className="scroll-mt-[clamp(5.5rem,10vw,6.5rem)] grid items-center gap-10 lg:grid-cols-2 lg:gap-16 [&_.home-demo]:w-full"
 		>
 			<motion.div
 				className={`flex flex-col ${feature.reverse ? "lg:order-2" : ""}`}
@@ -722,32 +723,32 @@ export default function CoreServices() {
 			id: "ai",
 			icon: <Bot className="size-[22px]" aria-hidden />,
 			demo: <AiDemo />,
-			href: "/services#ai",
+			href: "/services#services-3",
 		},
 		{
 			id: "engineering",
 			icon: <Code2 className="size-[22px]" aria-hidden />,
 			reverse: true,
 			demo: <CodeDemo />,
-			href: "/services#custom",
+			href: "/services#services-1",
 		},
 		{
 			id: "pod",
 			icon: <Users className="size-[22px]" aria-hidden />,
 			demo: <PodDemo />,
-			href: "/services#team",
+			href: "/services#services-7",
 		},
 		{
 			id: "devops",
 			icon: <Cloud className="size-[22px]" aria-hidden />,
 			reverse: true,
 			demo: <PipelineDemo />,
-			href: "/services#cloud",
+			href: "/services#services-6",
 		},
 	];
 
 	return (
-		<section ref={ref} id="services" className="home-section">
+		<section ref={ref} className="home-section">
 			<div className="home-wrap">
 				<motion.div
 					initial={

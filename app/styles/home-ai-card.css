@@ -1,0 +1,108 @@
+/*
+ * Featured AI card: plain surface, hairline brand ring with one short
+ * signal travelling the perimeter, and a soft brand wash from the top.
+ */
+@property --ai-angle {
+	syntax: "<angle>";
+	initial-value: 0deg;
+	inherits: false;
+}
+
+.home-ecard--featured.home-ai,
+.dark .home-ecard--featured.home-ai {
+	--ai-blue: var(--dash-brand);
+	--ai-blue-bright: var(--dash-brand);
+	isolation: isolate;
+	overflow: hidden;
+	background:
+		radial-gradient(
+			120% 80% at 50% 0%,
+			color-mix(in srgb, var(--ai-blue) 9%, transparent),
+			transparent 70%
+		),
+		var(--bg);
+	box-shadow: none;
+}
+
+.home-ecard--featured.home-ai:hover,
+.dark .home-ecard--featured.home-ai:hover {
+	transform: none;
+	box-shadow: none;
+}
+
+.home-ai::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	padding: 1px;
+	border-radius: inherit;
+	background:
+		conic-gradient(
+			from var(--ai-angle),
+			transparent 0deg 290deg,
+			color-mix(in srgb, var(--ai-blue) 35%, transparent) 325deg,
+			var(--ai-blue-bright) 356deg,
+			transparent 360deg
+		),
+		linear-gradient(color-mix(in srgb, var(--ai-blue) 24%, transparent) 0 0);
+	-webkit-mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	animation: home-ai-orbit 8s linear infinite;
+	pointer-events: none;
+}
+
+@keyframes home-ai-orbit {
+	to {
+		--ai-angle: 360deg;
+	}
+}
+
+.home-ai .home-ecard-icon,
+.home-ai:hover .home-ecard-icon {
+	background: var(--ai-blue);
+	color: #fff;
+}
+
+/* Dark: the brand token turns pastel; use a saturated blue on a deep navy surface */
+.dark .home-ecard--featured.home-ai {
+	--ai-blue: #2469ff;
+	--ai-blue-bright: #6f9bff;
+	background:
+		radial-gradient(
+			120% 90% at 50% 0%,
+			rgba(36, 105, 255, 0.16),
+			transparent 70%
+		),
+		#121a2e;
+}
+
+.dark .home-ai .home-ecard-icon,
+.dark .home-ai:hover .home-ecard-icon {
+	background: #1852e6;
+	color: #fff;
+}
+
+.dark .home-ai h3 {
+	color: #f2f5fb;
+}
+
+.dark .home-ai p {
+	color: #b4bdd0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.home-ai::before {
+		animation: none;
+	}
+}
+
+@media (min-width: 768px) {
+	.home-ecard--featured.home-ai {
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+	}
+}

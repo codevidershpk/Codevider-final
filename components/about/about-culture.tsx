@@ -23,7 +23,11 @@ export default function AboutCulture() {
 	const shouldReduceMotion = useReducedMotion();
 
 	return (
-		<section ref={ref} className="home-section home-section--tight">
+		<section
+			ref={ref}
+			id="our-culture"
+			className="home-section home-section--tight"
+		>
 			<div className="home-wrap">
 				<SectionHead
 					eyebrow={t("eyebrow")}

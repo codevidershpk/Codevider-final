@@ -1,9 +1,8 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
-import { useCopy } from "@/lib/copy";
-import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { fetchArticles } from "@/lib/api/blog-posts";
 import {
 	articleHref,
@@ -12,6 +11,7 @@ import {
 	getArticleDateValue,
 	getArticleExcerpt,
 } from "@/lib/blog/article-utils";
+import { useCopy } from "@/lib/copy";
 import type { Article } from "@/lib/types/blog";
 
 const RELATED_FETCH_LIMIT = 6;
@@ -118,7 +118,11 @@ export default function BlogRelated({ currentId }: BlogRelatedProps) {
 											tabIndex={-1}
 											aria-hidden
 										>
-											<span className="blog-media-title">{post.title}</span>
+											<span className="blog-media-title">
+												<span className="blog-media-title__text">
+													{post.title}
+												</span>
+											</span>
 										</Link>
 									)}
 

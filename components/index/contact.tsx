@@ -140,9 +140,9 @@ export default function Contact() {
 				centered
 			/>
 
-			<div className="home-wrap grid items-center gap-[clamp(2.5rem,6vw,5rem)] lg:grid-cols-[2fr_3fr] mt-[clamp(2rem,4vw,3rem)]">
+			<div className="home-wrap grid items-center gap-[clamp(2.5rem,6vw,5rem)] lg:grid-cols-3 mt-[clamp(2rem,4vw,3rem)]">
 				<motion.div
-					className="flex flex-col justify-center lg:pr-[clamp(1.25rem,2.5vw,2rem)]"
+					className="flex flex-col justify-center lg:col-span-1 lg:pr-[clamp(1.25rem,2.5vw,2rem)]"
 					initial={
 						shouldReduceMotion || !shouldAnimate
 							? false
@@ -179,8 +179,8 @@ export default function Contact() {
 							},
 						].map(({ icon: Icon, title, href, value }) => (
 							<div key={title} className="flex gap-5">
-								<span className="home-ecard-icon size-13 rounded-xl">
-									<Icon className="size-6" aria-hidden />
+								<span className="home-ecard-icon home-ecard-icon--contact">
+									<Icon className="size-5" aria-hidden />
 								</span>
 								<div>
 									<h3 className="text-base font-semibold text-(--text-h)">
@@ -205,7 +205,7 @@ export default function Contact() {
 				</motion.div>
 
 				<motion.div
-					className="flex flex-col justify-center lg:pl-[clamp(1.25rem,2.5vw,2rem)]"
+					className="flex flex-col justify-center lg:col-span-2 lg:pl-[clamp(1.25rem,2.5vw,2rem)]"
 					initial={
 						shouldReduceMotion || !shouldAnimate
 							? false
@@ -306,7 +306,7 @@ export default function Contact() {
 								/>
 							</div>
 
-							<div className="mt-5 w-full">
+							<div className="w-full">
 								{/* to make the widge be visible to everyone, just change the className of data-appearance to "always" */}
 								{/* by default the token is automatically sent to the server and the server validates it */}
 								<TurnstileWidget

@@ -1,11 +1,11 @@
 "use client";
 
 import { Check, Link2 } from "lucide-react";
+import type { SVGProps } from "react";
 import { useEffect, useState } from "react";
-import { useCopy } from "@/lib/copy";
 import { FacebookIcon } from "@/components/nav/footer-socials/icons/facebook-icon";
 import { LinkedInIcon } from "@/components/nav/footer-socials/icons/linkedin-icon";
-import type { SVGProps } from "react";
+import { useCopy } from "@/lib/copy";
 
 function XIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
 	return (

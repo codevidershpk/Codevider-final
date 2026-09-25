@@ -100,6 +100,33 @@ html.theme-switching * {
 	--code-bg: #edf2ff;
 	--social-bg: rgba(237, 242, 255, 0.65);
 
+	/* --- Shape & type scale (shared by inner pages) --- */
+	--ui-radius-xs: 4px;
+	--ui-radius-sm: 8px;
+	--ui-radius-md: 12px;
+	--ui-radius-lg: 16px;
+	--ui-radius-xl: 20px;
+	--ui-radius-pill: 999px;
+	--fs-2xs: 0.6875rem;
+	--fs-xs: 0.75rem;
+	--fs-sm: 0.8125rem;
+	--fs-md: 0.875rem;
+	--fs-body: 0.9375rem;
+	--fs-lg: 1rem;
+	--fs-page-title: clamp(1.75rem, 4.5vw, 2.75rem);
+	--leading-body: 1.6;
+	--measure: 68ch;
+	/* Brand-shadow tint (neutral blacks look grey against the blue palette) */
+	--shadow-hover:
+		0 0 0 1px color-mix(in srgb, var(--brand-blue) 20%, transparent),
+		0 4px 12px rgba(36, 65, 120, 0.1), 0 2px 4px rgba(36, 65, 120, 0.06);
+	/* Code blocks & dark sections */
+	--code-surface: #0d1a2e;
+	--code-text: #e6ecf7;
+	--code-muted: #95a3bd;
+	--on-dark: #eef3fb;
+	--on-dark-muted: rgba(238, 243, 251, 0.7);
+
 	/* --- Consolidated shadow system (2 tokens) --- */
 	--shadow-sm:
 		0 0 0 1px rgba(36, 65, 120, 0.07), 0 1px 2px -1px rgba(36, 65, 120, 0.08),
@@ -137,6 +164,7 @@ html.theme-switching * {
 	--home-section-alt: #e7f0ff;
 	--home-section-alt-border: #c0d0ea;
 	--home-surface-muted: #f3f7ff;
+	/* Must match the light `knockout` in scripts/generate-duotone-icons.mjs. */
 	--svc-tech-icon-bg: #ebf1ff;
 
 	/* --- Layout spacing --- */
@@ -211,6 +239,8 @@ html.theme-switching * {
 	--accent: var(--brand-blue);
 	--accent-bg: var(--brand-blue-soft);
 	--accent-border: rgba(122, 159, 235, 0.4);
+	/* Must match the dark `knockout` in scripts/generate-duotone-icons.mjs. */
+	--svc-tech-icon-bg: #1c1f2a; /* design.md --surface (dark) */
 	--brand-primary: var(--brand-blue-deep);
 	--brand-primary-hover: #2469ff;
 	--brand-accent-text: var(--brand-blue);
@@ -2208,6 +2238,13 @@ code {
 	}
 }
 
+/* Matches the footer social tiles: icon ≈ 47% of the box, radius ≈ 26%. */
+.home-ecard-icon--contact {
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+}
+
 .home-ecard:hover .home-ecard-icon {
 	background-color: color-mix(in srgb, var(--dash-brand) 20%, transparent);
 	color: var(--dash-brand);
@@ -2400,6 +2437,7 @@ code {
 	align-items: center;
 	gap: 16px;
 	text-align: left;
+	cursor: pointer;
 	padding: clamp(1.25rem, 2.2vw, 1.625rem) 2px;
 	font-weight: 600;
 	font-size: clamp(16px, 1.6vw, 19px);
@@ -2584,4 +2622,13 @@ code {
 	.svc-cta__btn:active {
 		transform: none;
 	}
+}
+
+/* Reload scroll restoration: hide the reflow, then fade in at the saved spot. */
+body {
+	transition: opacity 0.3s ease;
+}
+html.reload-restoring body {
+	opacity: 0;
+	transition: none;
 }

@@ -9,9 +9,8 @@ import {
 	X,
 } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { useCopy } from "@/lib/copy";
-import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { fetchArticles } from "@/lib/api/blog-posts";
 import {
 	articleHref,
@@ -20,6 +19,7 @@ import {
 	getArticleDateValue,
 	getArticleExcerpt,
 } from "@/lib/blog/article-utils";
+import { useCopy } from "@/lib/copy";
 import type { Article } from "@/lib/types/blog";
 import type { PaginatedMeta } from "@/lib/types/recruit";
 
@@ -97,7 +97,9 @@ function ArticleCard({
 					tabIndex={-1}
 					aria-hidden
 				>
-					<span className="blog-media-title">{post.title}</span>
+					<span className="blog-media-title">
+						<span className="blog-media-title__text">{post.title}</span>
+					</span>
 				</Link>
 			)}
 
@@ -105,19 +107,21 @@ function ArticleCard({
 				{variant === "hero" ? (
 					<p className="blog-card__badge">{badgeLabel}</p>
 				) : null}
-				<PostMeta post={post} metaLabel={metaLabel} />
 				<h3 className="blog-card__title">
 					<Link href={articleHref(post)}>{post.title}</Link>
 				</h3>
 				{excerpt ? <p className="blog-card__excerpt">{excerpt}</p> : null}
-				<Link
-					href={articleHref(post)}
-					className="blog-read-link blog-read-link--compact"
-					aria-label={readPostLabel}
-				>
-					{readMoreLabel}
-					<ArrowUpRight className="size-4" aria-hidden />
-				</Link>
+				<div className="blog-card__footer">
+					<PostMeta post={post} metaLabel={metaLabel} />
+					<Link
+						href={articleHref(post)}
+						className="blog-read-link blog-read-link--compact"
+						aria-label={readPostLabel}
+					>
+						{readMoreLabel}
+						<ArrowUpRight className="size-4" aria-hidden />
+					</Link>
+				</div>
 			</div>
 		</article>
 	);

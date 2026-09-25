@@ -93,7 +93,7 @@ export default function Hero() {
 								/>
 							</Link>
 							<Link
-								href="#services"
+								href="#core-services"
 								className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-(--hero-border) bg-(--hero-surface) px-7 py-3.5 text-sm font-medium text-(--hero-text-h) backdrop-blur-sm transition-[background-color,border-color,transform] hover:border-(--hero-accent-border) hover:bg-(--hero-accent-bg) active:scale-[0.96] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-(--hero-focus-ring)"
 							>
 								{t("explore_services")}

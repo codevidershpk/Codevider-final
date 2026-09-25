@@ -120,6 +120,7 @@ export default function AboutMeetTeam() {
 
 	return (
 		<section
+			id="team"
 			ref={sectionRef}
 			className="home-section home-section--tight home-feature-alt overflow-hidden"
 		>

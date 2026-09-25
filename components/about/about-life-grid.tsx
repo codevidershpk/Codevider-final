@@ -49,7 +49,7 @@ export default function AboutLifeGrid() {
 	const shouldReduceMotion = useReducedMotion();
 
 	return (
-		<section ref={ref} className="home-section">
+		<section ref={ref} id="life-at-codevider" className="home-section">
 			<div className="home-wrap">
 				<SectionHead
 					eyebrow={t("eyebrow")}

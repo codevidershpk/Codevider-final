@@ -719,6 +719,8 @@
 			"description_active": "Explore our current openings and find the role that fits your skills and ambitions.",
 			"loading": "Loading open roles…",
 			"error": "We couldn't load openings right now. Feel free to reach out directly while we fix this.",
+			"error_headline": "Openings are temporarily unavailable",
+			"retry": "Try again",
 			"cta": "Connect with us",
 			"apply": "Apply",
 			"view_details": "View details",

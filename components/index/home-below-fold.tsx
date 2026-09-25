@@ -10,12 +10,12 @@ export const WhoWeAre = createDeferredHomeSection(
 export const CoreServices = createDeferredHomeSection(
 	() => import("@/components/index/core-services"),
 	"70vh",
-	"services",
+	"core-services",
 );
 export const WhoWeEmpower = createDeferredHomeSection(
 	() => import("@/components/index/who-we-empower"),
 	"55vh",
-	"who-we-empower",
+	"what-we-build",
 );
 export const GlobalPartnerships = createDeferredHomeSection(
 	() => import("@/components/index/global-partnerships"),
@@ -25,7 +25,7 @@ export const GlobalPartnerships = createDeferredHomeSection(
 export const WhyChooseUs = createDeferredHomeSection(
 	() => import("@/components/index/why-choose-us"),
 	"60vh",
-	"why-choose-us",
+	"why-clients-choose-us",
 );
 export const Faq = createDeferredHomeSection(
 	() => import("@/components/index/faq"),

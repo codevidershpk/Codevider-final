@@ -8,6 +8,10 @@ import {
 	useRef,
 	useState,
 } from "react";
+import {
+	DEFERRED_SECTION_ATTR,
+	getReloadScrollAnchor,
+} from "@/lib/reload-scroll-restore";
 
 type SectionLoader = () => Promise<{ default: ComponentType }>;
 
@@ -15,7 +19,9 @@ function shouldForceMountForHash(sectionId?: string): boolean {
 	if (typeof window === "undefined" || !sectionId) return false;
 	if (window.location.hash.length <= 1) return false;
 
-	return window.location.hash.slice(1) === sectionId;
+	const hash = window.location.hash.slice(1);
+	// Also mount for nested targets, e.g. #core-services-2 inside #core-services.
+	return hash === sectionId || hash.startsWith(`${sectionId}-`);
 }
 
 /**
@@ -47,7 +53,9 @@ export function createDeferredHomeSection(
 		const [forceMount, setForceMount] = useState(false);
 
 		useLayoutEffect(() => {
-			if (shouldForceMountForHash(id)) {
+			// On reload, mount every section so the restored scroll position
+			// lands on real content instead of placeholder heights.
+			if (shouldForceMountForHash(id) || getReloadScrollAnchor()) {
 				setForceMount(true);
 			}
 		}, [id]);
@@ -102,6 +110,7 @@ export function createDeferredHomeSection(
 			<div
 				id={id}
 				ref={ref}
+				{...{ [DEFERRED_SECTION_ATTR]: "" }}
 				className={forceMount ? "deferred-section--active" : undefined}
 				style={shouldMount ? undefined : { minHeight: placeholderMinHeight }}
 			>

@@ -21,7 +21,7 @@ export default function AboutWhoWeAre() {
 			: { duration: 0.5, ease: revealEase, delay: index * 0.1 };
 
 	return (
-		<section ref={ref} className="home-section">
+		<section ref={ref} id="who-we-are" className="home-section">
 			<div className="home-wrap">
 				<SectionHead eyebrow={t("eyebrow")} headline={t("headline")} />
 

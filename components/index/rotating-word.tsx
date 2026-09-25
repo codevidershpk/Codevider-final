@@ -37,15 +37,20 @@ export default function RotatingWord({
 	const [index, setIndex] = useState(0);
 	const mounted = useMounted();
 
+	const wordsKey = words.join("\u0000");
+
+	// Keep the first (server-rendered) word in place so it stays visible on
+	// load; only shuffle the words that come after it.
 	useEffect(() => {
-		const arr = [...words];
-		for (let i = arr.length - 1; i > 0; i--) {
+		const [first, ...rest] = words;
+		for (let i = rest.length - 1; i > 0; i--) {
 			const j = Math.floor(Math.random() * (i + 1));
-			[arr[i], arr[j]] = [arr[j], arr[i]];
+			[rest[i], rest[j]] = [rest[j], rest[i]];
 		}
-		setShuffled(arr);
+		setShuffled(first === undefined ? [] : [first, ...rest]);
 		setIndex(0);
-	}, [words]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [wordsKey]);
 	const shouldReduceMotion = useReducedMotion();
 
 	useEffect(() => {

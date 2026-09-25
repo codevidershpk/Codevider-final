@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { useCopy } from "@/lib/copy";
 import { useRef } from "react";
+import { useCopy } from "@/lib/copy";
 
 const revealEase = [0.22, 1, 0.36, 1] as const;
 

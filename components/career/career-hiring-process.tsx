@@ -2,9 +2,9 @@
 
 import { Award, Code2, FileText, Users } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { useCopy } from "@/lib/copy";
 import { useRef } from "react";
 import SectionHead from "@/components/index/section-head";
+import { useCopy } from "@/lib/copy";
 
 const STEP_IDS = [
 	"application_review",

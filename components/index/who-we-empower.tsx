@@ -18,9 +18,8 @@ import {
 	sectionRevealItem,
 	useSectionReveal,
 } from "@/hooks/use-section-reveal";
-import BorderGlow from "@/components/ui/border-glow";
-import { useTheme } from "@/components/providers/ThemeProvider";
 import SectionHead from "./section-head";
+import AiFeatureCard from "./ai-feature-card";
 
 const CELLS = [
 	{ id: "ai", icon: Bot, area: "ai", featured: true },
@@ -36,8 +35,6 @@ const CELLS = [
 
 export default function WhoWeEmpower() {
 	const t = useCopy("home.empower");
-	const { theme } = useTheme();
-	const isDark = theme === "dark";
 	const { ref, isRevealed, shouldAnimate } = useSectionReveal();
 	const shouldReduceMotion = useReducedMotion();
 
@@ -97,23 +94,7 @@ export default function WhoWeEmpower() {
 									style={{ gridArea: area }}
 								>
 									{featured ? (
-										<BorderGlow
-											className="home-ecard home-ecard--featured"
-											alwaysOn
-											borderRadius={12}
-											backgroundColor="color-mix(in srgb, var(--dash-brand) 6%, var(--bg))"
-											glowColor={isDark ? "221 62 58" : "221 100 57"}
-											colors={
-												isDark
-													? ["#1852e6", "#76f9d3", "#7a9feb"]
-													: ["#2469ff", "#32fcb6", "#6b9bff"]
-											}
-											glowRadius={isDark ? 40 : 52}
-											glowIntensity={isDark ? 0.85 : 1.75}
-											fillOpacity={isDark ? 0.48 : 0.7}
-										>
-											{body}
-										</BorderGlow>
+										<AiFeatureCard />
 									) : (
 										<article className="home-ecard">{body}</article>
 									)}

@@ -2,25 +2,25 @@
 
 import { ArrowLeft } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import { useSearchParams } from "next/navigation";
-import { useCopy } from "@/lib/copy";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { fetchArticleBySlugOrId } from "@/lib/api/blog-posts";
+import { useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ArticleBody from "@/components/blog/article-body";
 import BlogRelated from "@/components/blog/blog-related";
 import BlogShare from "@/components/blog/blog-share";
+import { fetchArticleBySlugOrId } from "@/lib/api/blog-posts";
+import {
+	type ArticleTocEntry,
+	getArticleTocEntries,
+	slugifyHeading,
+} from "@/lib/blog/article-markdown";
 import {
 	formatArticleDate,
 	getArticleCoverUrl,
 	getArticleDateValue,
 	getArticleExcerpt,
 } from "@/lib/blog/article-utils";
-import {
-	getArticleTocEntries,
-	slugifyHeading,
-	type ArticleTocEntry,
-} from "@/lib/blog/article-markdown";
+import { useCopy } from "@/lib/copy";
 import type { Article } from "@/lib/types/blog";
 
 const revealEase = [0.22, 1, 0.36, 1] as const;
@@ -32,8 +32,8 @@ const tocSpring = {
 };
 
 /**
- * Sticky offset for TOC scrolling: fixed navbar height + (on mobile) the
- * sticky TOC bar height + breathing room. Measured live so it stays correct
+ * Sticky offset for TOC scrolling: fixed navbar height + breathing room
+ * (the mobile TOC bar sits at the bottom, so it doesn't cover headings). Measured live so it stays correct
  * whether the auto-hiding navbar is currently visible or not.
  */
 function getTocScrollOffsetPx(): number {
@@ -48,12 +48,7 @@ function getTocScrollOffsetPx(): number {
 		// Auto-hiding navbar translates off-screen when scrolled past.
 		navH = rect.bottom > 0 ? Math.max(0, Math.min(rect.bottom, 96)) : 0;
 	}
-	let tocH = 0;
-	if (!isDesktop) {
-		const tocEl = document.querySelector(".blog-article__toc");
-		if (tocEl) tocH = tocEl.getBoundingClientRect().height;
-	}
-	return Math.ceil(navH + tocH + 12);
+	return Math.ceil(navH + 12);
 }
 
 /** Smooth-scrolls to a heading, landing it below the navbar/sticky TOC. */
@@ -395,6 +390,24 @@ export default function BlogPost() {
 	const [domToc, setDomToc] = useState<ArticleTocEntry[]>([]);
 	const toc = domToc.length > 0 ? domToc : markdownToc;
 
+	// Flag while the article is on screen so the floating CTA can clear the
+	// mobile TOC bar, which only sticks until the article ends.
+	const hasToc = toc.length > 0;
+	useEffect(() => {
+		const el = contentRef.current;
+		if (!el || !hasToc) return;
+		const root = document.documentElement;
+		const io = new IntersectionObserver(([entry]) => {
+			if (entry.isIntersecting) root.dataset.articleTocBar = "";
+			else delete root.dataset.articleTocBar;
+		});
+		io.observe(el);
+		return () => {
+			io.disconnect();
+			delete root.dataset.articleTocBar;
+		};
+	}, [hasToc]);
+
 	// Scan the rendered article for headings once content is mounted.
 	useEffect(() => {
 		if (loadState.status !== "ready") {
@@ -635,6 +648,8 @@ export default function BlogPost() {
 				{post ? (
 					<>
 						<motion.header className="blog-article__header" {...reveal(0.06)}>
+							<h1 className="blog-article__title">{post.title}</h1>
+							{excerpt ? <p className="blog-article__lead">{excerpt}</p> : null}
 							{dateLabel && (
 								<ul
 									className="blog-meta blog-meta--article"
@@ -645,9 +660,6 @@ export default function BlogPost() {
 									</li>
 								</ul>
 							)}
-
-							<h1 className="blog-article__title">{post.title}</h1>
-							{excerpt ? <p className="blog-article__lead">{excerpt}</p> : null}
 						</motion.header>
 
 						<motion.figure
@@ -697,7 +709,9 @@ export default function BlogPost() {
 									>
 										<div
 											className="blog-toc-progress__fill"
-											style={{ transform: `scaleY(${readPercent / 100})` }}
+											style={
+												{ "--read": readPercent / 100 } as React.CSSProperties
+											}
 											aria-hidden="true"
 										/>
 										<span className="sr-only">

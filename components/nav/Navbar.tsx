@@ -285,6 +285,25 @@ export function Navbar() {
 	const [isHidden, setIsHidden] = useState(false);
 	const lastScrollYRef = useRef(0);
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+	const [atPageEnd, setAtPageEnd] = useState(false);
+
+	// Lift the floating CTA while the footer's bottom edge is in view so it
+	// doesn't cover the social buttons.
+	useEffect(() => {
+		const onScroll = () => {
+			const { scrollY, innerHeight } = window;
+			setAtPageEnd(
+				scrollY + innerHeight >= document.documentElement.scrollHeight - 80,
+			);
+		};
+		onScroll();
+		window.addEventListener("scroll", onScroll, { passive: true });
+		window.addEventListener("resize", onScroll);
+		return () => {
+			window.removeEventListener("scroll", onScroll);
+			window.removeEventListener("resize", onScroll);
+		};
+	}, []);
 	const initializedRef = useRef(false);
 	const [shouldAnimate, setShouldAnimate] = useState(false);
 	const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -555,7 +574,7 @@ export function Navbar() {
 									type="button"
 									onClick={closeMobileMenu}
 									aria-label={t("close_menu")}
-									className="mobile-nav-overlay__close grid size-10 place-items-center rounded-full active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-ring)"
+									className="mobile-nav-overlay__close -mr-[9px] grid cursor-pointer size-10 place-items-center rounded-full active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-ring)"
 								>
 									<X className="size-[18px]" aria-hidden />
 								</button>
@@ -607,7 +626,7 @@ export function Navbar() {
 								<Link
 									href="https://calendly.com/codevider/pasho"
 									onClick={closeMobileMenu}
-									className="home-brand-btn inline-flex w-full items-center justify-center gap-2 px-6 py-4 text-base"
+									className="home-brand-btn home-brand-btn--shine relative inline-flex w-full items-center justify-center gap-2 px-6 py-4 text-base"
 								>
 									{t("book_a_call")}
 									<ArrowUpRight className="size-[18px] shrink-0" aria-hidden />
@@ -620,7 +639,7 @@ export function Navbar() {
 
 			<Link
 				href="https://calendly.com/codevider/pasho"
-				className={`home-brand-btn home-brand-btn--shine gap-2 fixed bottom-6 right-6 z-50 px-5 py-3 navbar:hidden transition-opacity duration-200 ${mobileMenuOpen ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+				className={`floating-book-call home-brand-btn home-brand-btn--shine gap-2 fixed bottom-6 right-6 z-50 px-5 py-3 navbar:hidden transition-[opacity,translate] duration-200 ${atPageEnd ? "md:-translate-y-18" : ""} ${mobileMenuOpen ? "opacity-0 pointer-events-none" : "opacity-100"}`}
 				aria-label={t("book_a_call")}
 				aria-hidden={mobileMenuOpen || undefined}
 				tabIndex={mobileMenuOpen ? -1 : undefined}
