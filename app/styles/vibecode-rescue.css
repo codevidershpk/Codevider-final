@@ -915,3 +915,60 @@
 		display: none;
 	}
 }
+
+/* ---------- Hover (mirrors .home-ecard) ----------
+   Reveal writes an inline `transform`, so lift via `translate` instead. */
+
+.vcr-grid > .vcr-card,
+.vcr-icon,
+.vcr-stack__row,
+.vcr-stack .vcr-tags li {
+	transition-property: translate, scale, box-shadow, background-color, color;
+	transition-duration: 200ms;
+	transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (hover: hover) {
+	.vcr-grid > .vcr-card:hover {
+		translate: 0 -2px;
+		box-shadow:
+			0 0 0 1px color-mix(in srgb, var(--dash-brand) 20%, transparent),
+			0 4px 12px rgba(0, 0, 0, 0.07),
+			0 2px 4px rgba(0, 0, 0, 0.04);
+	}
+
+	.dark .vcr-grid > .vcr-card:hover {
+		box-shadow:
+			0 0 0 1px color-mix(in srgb, var(--dash-brand) 34%, transparent),
+			0 6px 16px rgba(0, 0, 0, 0.35);
+	}
+
+	.vcr-grid > .vcr-card:hover .vcr-icon,
+	.vcr-stack__row:hover .vcr-icon {
+		background-color: color-mix(in srgb, var(--dash-brand) 20%, transparent);
+		color: var(--dash-brand);
+		scale: 1.06;
+	}
+
+	.vcr-stack__row:hover {
+		translate: 4px 0;
+	}
+
+	.vcr-stack__row:hover .vcr-tags li {
+		box-shadow:
+			0 0 0 1px color-mix(in srgb, var(--dash-brand) 20%, transparent),
+			var(--shadow-sm);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.vcr-grid > .vcr-card:hover,
+	.vcr-stack__row:hover {
+		translate: none;
+	}
+
+	.vcr-grid > .vcr-card:hover .vcr-icon,
+	.vcr-stack__row:hover .vcr-icon {
+		scale: none;
+	}
+}
