@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useCopy } from "@/lib/copy";
 import {
@@ -10,103 +10,29 @@ import {
 } from "@/hooks/use-section-reveal";
 import Link from "next/link";
 
-const STAGGER = 0.1;
-
 const itemVariants = sectionRevealItem;
-
-const statDescVariants = {
-	hidden: { opacity: 0, y: 8 },
-	visible: {
-		opacity: 1,
-		y: 0,
-		transition: {
-			duration: 0.5,
-			ease: [0.2, 0, 0, 1] as const,
-			delay: 0.12,
-		},
-	},
-};
 
 const STATS = [
 	{
-		valueKey: "stat_global_partnerships_value", // {value}+
+		valueKey: "stat_global_partnerships_value",
 		labelKey: "stat_global_partnerships",
-		wide: false,
-		tone: "stat-card--partnerships",
 		value: 30,
 	},
 	{
-		valueKey: "stat_delivery_velocity_value", // {value}%
+		valueKey: "stat_delivery_velocity_value",
 		labelKey: "stat_delivery_velocity",
-		wide: false,
-		tone: "stat-card--accent",
 		value: 60,
 	},
 	{
-		valueKey: "stat_elite_engineers_value", // {value}+
-		labelKey: "stat_elite_engineers",
-		wide: true,
-		tone: "stat-card--engineers",
-		value: 25,
+		valueKey: "stat_embed_value",
+		labelKey: "stat_embed",
+		value: 2,
 	},
 ] as const;
 
-function StatCard({
-	value,
-	label,
-	index,
-	isRevealed,
-	shouldAnimate,
-	shouldReduceMotion,
-	wide,
-	tone,
-}: {
-	value: string;
-	label: string;
-	index: number;
-	isRevealed: boolean;
-	shouldAnimate: boolean;
-	shouldReduceMotion: boolean | null;
-	wide: boolean;
-	tone: string;
-}) {
-	return (
-		<motion.div
-			className={`stat-card ${tone} flex h-full flex-col justify-center rounded-2xl p-5 sm:p-6 ${wide ? "sm:col-span-2" : ""}`}
-			initial={shouldReduceMotion || !shouldAnimate ? false : "hidden"}
-			animate={isRevealed ? "visible" : "hidden"}
-			variants={{
-				hidden: {},
-				visible: {
-					transition: {
-						staggerChildren: 0.08,
-						delayChildren: 0.35 + index * STAGGER,
-					},
-				},
-			}}
-		>
-			<div
-				className={`flex flex-col gap-2.5 wrap-break-word ${wide ? "max-w-2xl" : ""}`}
-			>
-				<motion.p
-					className="stat-card-value font-(family-name:--mono) text-[clamp(1.875rem,3.5vw,2.5rem)] font-medium tabular-nums tracking-tight"
-					variants={itemVariants}
-				>
-					{value}
-				</motion.p>
-				<motion.p
-					className="stat-card-cap text-pretty text-sm leading-relaxed sm:text-base"
-					variants={statDescVariants}
-				>
-					{label}
-				</motion.p>
-			</div>
-		</motion.div>
-	);
-}
-
 export default function WhoWeAre() {
 	const t = useCopy("home");
+	const points = t.raw("who_we_are_points") as string[];
 	const {
 		ref: sectionRef,
 		isRevealed,
@@ -115,6 +41,7 @@ export default function WhoWeAre() {
 		margin: "-10% 0px -10% 0px",
 	});
 	const shouldReduceMotion = useReducedMotion();
+	const motionState = shouldReduceMotion || !shouldAnimate ? false : "hidden";
 
 	return (
 		<section
@@ -122,9 +49,9 @@ export default function WhoWeAre() {
 			aria-labelledby="who-we-are-heading"
 			className="home-section home-feature-alt"
 		>
-			<div className="home-wrap grid w-full gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-16">
+			<div className="home-wrap grid w-full items-center gap-10 lg:grid-cols-2 lg:gap-14">
 				<motion.div
-					initial={shouldReduceMotion || !shouldAnimate ? false : "hidden"}
+					initial={motionState}
 					animate={isRevealed ? "visible" : "hidden"}
 					variants={sectionRevealStagger}
 				>
@@ -134,42 +61,68 @@ export default function WhoWeAre() {
 
 					<motion.h2
 						id="who-we-are-heading"
-						className="mt-[clamp(1rem,2vw,1.25rem)] max-w-xl text-balance text-[clamp(1.75rem,3.5vw,2.5rem)] leading-[1.12] tracking-[-0.02em] text-(--text-h)"
+						className="mt-3.5 max-w-xl font-sans text-balance text-[clamp(1.75rem,4vw,2.6rem)] leading-[1.12] tracking-tight text-(--text-h)"
 						variants={itemVariants}
 					>
 						{t("who_we_are_headline")}
 					</motion.h2>
 
 					<motion.p
-						className="mt-4 max-w-[70ch] text-pretty text-base leading-relaxed text-(--text)"
+						className="mt-5 max-w-[65ch] text-pretty text-[1.0625rem] leading-relaxed text-(--text) sm:text-[1.125rem]"
 						variants={itemVariants}
 					>
 						{t("who_we_are_description")}
 					</motion.p>
 
-					<motion.div variants={itemVariants} className="mt-6">
-						<Link href="/about" className="home-ghost-btn">
+					<motion.ul
+						className="mt-6 grid max-w-xl gap-3"
+						variants={sectionRevealStagger}
+					>
+						{points.map((point) => (
+							<motion.li
+								key={point}
+								variants={itemVariants}
+								className="flex items-start gap-3 text-pretty text-sm leading-relaxed text-(--text)"
+							>
+								<span className="mt-1 grid size-3.5 shrink-0 place-items-center rounded-full bg-(--dash-brand-bg) text-(--dash-brand)">
+									<Check className="size-2" strokeWidth={3} aria-hidden />
+								</span>
+								{point}
+							</motion.li>
+						))}
+					</motion.ul>
+
+					<motion.div variants={itemVariants} className="mt-8">
+						<Link href="/about" className="home-link-arrow">
 							{t("read_more_about_us")}
-							<ArrowRight className="size-4" aria-hidden />
+							<ArrowUpRight className="size-[15px]" aria-hidden />
 						</Link>
 					</motion.div>
 				</motion.div>
 
-				<div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3.5 lg:pl-4">
-					{STATS.map(({ valueKey, labelKey, wide, tone, value }, index) => (
-						<StatCard
-							key={valueKey}
-							value={t(valueKey, { value })}
-							label={t(labelKey, { value })}
-							index={index}
-							isRevealed={isRevealed}
-							shouldAnimate={shouldAnimate}
-							shouldReduceMotion={shouldReduceMotion}
-							wide={wide}
-							tone={tone}
-						/>
-					))}
-				</div>
+				<motion.div
+					className="home-demo w-full"
+					initial={motionState}
+					animate={isRevealed ? "visible" : "hidden"}
+					variants={sectionRevealStagger}
+				>
+					<dl className="divide-y divide-[color-mix(in_srgb,var(--text-h)_8%,transparent)]">
+						{STATS.map(({ valueKey, labelKey, value }) => (
+							<motion.div
+								key={valueKey}
+								variants={itemVariants}
+								className="flex items-center justify-between gap-6 px-6 py-6"
+							>
+								<dt className="max-w-[18rem] text-pretty text-sm leading-snug text-(--text-muted)">
+									{t(labelKey, { value })}
+								</dt>
+								<dd className="shrink-0 font-sans text-[clamp(1.75rem,3vw,2.25rem)] font-medium tabular-nums tracking-tight text-(--dash-brand)">
+									{t(valueKey, { value })}
+								</dd>
+							</motion.div>
+						))}
+					</dl>
+				</motion.div>
 			</div>
 		</section>
 	);

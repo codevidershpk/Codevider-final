@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Contact from "@/components/index/contact";
 import { RescueHero } from "@/components/vibecode-rescue/rescue-hero";
 import {
+	RescueAfter,
 	RescueArrival,
 	RescueClose,
 	RescueKeep,
@@ -42,6 +43,7 @@ export default function VibeCodeRescuePage() {
 			<RescueProcess />
 			<RescueStack />
 			<RescueKeep />
+			<RescueAfter />
 			<RescueClose />
 			<div id="contact">
 				<Contact

@@ -2,7 +2,6 @@ import {
 	ArrowRight,
 	ArrowUpRight,
 	Bot,
-	Boxes,
 	Check,
 	Cloud,
 	Code2,
@@ -28,6 +27,7 @@ import {
 	Wrench,
 } from "lucide-react";
 import type { ReactNode } from "react";
+import { Reveal, RevealGroup } from "@/components/ui/reveal";
 
 const PRESSURE: { label: string; icon: LucideIcon }[] = [
 	{ label: "More users", icon: Users },
@@ -91,14 +91,9 @@ const STEPS: { title: string; body: string; icon: LucideIcon }[] = [
 		icon: ScanSearch,
 	},
 	{
-		title: "Rescue",
-		body: "We fix the issues preventing the product from moving forward.",
+		title: "Rescue & rebuild",
+		body: "We fix what’s blocking the product and, where necessary, rework the parts that can’t support the next stage.",
 		icon: LifeBuoy,
-	},
-	{
-		title: "Rebuild",
-		body: "Where necessary, we rework the parts that can’t support the next stage.",
-		icon: Boxes,
 	},
 	{
 		title: "Move forward",
@@ -127,7 +122,6 @@ const STACK: { title: string; items: string[]; icon: LucideIcon }[] = [
 ];
 
 const PRESERVE = [
-	"Your product",
 	"Your data",
 	"Your users",
 	"Your business logic",
@@ -145,9 +139,17 @@ function SectionHead({
 }) {
 	return (
 		<header className="vcr-head">
-			<p className="vcr-eyebrow">{eyebrow}</p>
-			<h2 className="vcr-h2">{title}</h2>
-			{children ? <div className="vcr-head__lead">{children}</div> : null}
+			<Reveal as="p" className="vcr-eyebrow">
+				{eyebrow}
+			</Reveal>
+			<Reveal as="h2" delay={0.06} className="vcr-h2">
+				{title}
+			</Reveal>
+			{children ? (
+				<Reveal delay={0.12} className="vcr-head__lead">
+					{children}
+				</Reveal>
+			) : null}
 		</header>
 	);
 }
@@ -162,53 +164,64 @@ function IconBadge({ icon: Icon }: { icon: LucideIcon }) {
 
 export function RescueReality() {
 	return (
-		<section className="vcr-section vcr-section--tint" id="reality">
-			<div className="vcr-wrap vcr-split">
+		<RevealGroup
+			as="section"
+			className="vcr-section vcr-section--tint"
+			id="reality"
+		>
+			<div className="vcr-wrap">
 				<SectionHead eyebrow="The problem" title="It looked easy at first.">
-					<p>
-						AI made building the first version incredibly fast. The problem
-						starts when the product becomes real, and the code that got you to
-						the prototype starts slowing everything down.
-					</p>
-					<p className="vcr-punch">That’s the point where we take over.</p>
+					<div className="vcr-reality">
+						<p>
+							AI made building the first version incredibly fast. The problem
+							starts when the product becomes real, and the code that got you to
+							the prototype starts slowing everything down.
+						</p>
+						<ul className="vcr-pressure">
+							{PRESSURE.map(({ label, icon }) => (
+								<li key={label}>
+									<IconBadge icon={icon} />
+									<span>{label}</span>
+								</li>
+							))}
+						</ul>
+						<p className="vcr-punch">That’s the point where we take over.</p>
+					</div>
 				</SectionHead>
-				<ul className="vcr-pressure">
-					{PRESSURE.map(({ label, icon }) => (
-						<li key={label} className="vcr-card vcr-card--row">
-							<IconBadge icon={icon} />
-							<span>{label}</span>
-						</li>
-					))}
-				</ul>
 			</div>
-		</section>
+		</RevealGroup>
 	);
 }
 
 export function RescueSituations() {
 	return (
-		<section className="vcr-section" id="situations">
+		<RevealGroup as="section" className="vcr-section" id="situations">
 			<div className="vcr-wrap">
 				<SectionHead eyebrow="Who it’s for" title="What can we rescue?" />
 				<ul className="vcr-grid vcr-grid--3">
-					{SITUATIONS.map((item) => (
-						<li key={item.title} className="vcr-card">
+					{SITUATIONS.map((item, index) => (
+						<Reveal
+							as="li"
+							key={item.title}
+							delay={0.16 + index * 0.06}
+							className="vcr-card"
+						>
 							<IconBadge icon={item.icon} />
 							<h3 className="vcr-h3">{item.title}</h3>
 							<p className="vcr-card__body">{item.body}</p>
-						</li>
+						</Reveal>
 					))}
 				</ul>
 			</div>
-		</section>
+		</RevealGroup>
 	);
 }
 
 export function RescueArrival() {
 	return (
-		<section className="vcr-band" id="arrival">
+		<RevealGroup as="section" className="vcr-band" id="arrival">
 			<div className="vcr-wrap vcr-split">
-				<div>
+				<Reveal>
 					<h2 className="vcr-h2 vcr-band__title">
 						We don’t need a clean codebase.
 						<span>That’s why we’re here.</span>
@@ -218,8 +231,8 @@ export function RescueArrival() {
 						figure out what’s worth keeping, what needs attention, and what
 						needs to change.
 					</p>
-				</div>
-				<div>
+				</Reveal>
+				<Reveal delay={0.12}>
 					<p className="vcr-band__label">
 						<Code2 className="size-4" aria-hidden />
 						We step into projects built with
@@ -229,23 +242,32 @@ export function RescueArrival() {
 							<li key={tool}>{tool}</li>
 						))}
 					</ul>
-				</div>
+				</Reveal>
 			</div>
-		</section>
+		</RevealGroup>
 	);
 }
 
 export function RescueProcess() {
 	return (
-		<section className="vcr-section vcr-section--tint" id="process">
+		<RevealGroup
+			as="section"
+			className="vcr-section vcr-section--tint"
+			id="process"
+		>
 			<div className="vcr-wrap">
 				<SectionHead
 					eyebrow="How it works"
 					title="From wherever you are now."
 				/>
-				<ol className="vcr-grid vcr-grid--5">
+				<ol className="vcr-grid vcr-grid--4">
 					{STEPS.map((step, index) => (
-						<li key={step.title} className="vcr-card vcr-step">
+						<Reveal
+							as="li"
+							key={step.title}
+							delay={0.16 + index * 0.06}
+							className="vcr-card vcr-step"
+						>
 							<div className="vcr-step__top">
 								<IconBadge icon={step.icon} />
 								<span className="vcr-step__index">
@@ -254,17 +276,17 @@ export function RescueProcess() {
 							</div>
 							<h3 className="vcr-h3">{step.title}</h3>
 							<p className="vcr-card__body">{step.body}</p>
-						</li>
+						</Reveal>
 					))}
 				</ol>
 			</div>
-		</section>
+		</RevealGroup>
 	);
 }
 
 export function RescueStack() {
 	return (
-		<section className="vcr-section" id="stack">
+		<RevealGroup as="section" className="vcr-section" id="stack">
 			<div className="vcr-wrap">
 				<SectionHead eyebrow="Technology" title="Every stack. Every stage.">
 					<p>
@@ -273,22 +295,31 @@ export function RescueStack() {
 					</p>
 				</SectionHead>
 				<div className="vcr-stack">
-					{STACK.map((group) => (
-						<div key={group.title} className="vcr-stack__row">
-							<div className="vcr-stack__label">
+					{STACK.map((group, index) => (
+						<Reveal
+							key={group.title}
+							delay={0.16 + index * 0.06}
+							className="vcr-stack__row"
+						>
+							<div className="vcr-stack__title">
 								<IconBadge icon={group.icon} />
 								<h3 className="vcr-h3">{group.title}</h3>
 							</div>
-							<ul className="vcr-tags">
-								{group.items.map((item) => (
-									<li key={item}>{item}</li>
-								))}
-							</ul>
-						</div>
+							<div className="vcr-stack__techs">
+								<ul className="vcr-tags">
+									{group.items.map((item) => (
+										<li key={item}>{item}</li>
+									))}
+								</ul>
+							</div>
+						</Reveal>
 					))}
 				</div>
+				<Reveal as="p" delay={0.4} className="vcr-stack__more">
+					And so much more. If it is in production, we can work with it.
+				</Reveal>
 			</div>
-		</section>
+		</RevealGroup>
 	);
 }
 
@@ -312,7 +343,11 @@ const AFTER: { title: string; body: string; icon: LucideIcon }[] = [
 
 export function RescueKeep() {
 	return (
-		<section className="vcr-section vcr-section--tint" id="keep">
+		<RevealGroup
+			as="section"
+			className="vcr-section vcr-section--tint"
+			id="keep"
+		>
 			<div className="vcr-wrap">
 				<div className="vcr-split">
 					<SectionHead eyebrow="No restart" title="Keep what matters.">
@@ -322,61 +357,75 @@ export function RescueKeep() {
 							the engineering underneath it.
 						</p>
 					</SectionHead>
-					<ul className="vcr-card vcr-checklist">
+					<Reveal as="ul" delay={0.18} className="vcr-card vcr-checklist">
 						{PRESERVE.map((item) => (
 							<li key={item}>
 								<Check className="size-5" strokeWidth={2} aria-hidden />
 								{item}
 							</li>
 						))}
-					</ul>
-				</div>
-
-				<div className="vcr-after" id="after">
-					<div className="vcr-after__head">
-						<h3 className="vcr-h3">After the rescue</h3>
-						<p className="vcr-card__body">
-							Rescue can be the beginning of the next phase, not the end of the
-							project. You don’t have to figure that part out alone.
-						</p>
-					</div>
-					<ul className="vcr-grid vcr-grid--3">
-						{AFTER.map((item) => (
-							<li
-								key={item.title}
-								className="vcr-card vcr-card--row vcr-after__item"
-							>
-								<IconBadge icon={item.icon} />
-								<div>
-									<p className="vcr-after__title">{item.title}</p>
-									<p className="vcr-card__body">{item.body}</p>
-								</div>
-							</li>
-						))}
-					</ul>
+					</Reveal>
 				</div>
 			</div>
-		</section>
+		</RevealGroup>
+	);
+}
+
+export function RescueAfter() {
+	return (
+		<RevealGroup as="section" className="vcr-section" id="after">
+			<div className="vcr-wrap">
+				<SectionHead eyebrow="What’s next" title="After the rescue.">
+					<p>
+						Rescue can be the beginning of the next phase, not the end of the
+						project. You don’t have to figure that part out alone.
+					</p>
+				</SectionHead>
+				<ol className="vcr-grid vcr-grid--3">
+					{AFTER.map((item, index) => (
+						<Reveal
+							as="li"
+							key={item.title}
+							delay={0.16 + index * 0.06}
+							className="vcr-card vcr-after__item"
+						>
+							<div className="vcr-step__top">
+								<IconBadge icon={item.icon} />
+								<span className="vcr-step__index">
+									{String(index + 1).padStart(2, "0")}
+								</span>
+							</div>
+							<h3 className="vcr-h3">{item.title}</h3>
+							<p className="vcr-card__body">{item.body}</p>
+						</Reveal>
+					))}
+				</ol>
+			</div>
+		</RevealGroup>
 	);
 }
 
 export function RescueClose() {
 	return (
-		<section className="vcr-section" id="next">
+		<RevealGroup
+			as="section"
+			className="vcr-section vcr-section--tint"
+			id="next"
+		>
 			<div className="vcr-wrap">
 				<div className="vcr-cta">
-					<p className="vcr-eyebrow vcr-eyebrow--center">
+					<Reveal as="p" className="vcr-eyebrow vcr-eyebrow--center">
 						Built with AI. Ready for engineers.
-					</p>
-					<h2 className="vcr-h2">
+					</Reveal>
+					<Reveal as="h2" delay={0.06} className="vcr-h2">
 						Your prototype got you this far. Let’s see where it can go next.
-					</h2>
-					<p className="vcr-cta__body">
+					</Reveal>
+					<Reveal as="p" delay={0.12} className="vcr-cta__body">
 						The goal isn’t to make your app look like it was never vibe-coded.
 						It’s to make it good enough to keep building. Tell us what you’ve
 						built, what’s breaking, and where you’re stuck.
-					</p>
-					<div className="vcr-actions vcr-actions--center">
+					</Reveal>
+					<Reveal delay={0.18} className="vcr-actions vcr-actions--center">
 						<a href="#contact" className="home-brand-btn vcr-btn">
 							Rescue my app
 							<ArrowRight className="size-4" aria-hidden />
@@ -388,9 +437,9 @@ export function RescueClose() {
 							Talk to an engineer
 							<ArrowUpRight className="size-4" aria-hidden />
 						</a>
-					</div>
+					</Reveal>
 				</div>
 			</div>
-		</section>
+		</RevealGroup>
 	);
 }

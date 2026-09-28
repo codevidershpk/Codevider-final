@@ -1,14 +1,15 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { useCopy } from "@/lib/copy";
 import WorldMap from "@/components/ui/world-map";
 import {
 	appleRevealEase,
 	revealTransition,
+	sectionItemTransition,
 	sectionRevealItem,
 	useSectionReveal,
 } from "@/hooks/use-section-reveal";
+import { useCopy } from "@/lib/copy";
 import SectionHead from "./section-head";
 
 const PARTNERSHIP_HUB = { lat: 32.1533, lng: 17.1683 } as const;
@@ -37,13 +38,29 @@ export default function GlobalPartnerships() {
 			}}
 		>
 			<div className="home-wrap relative z-1">
-				<SectionHead
-					eyebrow={t("eyebrow")}
-					headline={t("headline")}
-					description={t("description")}
-					centered
-					className="[&_.home-eyebrow]:text-(--home-eyebrow-highlight) [&_.home-eyebrow]:before:bg-(--home-eyebrow-highlight)"
-				/>
+				<motion.div
+					initial={
+						shouldReduceMotion || !shouldAnimate
+							? false
+							: sectionRevealItem.hidden
+					}
+					animate={
+						isRevealed ? sectionRevealItem.visible : sectionRevealItem.hidden
+					}
+					transition={sectionItemTransition(
+						shouldAnimate,
+						0,
+						!!shouldReduceMotion,
+					)}
+				>
+					<SectionHead
+						eyebrow={t("eyebrow")}
+						headline={t("headline")}
+						description={t("description")}
+						centered
+						className="[&_.home-eyebrow]:text-(--home-eyebrow-highlight) [&_.home-eyebrow]:before:bg-(--home-eyebrow-highlight)"
+					/>
+				</motion.div>
 			</div>
 
 			<motion.div

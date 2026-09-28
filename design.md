@@ -121,8 +121,8 @@ The 1023px and 1024px breakpoints are merged into lg (use `max-width: 1023px`). 
 
 ## Typography
 
-- **Sans (body):** Alexandria, via `--font-sans` / `--sans`
-- **Serif (headings):** Libre Baskerville, weight 400, via `--font-heading` / `--heading`
+- **Sans (body):** Sora, via `--font-sans` / `--sans`
+- **Serif (headings):** Lora, weight 400, via `--font-heading` / `--heading`
 - **Mono:** `ui-monospace, Consolas, monospace`
 - **Root size:** 18px, or 16px at 1024px and below. Line height 145%. Body letter spacing is 0.18px and is set on `body` only.
 

@@ -54,10 +54,8 @@ html.theme-switching * {
 }
 
 @theme {
-	--font-sans: var(--font-sans), system-ui, sans-serif;
-	--font-serif:
-		var(--font-heading), Baskerville, "Baskerville Old Face", "Hoefler Text",
-		Georgia, serif;
+	--font-sans: var(--font-sans), Sora, system-ui, sans-serif;
+	--font-serif: var(--font-heading), Lora, Georgia, "Times New Roman", serif;
 	--breakpoint-navbar: 936px;
 }
 
@@ -184,10 +182,8 @@ html.theme-switching * {
 	}
 
 	/* --- Type stacks --- */
-	--sans: var(--font-sans), system-ui, sans-serif;
-	--heading:
-		var(--font-heading), Baskerville, "Baskerville Old Face", "Hoefler Text",
-		Georgia, serif;
+	--sans: var(--font-sans), Sora, system-ui, sans-serif;
+	--heading: var(--font-heading), Lora, Georgia, "Times New Roman", serif;
 	--mono: ui-monospace, Consolas, monospace;
 
 	/* --- Base typography --- */
@@ -205,6 +201,11 @@ html.theme-switching * {
 	@media (max-width: 1024px) {
 		font-size: 16px;
 	}
+}
+
+/* Keep native hash jumps in sync with NAV_SCROLL_OFFSET (lib/wait-for-stable-layout). */
+html {
+	scroll-padding-top: 88px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -391,13 +392,15 @@ code {
    SHARED SURFACE CARDS — use consolidated shadow tokens
    ============================================================ */
 .surface-card {
-	background: var(--bg);
-	box-shadow: var(--shadow-sm);
-	transition: box-shadow 150ms ease-out;
-}
-
-.surface-card:hover {
-	box-shadow: var(--shadow-md);
+	background:
+		radial-gradient(
+			120% 90% at 0% 0%,
+			color-mix(in srgb, var(--dash-brand) 12%, transparent),
+			transparent 60%
+		),
+		color-mix(in srgb, var(--text-h) 3%, var(--bg));
+	border: 1px solid color-mix(in srgb, var(--text-h) 9%, transparent);
+	box-shadow: none;
 }
 
 /* ============================================================
@@ -427,28 +430,22 @@ code {
 }
 
 .stat-card-value {
-	color: var(--dash-text);
+	color: var(--dash-brand);
 }
 
 .stat-card-cap {
 	color: var(--dash-muted);
 }
 
+/* Highlighted stat: tinted surface instead of a solid fill, so it doesn't
+   compete with the section CTA. */
 .stat-card--accent {
 	background: linear-gradient(
 		135deg,
-		var(--dash-brand-solid) 0%,
-		var(--dash-brand-solid-end) 100%
+		color-mix(in srgb, var(--dash-brand) 12%, var(--dash-surface)) 0%,
+		var(--dash-surface) 100%
 	);
-	border: none;
-}
-
-.stat-card--accent .stat-card-cap {
-	color: color-mix(in srgb, var(--on-brand) 88%, transparent);
-}
-
-.stat-card--accent .stat-card-value {
-	color: var(--on-brand);
+	border-color: color-mix(in srgb, var(--dash-brand) 35%, var(--dash-border));
 }
 
 /* ============================================================
@@ -1246,12 +1243,15 @@ code {
 	min-width: 0;
 	overflow: hidden;
 	border-radius: 16px;
-	border: 1px solid var(--border);
-	background: var(--bg);
-	box-shadow: var(--shadow-sm);
-	transition:
-		border-color 200ms ease,
-		box-shadow 250ms ease;
+	background:
+		radial-gradient(
+			120% 60% at 0% 0%,
+			color-mix(in srgb, var(--dash-brand) 10%, transparent),
+			transparent 60%
+		),
+		color-mix(in srgb, var(--text-h) 3%, var(--bg));
+	border: 1px solid color-mix(in srgb, var(--text-h) 9%, transparent);
+	transition: border-color 300ms ease;
 }
 
 .home-demo--ai,
@@ -1264,11 +1264,14 @@ code {
 	min-height: 0;
 }
 
-.home-demo:hover {
-	border-color: color-mix(in srgb, var(--dash-brand) 35%, var(--border));
-	box-shadow:
-		var(--shadow-md),
-		0 0 0 1px color-mix(in srgb, var(--dash-brand) 10%, transparent);
+.home-demo--ai,
+.home-code-editor {
+	border-color: var(--border);
+}
+
+.home-demo--ai:hover,
+.home-code-editor:hover {
+	border-color: color-mix(in srgb, var(--dash-brand) 45%, var(--border));
 }
 
 .home-demo-head {
@@ -1277,7 +1280,7 @@ code {
 	justify-content: space-between;
 	gap: 1rem;
 	padding: clamp(1rem, 2vw, 1.25rem) var(--home-inset-lg);
-	border-bottom: 1px solid var(--border);
+	border-bottom: 1px solid color-mix(in srgb, var(--text-h) 10%, transparent);
 	font-weight: 600;
 	font-size: 14px;
 	color: var(--text-h);
@@ -1898,6 +1901,15 @@ code {
 	}
 }
 
+.border-glow {
+	position: relative;
+	display: grid;
+	isolation: isolate;
+	height: 100%;
+	transform: translate3d(0, 0, 0.01px);
+	border: 1px solid color-mix(in srgb, var(--text-h) 8%, transparent);
+}
+
 .home-empower {
 	display: flex;
 	flex-direction: column;
@@ -1946,15 +1958,6 @@ code {
 .home-empower-cell > .home-ecard {
 	flex: 1 1 auto;
 	min-height: 100%;
-}
-
-.border-glow {
-	position: relative;
-	display: grid;
-	isolation: isolate;
-	height: 100%;
-	transform: translate3d(0, 0, 0.01px);
-	border: 1px solid color-mix(in srgb, var(--text-h) 8%, transparent);
 }
 
 .home-ecard.border-glow {
@@ -2017,7 +2020,7 @@ code {
 	text-align: left;
 	min-height: 0;
 	height: 100%;
-	background: var(--bg);
+	background: color-mix(in srgb, var(--home-section-alt) 35%, var(--bg));
 	border: none;
 	border-radius: var(--ecard-radius);
 	padding: var(--ecard-pad);
@@ -2084,6 +2087,24 @@ code {
 	box-shadow:
 		0 0 0 1px color-mix(in srgb, var(--dash-brand) 34%, transparent),
 		0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+/* What we build: tinted surface + brand glow, matching the newer home cards */
+.home-empower .home-ecard:not(.home-ecard--featured) {
+	background:
+		radial-gradient(
+			120% 90% at 0% 0%,
+			color-mix(in srgb, var(--dash-brand) 12%, transparent),
+			transparent 60%
+		),
+		color-mix(in srgb, var(--text-h) 3%, var(--bg));
+	border: 1px solid var(--border);
+	box-shadow: none;
+}
+
+.home-empower .home-ecard:not(.home-ecard--featured):hover {
+	border-color: color-mix(in srgb, var(--dash-brand) 45%, var(--border));
+	box-shadow: none;
 }
 
 .dark .home-ecard.border-glow:hover {
@@ -2285,141 +2306,6 @@ code {
 	);
 	border-color: transparent;
 	color: #f3f4f6;
-}
-
-.why-choose {
-	display: grid;
-	gap: clamp(2rem, 5vw, 3.25rem);
-	align-items: stretch;
-}
-
-@media (min-width: 960px) {
-	.why-choose {
-		grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.28fr);
-		gap: clamp(2.5rem, 5vw, 4.5rem);
-	}
-}
-
-.why-choose-proof {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	align-self: stretch;
-	min-width: 0;
-	min-height: 100%;
-	height: 100%;
-}
-
-/* Card chrome only when side-by-side with pillars */
-@media (min-width: 960px) {
-	.why-choose-proof {
-		padding: clamp(1.25rem, 3vw, 1.75rem);
-		border-radius: 14px;
-		background: color-mix(in srgb, var(--bg) 72%, transparent);
-		box-shadow: inset 0 0 0 1px
-			color-mix(in srgb, var(--text-h) 8%, transparent);
-	}
-
-	.dark .why-choose-proof {
-		background: color-mix(in srgb, var(--bg) 45%, transparent);
-		box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-	}
-
-	.why-choose-proof__aside {
-		margin-top: auto;
-	}
-}
-
-.why-choose-proof__label {
-	font-size: 0.8125rem;
-	font-weight: 600;
-	letter-spacing: 0.02em;
-	line-height: 1.3;
-	color: var(--dash-brand);
-}
-
-.why-choose-proof__year {
-	margin-top: 0.35rem;
-	font-size: clamp(3.25rem, 8vw, 4.75rem);
-	font-weight: 600;
-	letter-spacing: -0.035em;
-	line-height: 0.92;
-	color: var(--text-h);
-}
-
-.why-choose-proof__lede {
-	margin-top: 1.125rem;
-	max-width: 32ch;
-	font-size: 1rem;
-	line-height: 1.65;
-	color: var(--text);
-}
-
-.why-choose-proof__aside {
-	margin-top: 1.25rem;
-	padding-top: 1.125rem;
-	border-top: 1px solid color-mix(in srgb, var(--text-h) 10%, transparent);
-	max-width: 34ch;
-	font-size: 0.9375rem;
-	line-height: 1.6;
-	color: var(--text-h);
-}
-
-.dark .why-choose-proof__aside {
-	border-top-color: rgba(255, 255, 255, 0.12);
-}
-
-.why-choose-pillars {
-	display: flex;
-	flex-direction: column;
-	min-width: 0;
-	height: 100%;
-}
-
-.why-choose-pillar {
-	padding-block: 1.375rem;
-	border-bottom: 1px solid color-mix(in srgb, var(--text-h) 10%, transparent);
-}
-
-.dark .why-choose-pillar {
-	border-bottom-color: rgba(255, 255, 255, 0.12);
-}
-
-.why-choose-pillar:first-child {
-	padding-top: 0;
-}
-
-.why-choose-pillar:last-child {
-	border-bottom: none;
-	padding-bottom: 0;
-}
-
-.why-choose-pillar h3 {
-	font-size: clamp(1.125rem, 2.2vw, 1.3125rem);
-	font-weight: 600;
-	letter-spacing: -0.02em;
-	line-height: 1.3;
-	color: var(--text-h);
-}
-
-.why-choose-pillar p {
-	margin-top: 0.5rem;
-	max-width: 52ch;
-	font-size: 0.9875rem;
-	line-height: 1.65;
-	color: var(--text);
-}
-
-@media (min-width: 960px) {
-	.why-choose-pillar {
-		padding-block: 1.5rem;
-	}
-
-	.why-choose-pillar p {
-		margin-top: 0.625rem;
-		font-size: 1rem;
-		line-height: 1.7;
-	}
 }
 
 .home-faq-item {

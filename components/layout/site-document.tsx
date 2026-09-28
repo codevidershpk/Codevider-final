@@ -1,19 +1,19 @@
-import { Alexandria, Libre_Baskerville } from "next/font/google";
+import { Lora, Sora } from "next/font/google";
 import type { ReactNode } from "react";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
-const alexandria = Alexandria({
+const sora = Sora({
 	variable: "--font-sans",
-	subsets: ["latin"],
-	style: ["normal"],
+	subsets: ["latin", "latin-ext"],
+	weight: ["400", "500", "600", "700"],
 });
 
-const libreBaskerville = Libre_Baskerville({
+const lora = Lora({
 	variable: "--font-heading",
-	subsets: ["latin"],
-	weight: ["400", "700"],
+	subsets: ["latin", "latin-ext"],
 	style: ["normal", "italic"],
+	weight: ["400", "500", "600", "700"],
 });
 
 /**
@@ -45,7 +45,7 @@ export function SiteDocument({ children }: Props) {
 			lang="en"
 			data-scroll-behavior="smooth"
 			suppressHydrationWarning
-			className={`${alexandria.variable} ${libreBaskerville.variable} h-full antialiased`}
+			className={`${sora.variable} ${lora.variable} h-full antialiased`}
 		>
 			<head>
 				<script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />

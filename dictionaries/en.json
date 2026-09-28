@@ -49,15 +49,20 @@
 		"global_projects": "Global projects",
 		"engineers": "Engineers",
 		"who_we_are_eyebrow": "Who we are",
-		"who_we_are_headline": "Transforming ideas into trusted digital solutions",
-		"who_we_are_description": "From web and mobile apps to cloud platforms and enterprise systems, we craft reliable software tailored to your business needs. Our teams blend modern technologies, scalable architectures, and intuitive design to deliver secure, high-performance solutions that help organizations innovate and grow.",
+		"who_we_are_headline": "Software teams that plug into yours",
+		"who_we_are_description": "We design, build, and run web, mobile, and cloud products inside your process. Same rituals, same backlog, no extra layer of management.",
+		"who_we_are_points": [
+			"Pods that join your standups, not a parallel process",
+			"Architecture your team can keep after we leave",
+			"Security and delivery owned by the same squad"
+		],
 		"read_more_about_us": "Read more about us",
 		"stat_global_partnerships_value": "{value}+",
 		"stat_global_partnerships": "Partnerships across the globe",
 		"stat_delivery_velocity_value": "{value}%",
-		"stat_delivery_velocity": "Average growth in delivery velocity",
-		"stat_elite_engineers_value": "{value}+",
-		"stat_elite_engineers": "Elite engineers with deep, full-stack expertise, ready to embed into your team within two weeks.",
+		"stat_delivery_velocity": "Average lift in delivery velocity",
+		"stat_embed_value": "{value} wk",
+		"stat_embed": "Kickoff to an embedded pod",
 		"core_services": {
 			"eyebrow": "Our core services",
 			"headline": "Everything you need to ship, scale, and stay ahead",
@@ -211,23 +216,62 @@
 			"eyebrow": "Why clients choose us",
 			"headline": "Senior partners, not extra hands",
 			"description": "We embed with your team, move at product pace, and leave you with full ownership of everything we ship.",
-			"proof_label": "Shipping since",
-			"proof_year": "2019",
-			"proof_description": "Mature process, sharp engineering, and a delivery model built for product teams under real deadline pressure.",
-			"proof_aside": "45+ projects across time zones. Full IP ownership — yours from day one.",
-			"cta": "Contact Us",
 			"pillars": {
 				"collaboration": {
 					"title": "Seamless collaboration",
-					"description": "We plug into your stack and rituals — Slack, Jira, GitHub — with shared roadmaps and full visibility. No black-box agency handoffs."
+					"description": "We plug into your stack and rituals — Slack, Jira, GitHub — with shared roadmaps and full visibility. No black-box agency handoffs.",
+					"visual": {
+						"feed": [
+							"PR #482 merged",
+							"Sprint review · Thu 10:00",
+							"Roadmap updated"
+						]
+					}
 				},
 				"efficiency": {
 					"title": "Value-driven efficiency",
-					"description": "Skip slow hiring cycles. Based in Tirana, Albania — a strong European tech hub — we ship senior web engineering at optimized rates without cutting quality."
+					"description": "Skip slow hiring cycles. Based in Tirana, Albania — a strong European tech hub — we ship senior web engineering at optimized rates without cutting quality.",
+					"visual": {
+						"typical": "Typical hire",
+						"typical_value": "12 wks",
+						"us": "Codevider",
+						"us_value": "2 wks"
+					}
 				},
 				"expertise": {
 					"title": "Expertise on demand",
-					"description": "Senior specialists who bring sharp, proactive solutions when your product needs them most — not just capacity to fill a roster."
+					"description": "Senior specialists who bring sharp, proactive solutions when your product needs them most — not just capacity to fill a roster.",
+					"visual": {
+						"roles": [
+							"Senior FE",
+							"Senior BE",
+							"Mobile",
+							"DevOps",
+							"Cloud architect",
+							"AI / ML",
+							"Data engineer",
+							"UI/UX",
+							"QA lead"
+						]
+					}
+				}
+			},
+			"stats": {
+				"since": {
+					"value": "2019",
+					"label": "Shipping since"
+				},
+				"projects": {
+					"value": "45+",
+					"label": "Projects delivered"
+				},
+				"engineers": {
+					"value": "25+",
+					"label": "Senior engineers"
+				},
+				"ip": {
+					"value": "100%",
+					"label": "IP yours from day one"
 				}
 			}
 		},

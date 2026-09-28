@@ -67,7 +67,7 @@ export default function Hero() {
 			<div className="home-wrap relative z-10">
 				<div className="grid w-full items-center gap-16 lg:grid-cols-[1.02fr_0.98fr]">
 					<div className="flex flex-col items-center lg:items-start">
-						<h1 className="hero-reveal hero-reveal-1 max-w-2xl text-balance text-center text-[clamp(2.5rem,5.5vw,4.2rem)] leading-[1.04] tracking-[-0.03em] text-(--hero-text-h) lg:text-left">
+						<h1 className="hero-reveal hero-reveal-1 max-w-2xl text-balance text-center text-[clamp(2.5rem,5.5vw,4.2rem)] leading-[1.1] tracking-[-0.03em] text-(--hero-text-h) lg:text-left">
 							<span className="font-sans">
 								{t("your_strategic_partner_in")}{" "}
 							</span>

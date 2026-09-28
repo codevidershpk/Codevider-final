@@ -15,13 +15,20 @@ import {
 
 type SectionLoader = () => Promise<{ default: ComponentType }>;
 
-function shouldForceMountForHash(sectionId?: string): boolean {
-	if (typeof window === "undefined" || !sectionId) return false;
-	if (window.location.hash.length <= 1) return false;
-
+/**
+ * True when the URL hash points at any deferred section (or something nested
+ * in one, e.g. #core-services-2). Every section then mounts up front: if the
+ * ones above the target stayed placeholders, they would grow mid-scroll and
+ * push the target out from under the scroll position.
+ */
+function hashTargetsDeferredSection(): boolean {
+	if (typeof window === "undefined") return false;
 	const hash = window.location.hash.slice(1);
-	// Also mount for nested targets, e.g. #core-services-2 inside #core-services.
-	return hash === sectionId || hash.startsWith(`${sectionId}-`);
+	if (!hash) return false;
+
+	return [
+		...document.querySelectorAll<HTMLElement>(`[${DEFERRED_SECTION_ATTR}]`),
+	].some(({ id }) => id && (hash === id || hash.startsWith(`${id}-`)));
 }
 
 /**
@@ -55,10 +62,17 @@ export function createDeferredHomeSection(
 		useLayoutEffect(() => {
 			// On reload, mount every section so the restored scroll position
 			// lands on real content instead of placeholder heights.
-			if (shouldForceMountForHash(id) || getReloadScrollAnchor()) {
+			if (hashTargetsDeferredSection() || getReloadScrollAnchor()) {
 				setForceMount(true);
 			}
-		}, [id]);
+
+			// In-page hash links (e.g. nav "Contact") need the same treatment.
+			const onHashChange = () => {
+				if (hashTargetsDeferredSection()) setForceMount(true);
+			};
+			window.addEventListener("hashchange", onHashChange);
+			return () => window.removeEventListener("hashchange", onHashChange);
+		}, []);
 
 		useEffect(() => {
 			if (forceMount) {

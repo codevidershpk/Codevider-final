@@ -3,6 +3,7 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Reveal, RevealGroup } from "@/components/ui/reveal";
 import { fetchArticles } from "@/lib/api/blog-posts";
 import {
 	articleHref,
@@ -71,8 +72,14 @@ export default function BlogRelated({ currentId }: BlogRelatedProps) {
 	if (status === "ready" && related.length === 0) return null;
 
 	return (
-		<section className="blog-related" aria-label={t("related_label")}>
-			<p className="blog-related__headline">{t("related_headline")}</p>
+		<RevealGroup
+			as="section"
+			className="blog-related"
+			aria-label={t("related_label")}
+		>
+			<Reveal as="p" className="blog-related__headline">
+				{t("related_headline")}
+			</Reveal>
 
 			{status === "loading" ? (
 				<div className="blog-related__loading" aria-live="polite" aria-busy>
@@ -93,13 +100,13 @@ export default function BlogRelated({ currentId }: BlogRelatedProps) {
 
 			{status === "ready" && related.length > 0 ? (
 				<ul className="blog-related__grid">
-					{related.map((post) => {
+					{related.map((post, index) => {
 						const dateLabel = formatArticleDate(getArticleDateValue(post));
 						const excerpt = getArticleExcerpt(post);
 						const cover = getArticleCoverUrl(post.cover_image);
 
 						return (
-							<li key={post.id}>
+							<Reveal as="li" key={post.id} delay={0.08 + index * 0.08}>
 								<article className="blog-related-card">
 									{cover ? (
 										<Link
@@ -148,11 +155,11 @@ export default function BlogRelated({ currentId }: BlogRelatedProps) {
 										</Link>
 									</div>
 								</article>
-							</li>
+							</Reveal>
 						);
 					})}
 				</ul>
 			) : null}
-		</section>
+		</RevealGroup>
 	);
 }

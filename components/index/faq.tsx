@@ -2,7 +2,6 @@
 
 import { ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import { useCopy } from "@/lib/copy";
 import { useState } from "react";
 import {
 	appleRevealEase,
@@ -10,6 +9,7 @@ import {
 	sectionRevealItem,
 	useSectionReveal,
 } from "@/hooks/use-section-reveal";
+import { useCopy } from "@/lib/copy";
 import SectionHead from "./section-head";
 
 const FAQ_IDS = [
@@ -121,7 +121,27 @@ export default function Faq() {
 	return (
 		<section ref={ref} className="home-section home-section--tight">
 			<div className="home-wrap">
-				<SectionHead eyebrow={t("eyebrow")} headline={t("headline")} centered />
+				<motion.div
+					initial={
+						shouldReduceMotion || !shouldAnimate
+							? false
+							: sectionRevealItem.hidden
+					}
+					animate={
+						isRevealed ? sectionRevealItem.visible : sectionRevealItem.hidden
+					}
+					transition={sectionItemTransition(
+						shouldAnimate,
+						0,
+						!!shouldReduceMotion,
+					)}
+				>
+					<SectionHead
+						eyebrow={t("eyebrow")}
+						headline={t("headline")}
+						centered
+					/>
+				</motion.div>
 
 				<div className="home-section-lead mx-auto max-w-[860px]">
 					{FAQ_IDS.map((id, index) => {

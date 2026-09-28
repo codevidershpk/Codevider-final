@@ -26,7 +26,7 @@ export default function AboutCulture() {
 		<section
 			ref={ref}
 			id="our-culture"
-			className="home-section home-section--tight"
+			className="home-section home-section--tight home-feature-alt"
 		>
 			<div className="home-wrap">
 				<SectionHead

@@ -1,12 +1,25 @@
 "use client";
 
-import { type CSSProperties, useCallback, useEffect, useState } from "react";
+import {
+	type CSSProperties,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 
 const COLS = 4;
 const ROWS = 5;
 const CELL_COUNT = COLS * ROWS;
 
 const LETTERS = ["R", "E", "S", "C", "U", "E"] as const;
+
+// How long every letter stays broken before the first one snaps back.
+const HOLD_MS = 700;
+// Delay between each letter reassembling, left to right.
+const STAGGER_MS = 160;
+// Play once on load, after the hero copy has faded in.
+const INTRO_DELAY_MS = 1400;
 
 type Offset = { x: number; y: number; r: number };
 
@@ -29,17 +42,16 @@ function fragmentOffset(letter: string, index: number): Offset | null {
 function RescueLetter({
 	char,
 	open,
-	onToggle,
+	className = "",
 }: {
 	char: string;
 	open: boolean;
-	onToggle: () => void;
+	className?: string;
 }) {
 	return (
 		<span
-			className={open ? "vcr-letter is-open" : "vcr-letter"}
+			className={`vcr-letter${open ? " is-open" : ""} ${className}`.trim()}
 			aria-hidden
-			onClick={onToggle}
 		>
 			<span className="vcr-letter__solid">{char}</span>
 			{Array.from({ length: CELL_COUNT }, (_, index) => {
@@ -70,38 +82,55 @@ function RescueLetter({
 }
 
 export function RescueWord() {
-	const [active, setActive] = useState<number | null>(null);
-	const [canHover, setCanHover] = useState(true);
+	const [broken, setBroken] = useState<boolean[]>(() =>
+		LETTERS.map(() => false),
+	);
+	const running = useRef(false);
+	const timers = useRef<number[]>([]);
 
-	useEffect(() => {
-		const hoverMq = window.matchMedia("(hover: hover) and (pointer: fine)");
-		const motionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
-		const sync = () => setCanHover(hoverMq.matches && !motionMq.matches);
-		sync();
-		hoverMq.addEventListener("change", sync);
-		motionMq.addEventListener("change", sync);
-		return () => {
-			hoverMq.removeEventListener("change", sync);
-			motionMq.removeEventListener("change", sync);
-		};
+	const shatter = useCallback(() => {
+		if (running.current) return;
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+		running.current = true;
+		setBroken(LETTERS.map(() => true));
+
+		timers.current = LETTERS.map((_, index) =>
+			window.setTimeout(
+				() => {
+					setBroken((current) =>
+						current.map((value, i) => (i === index ? false : value)),
+					);
+					if (index === LETTERS.length - 1) running.current = false;
+				},
+				HOLD_MS + index * STAGGER_MS,
+			),
+		);
 	}, []);
 
-	const toggle = useCallback(
-		(index: number) => {
-			if (canHover) return;
-			setActive((current) => (current === index ? null : index));
-		},
-		[canHover],
-	);
+	useEffect(() => {
+		const intro = window.setTimeout(shatter, INTRO_DELAY_MS);
+		return () => {
+			window.clearTimeout(intro);
+			for (const id of timers.current) window.clearTimeout(id);
+			running.current = false;
+		};
+	}, [shatter]);
 
 	return (
-		<div className="vcr-word" role="img" aria-label="RESCUE">
+		<div
+			className="vcr-word"
+			role="img"
+			aria-label="RESCUE"
+			onPointerEnter={shatter}
+			onClick={shatter}
+		>
 			{LETTERS.map((letter, index) => (
 				<RescueLetter
 					key={`${letter}-${index}`}
 					char={letter}
-					open={active === index}
-					onToggle={() => toggle(index)}
+					open={broken[index]}
+					// The round C–U pair reads tighter than the rest; open it up.
+					className={letter === "U" ? "vcr-letter--loose-start" : undefined}
 				/>
 			))}
 		</div>

@@ -231,7 +231,7 @@ export default function ServicesTechStack() {
 									type="button"
 									role="tab"
 									aria-selected={isActive}
-									className={`svc-tech-filter relative overflow-hidden ${isActive ? "svc-tech-filter--active" : ""}`}
+									className={`svc-tech-filter relative cursor-pointer overflow-hidden ${isActive ? "svc-tech-filter--active" : ""}`}
 									onClick={() => goTo(i)}
 								>
 									{filter.label}

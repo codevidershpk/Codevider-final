@@ -11,7 +11,6 @@ import {
 	Send,
 } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import { useCopy } from "@/lib/copy";
 import { ReactNode, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -24,6 +23,7 @@ import {
 	useSectionReveal,
 } from "@/hooks/use-section-reveal";
 import { submitContactLead } from "@/lib/api/contact-lead";
+import { useCopy } from "@/lib/copy";
 import {
 	type ContactFormValues,
 	createContactSchema,
@@ -142,12 +142,28 @@ export default function Contact({
 	return (
 		<section ref={ref} className="home-section home-feature-alt">
 			{hideIntro ? null : (
-				<SectionHead
-					eyebrow={t("eyebrow")}
-					headline={t("headline")}
-					description={t("description")}
-					centered
-				/>
+				<motion.div
+					initial={
+						shouldReduceMotion || !shouldAnimate
+							? false
+							: sectionRevealItem.hidden
+					}
+					animate={
+						isRevealed ? sectionRevealItem.visible : sectionRevealItem.hidden
+					}
+					transition={sectionItemTransition(
+						shouldAnimate,
+						0,
+						!!shouldReduceMotion,
+					)}
+				>
+					<SectionHead
+						eyebrow={t("eyebrow")}
+						headline={t("headline")}
+						description={t("description")}
+						centered
+					/>
+				</motion.div>
 			)}
 
 			<div
@@ -165,7 +181,7 @@ export default function Contact({
 					}
 					transition={sectionItemTransition(
 						shouldAnimate,
-						0,
+						hideIntro ? 0 : 0.1,
 						!!shouldReduceMotion,
 					)}
 				>
@@ -228,7 +244,7 @@ export default function Contact({
 					}
 					transition={sectionItemTransition(
 						shouldAnimate,
-						0.1,
+						hideIntro ? 0.1 : 0.2,
 						!!shouldReduceMotion,
 					)}
 				>

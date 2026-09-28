@@ -105,6 +105,38 @@ export function waitForHashTarget(
 
 const NAV_SCROLL_OFFSET = 88;
 
+/** Resolves once `scrollY` has not changed for `idleFor` ms. */
+function waitForScrollIdle(
+	idleFor = 150,
+	timeout = 3000,
+	signal?: AbortSignal,
+): Promise<void> {
+	return new Promise((resolve) => {
+		let last = window.scrollY;
+		let idle = 0;
+		const step = 50;
+
+		const finish = () => {
+			clearInterval(interval);
+			clearTimeout(timer);
+			resolve();
+		};
+
+		const interval = setInterval(() => {
+			if (signal?.aborted) return finish();
+			if (window.scrollY === last) {
+				idle += step;
+				if (idle >= idleFor) finish();
+			} else {
+				idle = 0;
+				last = window.scrollY;
+			}
+		}, step);
+		const timer = setTimeout(finish, timeout);
+		signal?.addEventListener("abort", finish, { once: true });
+	});
+}
+
 /**
  * Scrolls to a hash target, accounting for the fixed navbar.
  */
@@ -128,14 +160,25 @@ export async function scrollToHashTargetWhenReady(
 	id: string,
 	signal?: AbortSignal,
 ) {
+	const existing = document.getElementById(id);
+	const readyNow = !!existing && isHashTargetReady(existing);
+
 	const el = await waitForHashTarget(id, 50, 8000, signal);
 	if (!el || signal?.aborted) return;
 
-	await waitForStableLayout(300, 50, 8000, signal);
-	if (signal?.aborted) return;
+	// Target already on the page: scroll straight away. Waiting would let the
+	// browser's native hash scroll start first, and restarting it mid-flight
+	// reads as a stutter.
+	if (!readyNow) {
+		await waitForStableLayout(300, 50, 8000, signal);
+		if (signal?.aborted) return;
+	}
 
 	scrollToHashTarget(el);
 
+	// Only check for drift once the smooth scroll has finished; checking
+	// mid-flight would restart it halfway there.
+	await waitForScrollIdle(150, 3000, signal);
 	await waitForStableLayout(200, 50, 3000, signal);
 	if (signal?.aborted) return;
 

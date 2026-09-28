@@ -768,6 +768,7 @@ export default function CoreServices() {
 						headline={t("headline")}
 						description={t("description")}
 						descriptionClassName="mt-7 text-sm sm:mt-8"
+						centered
 					/>
 				</motion.div>
 
