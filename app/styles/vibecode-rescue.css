@@ -916,8 +916,9 @@
 	}
 }
 
-/* ---------- Hover (mirrors .home-ecard) ----------
-   Reveal writes an inline `transform`, so lift via `translate` instead. */
+/* ---------- Hover / tap (mirrors .home-ecard) ----------
+   Reveal writes an inline `transform`, so lift via `translate` instead.
+   Pointer devices get :hover; touch devices get the same look on tap (:active). */
 
 .vcr-grid > .vcr-card,
 .vcr-icon,
@@ -926,6 +927,7 @@
 	transition-property: translate, scale, box-shadow, background-color, color;
 	transition-duration: 200ms;
 	transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+	-webkit-tap-highlight-color: transparent;
 }
 
 @media (hover: hover) {
@@ -961,14 +963,50 @@
 	}
 }
 
+.vcr-grid > .vcr-card:active {
+	translate: 0 -2px;
+	box-shadow:
+		0 0 0 1px color-mix(in srgb, var(--dash-brand) 20%, transparent),
+		0 4px 12px rgba(0, 0, 0, 0.07),
+		0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.dark .vcr-grid > .vcr-card:active {
+	box-shadow:
+		0 0 0 1px color-mix(in srgb, var(--dash-brand) 34%, transparent),
+		0 6px 16px rgba(0, 0, 0, 0.35);
+}
+
+.vcr-grid > .vcr-card:active .vcr-icon,
+.vcr-stack__row:active .vcr-icon {
+	background-color: color-mix(in srgb, var(--dash-brand) 20%, transparent);
+	color: var(--dash-brand);
+	scale: 1.06;
+}
+
+.vcr-stack__row:active {
+	translate: 4px 0;
+}
+
+.vcr-stack__row:active .vcr-tags li {
+	box-shadow:
+		0 0 0 1px color-mix(in srgb, var(--dash-brand) 20%, transparent),
+		var(--shadow-sm);
+}
+
 @media (prefers-reduced-motion: reduce) {
-	.vcr-grid > .vcr-card:hover,
-	.vcr-stack__row:hover {
+	.vcr-grid > .vcr-card:is(:hover, :active),
+	.vcr-stack__row:is(:hover, :active) {
 		translate: none;
 	}
 
-	.vcr-grid > .vcr-card:hover .vcr-icon,
-	.vcr-stack__row:hover .vcr-icon {
+	.vcr-grid > .vcr-card:is(:hover, :active) .vcr-icon,
+	.vcr-stack__row:is(:hover, :active) .vcr-icon {
 		scale: none;
 	}
+}
+
+/* Contact form: drop the brand-tint corner glow on this page. */
+.vcr-page .surface-card {
+	background-image: none;
 }
