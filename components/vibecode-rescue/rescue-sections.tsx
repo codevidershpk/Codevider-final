@@ -415,7 +415,9 @@ export function RescueClose() {
 			<div className="vcr-wrap">
 				<div className="vcr-cta">
 					<Reveal as="p" className="vcr-eyebrow vcr-eyebrow--center">
-						Built with AI. Ready for engineers.
+						<span className="vcr-eyebrow__lines">
+							<span>Built with AI.</span> <span>Ready for engineers.</span>
+						</span>
 					</Reveal>
 					<Reveal as="h2" delay={0.06} className="vcr-h2">
 						Your prototype got you this far. Let’s see where it can go next.

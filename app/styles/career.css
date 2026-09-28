@@ -171,6 +171,14 @@
 	}
 }
 @media (max-width: 767.98px) {
+	/* No outer card on mobile; the job cards sit directly on the page. */
+	.career-openings-card {
+		padding: 0;
+		border-radius: 0;
+		background: transparent;
+		box-shadow: none;
+	}
+
 	/* Title + CTA side by side, meta full-width below */
 	.career-job-card {
 		display: grid;
@@ -281,6 +289,17 @@
 .career-job-card__cta:focus-visible {
 	outline: 2px solid var(--dash-brand);
 	outline-offset: 2px;
+}
+@media (max-width: 767.98px) {
+	.career-job-card .career-job-card__cta {
+		width: 2.75rem;
+		height: 2.75rem;
+		padding: 0;
+	}
+
+	.career-job-card__cta-label {
+		display: none;
+	}
 }
 @media (prefers-reduced-motion: reduce) {
 	.career-job-card:hover,
@@ -745,10 +764,10 @@
 	color: var(--on-dark);
 }
 .career-hiring .home-eyebrow {
-	color: var(--brand-blue);
+	color: var(--on-dark-accent);
 }
 .career-hiring .home-eyebrow::before {
-	background: var(--brand-blue);
+	background: var(--on-dark-accent);
 }
 .career-hiring__head h2 {
 	color: #fff;

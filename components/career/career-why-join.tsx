@@ -37,17 +37,19 @@ export default function CareerWhyJoin() {
 						return (
 							<motion.article
 								key={id}
-								className="home-ecard home-card-body text-center md:text-left"
+								className="home-ecard home-card-body text-left"
 								initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
 								animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
 								transition={transition}
 							>
-								<div className="home-ecard-icon mx-auto md:mx-0">
-									<Icon className="size-[22px]" aria-hidden />
+								<div className="flex items-center gap-3">
+									<div className="home-ecard-icon shrink-0">
+										<Icon className="size-[22px]" aria-hidden />
+									</div>
+									<h3 className="text-xl font-semibold text-balance tracking-[-0.01em] text-(--text-h)">
+										{t(`values.${id}.title`)}
+									</h3>
 								</div>
-								<h3 className="text-xl font-semibold text-balance tracking-[-0.01em] text-(--text-h)">
-									{t(`values.${id}.title`)}
-								</h3>
 								<p className="text-pretty text-[15px] leading-relaxed text-(--text)">
 									{t(`values.${id}.description`)}
 								</p>

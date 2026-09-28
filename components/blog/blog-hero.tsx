@@ -20,7 +20,7 @@ export default function BlogHero() {
 	return (
 		<section ref={ref} className="svc-hero blog-hero">
 			<div className="svc-hero__glow" aria-hidden />
-			<div className="home-wrap relative z-10 pt-[clamp(5.5rem,10vw,7.5rem)] pb-[clamp(3.25rem,7vw,5rem)]">
+			<div className="home-wrap relative z-10 pt-[clamp(6.5rem,12vw,9rem)] pb-[clamp(4rem,8vw,6rem)]">
 				<motion.p
 					className="home-eyebrow svc-hero__eyebrow"
 					initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}

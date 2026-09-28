@@ -353,10 +353,10 @@ function PodDemo() {
 	};
 
 	const colors: Record<(typeof POD_ROLES)[number], string> = {
-		frontend: "bg-(--pod-fe)",
-		backend: "bg-(--pod-be)",
-		qa: "bg-(--pod-qa)",
-		pm: "bg-(--pod-pm)",
+		frontend: "bg-(--pod-fe) dark:text-[#06140d]",
+		backend: "bg-(--pod-be) dark:text-[#06140d]",
+		qa: "bg-(--pod-qa) dark:text-[#06140d]",
+		pm: "bg-(--pod-pm) dark:text-[#06140d]",
 	};
 
 	const titleColors: Record<(typeof POD_ROLES)[number], string> = {
@@ -447,7 +447,7 @@ function PodDemo() {
 					<span className={`font-semibold ${titleColors[active]}`}>
 						{t(`role_${active}`)}
 					</span>
-					{" — "}
+					{": "}
 					{t(`role_${active}_desc`)}
 				</motion.p>
 			</AnimatePresence>

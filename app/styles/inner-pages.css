@@ -28,10 +28,10 @@
 		);
 }
 .svc-hero__eyebrow {
-	color: var(--brand-blue);
+	color: var(--on-dark-accent);
 }
 .svc-hero__eyebrow::before {
-	background: var(--brand-blue);
+	background: var(--on-dark-accent);
 }
 .svc-hero__title {
 	max-width: 16ch;

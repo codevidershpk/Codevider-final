@@ -143,6 +143,7 @@ export default function Contact({
 		<section ref={ref} className="home-section home-feature-alt">
 			{hideIntro ? null : (
 				<motion.div
+					className="home-wrap"
 					initial={
 						shouldReduceMotion || !shouldAnimate
 							? false

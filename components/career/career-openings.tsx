@@ -217,7 +217,9 @@ export default function CareerOpenings() {
 														className="career-job-card__cta"
 														aria-label={t("apply_for", { title: job.title })}
 													>
-														{t("view_details")}
+														<span className="career-job-card__cta-label">
+															{t("view_details")}
+														</span>
 														<ArrowUpRight className="size-4" aria-hidden />
 													</Link>
 												</article>

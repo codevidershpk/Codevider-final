@@ -23,7 +23,7 @@
 		},
 		"blog": {
 			"title": "Blogs — Codevider",
-			"description": "Ideas on tech, work, people, and culture — from engineering, AI, and product craft to HR, teamwork, career growth, and the psychology of great work."
+			"description": "Ideas on tech, work, people, and culture, from engineering, AI, and product craft to HR, teamwork, career growth, and the psychology of great work."
 		},
 		"blog_post": {
 			"title": "Article — Codevider",
@@ -42,7 +42,7 @@
 	"home": {
 		"your_strategic_partner_in": "Your strategic partner in",
 		"hero_lead_emphasis": "We design, build, and scale reliable web, mobile, and cloud software",
-		"hero_lead_rest": "— embedded with your team and delivered without the overhead.",
+		"hero_lead_rest": "embedded with your team and delivered without the overhead.",
 		"start_your_project": "Start your project",
 		"explore_services": "Explore services",
 		"years_delivering": "Years delivering",
@@ -163,7 +163,7 @@
 		"empower": {
 			"eyebrow": "What we build",
 			"headline": "We build software. AI where it earns its place.",
-			"description": "From mobile and custom platforms to data, fintech, CRM, and enterprise modernization — plus automation, cloud, and AI integrated wherever it creates real leverage.",
+			"description": "From mobile and custom platforms to data, fintech, CRM, and enterprise modernization, plus automation, cloud, and AI integrated wherever it creates real leverage.",
 			"cards": {
 				"automation": {
 					"title": "Workflow Automation",
@@ -175,7 +175,7 @@
 				},
 				"ai": {
 					"title": "AI Integration",
-					"description": "Embed intelligence wherever it helps — chat, workflows, search, analytics — so AI shows up in the product, not as a bolted-on feature."
+					"description": "Embed intelligence wherever it helps across chat, workflows, search and analytics, so AI shows up in the product, not as a bolted-on feature."
 				},
 				"mobile": {
 					"title": "Mobile Apps",
@@ -183,7 +183,7 @@
 				},
 				"custom": {
 					"title": "Custom Software",
-					"description": "Scalable systems built around your workflows — not off-the-shelf constraints."
+					"description": "Scalable systems built around your workflows, not off-the-shelf constraints."
 				},
 				"data": {
 					"title": "Data & BI",
@@ -206,7 +206,7 @@
 		"global": {
 			"eyebrow": "Global partnerships",
 			"headline": "Building bridges across borders",
-			"description": "We enable seamless collaboration on projects worldwide — empowering startups, enterprises, and innovators to grow together.",
+			"description": "We enable seamless collaboration on projects worldwide, empowering startups, enterprises, and innovators to grow together.",
 			"tirana": "Tirana",
 			"germany": "Germany",
 			"usa": "United States",
@@ -219,7 +219,7 @@
 			"pillars": {
 				"collaboration": {
 					"title": "Seamless collaboration",
-					"description": "We plug into your stack and rituals — Slack, Jira, GitHub — with shared roadmaps and full visibility. No black-box agency handoffs.",
+					"description": "We plug into your stack and rituals, Slack, Jira, GitHub, with shared roadmaps and full visibility. No black-box agency handoffs.",
 					"visual": {
 						"feed": [
 							"PR #482 merged",
@@ -230,7 +230,7 @@
 				},
 				"efficiency": {
 					"title": "Value-driven efficiency",
-					"description": "Skip slow hiring cycles. Based in Tirana, Albania — a strong European tech hub — we ship senior web engineering at optimized rates without cutting quality.",
+					"description": "Skip slow hiring cycles. Based in Tirana, Albania, a strong European tech hub, we ship senior web engineering at optimized rates without cutting quality.",
 					"visual": {
 						"typical": "Typical hire",
 						"typical_value": "12 wks",
@@ -240,7 +240,7 @@
 				},
 				"expertise": {
 					"title": "Expertise on demand",
-					"description": "Senior specialists who bring sharp, proactive solutions when your product needs them most — not just capacity to fill a roster.",
+					"description": "Senior specialists who bring sharp, proactive solutions when your product needs them most, not just capacity to fill a roster.",
 					"visual": {
 						"roles": [
 							"Senior FE",
@@ -569,7 +569,7 @@
 					"blocks": [
 						{
 							"type": "p",
-							"text": "All assets, content, and materials available on this website—including but not limited to source code, layouts, text, designs, graphics, branding, logos, case studies, whitepapers, and interface elements—are the exclusive intellectual property of Codevider or its licensors, protected by Albanian copyright laws and international intellectual property treaties."
+							"text": "All assets, content, and materials available on this website, including but not limited to source code, layouts, text, designs, graphics, branding, logos, case studies, whitepapers, and interface elements are the exclusive intellectual property of Codevider or its licensors, protected by Albanian copyright laws and international intellectual property treaties."
 						},
 						{
 							"type": "ul",
@@ -612,7 +612,7 @@
 						},
 						{
 							"type": "p",
-							"text": "IN NO EVENT SHALL CODEVIDER, ITS DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES—INCLUDING LOSS OF PROFITS, REVENUE, DATA, OR BUSINESS OPPORTUNITY—ARISING OUT OF OR IN CONNECTION WITH YOUR USE, OR INABILITY TO USE, THIS WEBSITE, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.",
+							"text": "IN NO EVENT SHALL CODEVIDER, ITS DIRECTORS, EMPLOYEES, OR AGENTS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING LOSS OF PROFITS, REVENUE, DATA, OR BUSINESS OPPORTUNITY ARISING OUT OF OR IN CONNECTION WITH YOUR USE, OR INABILITY TO USE, THIS WEBSITE, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.",
 							"variant": "disclaimer"
 						}
 					]
@@ -671,7 +671,7 @@
 		"our_team": "Our team",
 		"our_story": "Our story",
 		"meta_title": "About — Codevider",
-		"meta_description": "Founded in 2019 in Tirana, Albania, Codevider crafts software that means business — strategy, design, and engineering in harmony.",
+		"meta_description": "Founded in 2019 in Tirana, Albania, Codevider crafts software that means business, strategy, design, and engineering in harmony.",
 		"hero": {
 			"eyebrow": "About us",
 			"headline": "Crafting software that means business",
@@ -683,7 +683,7 @@
 		"who_we_are": {
 			"eyebrow": "Who we are",
 			"headline": "Built for partnership, engineered for scale",
-			"paragraph_1": "Founded in 2019 in Tirana, Albania, Codevider delivers high-performance, cost-efficient software development solutions for startups, SMEs, and enterprises across Europe and beyond. We specialize in web and mobile development, cloud-native microservices, and AI-powered integrations — helping you accelerate time-to-market and cut development costs by up to 60%.",
+			"paragraph_1": "Founded in 2019 in Tirana, Albania, Codevider delivers high-performance, cost-efficient software development solutions for startups, SMEs, and enterprises across Europe and beyond. We specialize in web and mobile development, cloud-native microservices, and AI-powered integrations, helping you accelerate time-to-market and cut development costs by up to 60%.",
 			"paragraph_2": "Our team of {value}+ developers excels in today's most advanced tech stacks. We integrate directly into your workflow using agile, sprint-based methodologies that keep you informed and in control, every step of the way. With a focus on quality, agility, and long-term partnership, we turn your ideas into scalable, future-ready digital products.",
 			"cta": "Let's build together"
 		},
@@ -694,7 +694,7 @@
 			"principles": {
 				"vision": {
 					"title": "Clear Vision",
-					"description": "We align on goals before writing a line of code — so every sprint moves your product toward a measurable outcome."
+					"description": "We align on goals before writing a line of code, so every sprint moves your product toward a measurable outcome."
 				},
 				"code": {
 					"title": "Clean Code",
@@ -709,7 +709,7 @@
 		"life": {
 			"eyebrow": "Life at Codevider",
 			"headline": "Our team in the studio",
-			"description": "From focused deep work to team moments — this is how we build together every day.",
+			"description": "From focused deep work to team moments. This is how we build together every day.",
 			"office_alt_1": "Private glass booths and open workspace at the Codevider office",
 			"office_alt_2": "Colorful lounge area with beanbags at the Codevider office",
 			"photo_alt_1": "Two Codevider team members smiling in the office",
@@ -899,7 +899,7 @@
 			"values": {
 				"ownership": {
 					"title": "Real ownership",
-					"description": "Every team member takes ownership of their work and ships features that reach real users across Europe and beyond."
+					"description": "Every team member takes ownership of their work and ships features that reach real users across the world."
 				},
 				"growth": {
 					"title": "Continuous growth",
@@ -914,19 +914,19 @@
 		"hiring": {
 			"eyebrow": "How we hire",
 			"headline": "Our hiring process",
-			"description": "Four clear steps — designed to be transparent, fair, and respectful of your time.",
+			"description": "Four clear steps, designed to be transparent, fair, and respectful of your time.",
 			"steps": {
 				"application_review": {
 					"title": "Application Review",
-					"description": "We carefully review your resume and portfolio to assess how your skills align with our needs. We look for potential, not just perfection — your capacity for growth, collaboration, and impact."
+					"description": "We carefully review your resume and portfolio to assess how your skills align with our needs. We look for potential, not just perfection, your capacity for growth, collaboration, and impact."
 				},
 				"hr_interview": {
 					"title": "HR Interview",
-					"description": "Management and HR conduct the first interview to understand your experience, talents, and goals — and to share more about our culture of work and the principles we believe in."
+					"description": "Management and HR conduct the first interview to understand your experience, talents, and goals, and to share more about our culture of work and the principles we believe in."
 				},
 				"technical_review": {
 					"title": "Technical Review",
-					"description": "A technical assessment evaluates your level of expertise, analytical thinking, and how you approach challenges — building a full picture of your professional profile."
+					"description": "A technical assessment evaluates your level of expertise, analytical thinking, and how you approach challenges, building a full picture of your professional profile."
 				},
 				"offer": {
 					"title": "The Offer",
@@ -939,13 +939,13 @@
 		"hero": {
 			"eyebrow": "Blogs",
 			"headline": "Notes on tech, work, and people",
-			"lead": "Engineering, AI, and product craft — plus HR, teamwork, career growth, and the psychology of building great software together."
+			"lead": "Engineering, AI, and product craft, plus HR, teamwork, career growth, and the psychology of building great software together."
 		},
 		"list": {
 			"eyebrow": "Tech • People • Culture • Careers",
 			"headline": "Latest from the team",
 			"headline_empty": "No posts yet",
-			"description": "Field notes on technology, teamwork, culture, careers, and the human side of work — from engineers, HR, and product partners.",
+			"description": "Field notes on technology, teamwork, culture, careers, and the human side of work, from engineers, HR, and product partners.",
 			"description_empty": "New articles are on the way. Check back soon for notes from the Codevider team.",
 			"loading": "Loading articles…",
 			"error": "We couldn't load articles right now. Please try again in a moment.",
@@ -978,7 +978,7 @@
 			"toc_nav": "Article sections",
 			"progress_label": "Reading progress",
 			"progress_status": "{percent}% read",
-			"progress_hint": "Keep scrolling — this fills up when you reach the end.",
+			"progress_hint": "Keep scrolling. This fills up when you reach the end.",
 			"progress_done": "You've reached the end of this article.",
 			"share_label": "Share this article",
 			"share_hint": "Found this useful? Pass it on.",
@@ -991,7 +991,7 @@
 			"share_x_short": "X",
 			"share_linkedin_short": "LinkedIn",
 			"share_copy_short": "Copy link",
-			"share_copied": "Share message copied — ready to paste anywhere",
+			"share_copied": "Share message copied, ready to paste anywhere",
 			"share_copied_short": "Copied",
 			"related_label": "Related articles",
 			"related_headline": "More articles",
@@ -1016,7 +1016,7 @@
 			"outcomes_heading": "Outcomes",
 			"nav_aria": "Service categories",
 			"cta_title": "Not seeing a perfect match?",
-			"cta_body": "We tailor engagements to fit your roadmap — tell us your use-case and we'll suggest the most effective path forward.",
+			"cta_body": "We tailor engagements to fit your roadmap. Tell us your use-case and we'll suggest the most effective path forward.",
 			"cta_button": "Talk to us",
 			"nav": {
 				"custom": "Custom Software",
@@ -1124,7 +1124,7 @@
 					"description": "Add vetted engineers and product talent that plug into your process. Scale up quickly, keep momentum, and deliver more without long hiring cycles.",
 					"solutions": {
 						"1": "Specialized engineers embedded in your workflow",
-						"2": "Flexible engagement — scale up or down",
+						"2": "Flexible engagement that scales up or down",
 						"3": "Immediate capacity without long recruitment cycles"
 					},
 					"outcomes": {
@@ -1146,7 +1146,7 @@
 				},
 				"team_selection": {
 					"title": "Team selection",
-					"description": "We assemble a focused pod — frontend, backend, and QA — matched to your stack and timeline."
+					"description": "We assemble a focused pod of frontend, backend, and QA, matched to your stack and timeline."
 				},
 				"agile_delivery": {
 					"title": "Agile delivery",

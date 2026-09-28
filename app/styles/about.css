@@ -65,10 +65,10 @@
 .about-team-carousel {
 	/* Room for hover lift — overflow-x creates a clip edge on Y too */
 	padding-block: 6px 0;
-	padding-inline: var(--home-inline);
-	scroll-padding-inline: var(--home-inline);
+	scroll-snap-type: x mandatory;
 }
 .about-team-carousel__card {
+	scroll-snap-align: start;
 	width: min(78vw, 280px);
 }
 @media (min-width: 640px) {
@@ -78,7 +78,7 @@
 }
 @media (min-width: 1024px) {
 	.about-team-carousel__card {
-		width: min(22vw, 240px);
+		width: calc((100% - 4 * 1.5rem) / 5);
 	}
 }
 .about-team-carousel__photo {
