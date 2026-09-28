@@ -2,12 +2,12 @@
 
 import { Check, GitMerge, Map, Video } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import { useCopy } from "@/lib/copy";
 import {
 	sectionItemTransition,
 	sectionRevealItem,
 	useSectionReveal,
 } from "@/hooks/use-section-reveal";
+import { useCopy } from "@/lib/copy";
 import SectionHead from "./section-head";
 
 const STATS = ["since", "projects", "engineers", "ip"] as const;
@@ -17,7 +17,7 @@ const FEED_ICONS = [GitMerge, Video, Map];
 type Translate = ReturnType<typeof useCopy>;
 
 const surface =
-	"bg-[color-mix(in_srgb,var(--text-h)_3%,var(--bg))] shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--text-h)_9%,transparent)]";
+	"bg-white shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--text-h)_9%,transparent),0_1px_2px_oklch(0_0_0/0.04),0_8px_24px_-12px_oklch(0_0_0/0.08)] dark:bg-[color-mix(in_srgb,var(--text-h)_3%,var(--bg))] dark:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--text-h)_9%,transparent)]";
 const chip =
 	"flex items-center gap-2.5 bg-(--bg) text-(--text-h) shadow-[0_0_0_1px_color-mix(in_srgb,var(--text-h)_8%,transparent)]";
 
@@ -132,11 +132,11 @@ export default function WhyChooseUs() {
 									key={id}
 									role="listitem"
 									{...motionProps(0.08 + index * 0.08)}
-									className={`${surface} flex flex-col overflow-hidden rounded-2xl transition-shadow duration-300 hover:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--dash-brand)_40%,transparent)]`}
+									className={`${surface} flex flex-col overflow-hidden rounded-2xl transition-shadow duration-300 hover:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--dash-brand)_40%,transparent)] dark:hover:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--dash-brand)_40%,transparent)]`}
 								>
 									<div
 										aria-hidden
-										className="flex min-h-44 flex-col justify-center border-b border-[color-mix(in_srgb,var(--text-h)_8%,transparent)] bg-[radial-gradient(120%_90%_at_0%_0%,color-mix(in_srgb,var(--dash-brand)_14%,transparent),transparent_60%)] p-5 text-[0.8125rem] text-(--text-muted)"
+										className="flex min-h-44 flex-col justify-center border-b border-[color-mix(in_srgb,var(--text-h)_8%,transparent)] bg-[radial-gradient(120%_90%_at_0%_0%,color-mix(in_srgb,var(--dash-brand)_6%,transparent),transparent_60%)] dark:bg-[radial-gradient(120%_90%_at_0%_0%,color-mix(in_srgb,var(--dash-brand)_14%,transparent),transparent_60%)] p-5 text-[0.8125rem] text-(--text-muted)"
 									>
 										<Visual t={t} />
 									</div>

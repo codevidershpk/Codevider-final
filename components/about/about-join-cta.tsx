@@ -2,9 +2,9 @@
 
 import { ArrowRight } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "motion/react";
-import { useCopy } from "@/lib/copy";
-import { useRef } from "react";
 import Link from "next/link";
+import { useRef } from "react";
+import { useCopy } from "@/lib/copy";
 
 const revealEase = [0.22, 1, 0.36, 1] as const;
 
@@ -32,9 +32,15 @@ export default function AboutJoinCta() {
 					</p>
 					<h2 className="about-join-cta__title">{t("headline")}</h2>
 					<p className="about-join-cta__description">{t("description")}</p>
-					<Link href="/career" className="about-join-cta__btn">
+					<Link
+						href="/career"
+						className="home-brand-btn group about-join-cta__btn inline-flex min-h-11 items-center gap-2 px-7 py-3.5 text-sm"
+					>
 						{t("cta")}
-						<ArrowRight className="size-4" aria-hidden />
+						<ArrowRight
+							className="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
+							aria-hidden
+						/>
 					</Link>
 				</motion.div>
 			</div>

@@ -405,6 +405,27 @@ code {
 	box-shadow: none;
 }
 
+/* Light mode: the text-h tint + brand glow reads muddy on white, so use a clean
+   white surface with a softer glow and a faint shadow for lift. */
+:root:not(.dark) .surface-card,
+:root:not(.dark) .home-demo,
+:root:not(.dark) .home-empower .home-ecard:not(.home-ecard--featured) {
+	background:
+		radial-gradient(
+			120% 90% at 0% 0%,
+			color-mix(in srgb, var(--dash-brand) 6%, transparent),
+			transparent 60%
+		),
+		#fff;
+}
+
+:root:not(.dark) .surface-card,
+:root:not(.dark) .home-demo {
+	box-shadow:
+		0 1px 2px oklch(0 0 0 / 0.04),
+		0 8px 24px -12px oklch(0 0 0 / 0.08);
+}
+
 /* ============================================================
    STAT CARDS — now theme-adaptive instead of hardcoded dark
    ============================================================ */

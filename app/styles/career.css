@@ -301,6 +301,16 @@
 		display: none;
 	}
 }
+@media (min-width: 768px) {
+	.career-job-card .career-job-card__cta {
+		border: 1px solid var(--border);
+		box-shadow: none;
+	}
+	.career-job-card .career-job-card__cta:hover {
+		border-color: color-mix(in srgb, var(--dash-brand) 35%, var(--border));
+		box-shadow: var(--shadow-md);
+	}
+}
 @media (prefers-reduced-motion: reduce) {
 	.career-job-card:hover,
 	.career-job-card__cta:active {
