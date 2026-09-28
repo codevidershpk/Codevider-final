@@ -75,7 +75,15 @@ function FieldError({ id, message }: { id?: string; message?: string }) {
 	);
 }
 
-export default function Contact() {
+type ContactProps = {
+	hideIntro?: boolean;
+	messagePlaceholder?: string;
+};
+
+export default function Contact({
+	hideIntro = false,
+	messagePlaceholder,
+}: ContactProps = {}) {
 	const t = useCopy("home.contact");
 	const { ref, isRevealed, shouldAnimate } = useSectionReveal();
 	const shouldReduceMotion = useReducedMotion();
@@ -133,14 +141,18 @@ export default function Contact() {
 
 	return (
 		<section ref={ref} className="home-section home-feature-alt">
-			<SectionHead
-				eyebrow={t("eyebrow")}
-				headline={t("headline")}
-				description={t("description")}
-				centered
-			/>
+			{hideIntro ? null : (
+				<SectionHead
+					eyebrow={t("eyebrow")}
+					headline={t("headline")}
+					description={t("description")}
+					centered
+				/>
+			)}
 
-			<div className="home-wrap grid items-center gap-[clamp(2.5rem,6vw,5rem)] lg:grid-cols-3 mt-[clamp(2rem,4vw,3rem)]">
+			<div
+				className={`home-wrap grid items-center gap-[clamp(2.5rem,6vw,5rem)] lg:grid-cols-3${hideIntro ? "" : " mt-[clamp(2rem,4vw,3rem)]"}`}
+			>
 				<motion.div
 					className="flex flex-col justify-center lg:col-span-1 lg:pr-[clamp(1.25rem,2.5vw,2rem)]"
 					initial={
@@ -292,7 +304,9 @@ export default function Contact() {
 									id="contact-details"
 									rows={5}
 									maxLength={1000}
-									placeholder={t("form_message_placeholder")}
+									placeholder={
+										messagePlaceholder ?? t("form_message_placeholder")
+									}
 									className={`${inputClassName} min-h-[132px] resize-y${errors.details ? ` ${inputErrorClassName}` : ""}`}
 									aria-invalid={errors.details ? true : undefined}
 									aria-describedby={

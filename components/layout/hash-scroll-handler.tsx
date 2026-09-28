@@ -63,6 +63,18 @@ const SPY_SECTION_IDS: Record<string, string[]> = {
 		"tech-stack",
 	],
 	"/about": ["who-we-are", "our-culture", "life-at-codevider", "team"],
+	"/vibecode-rescue": [
+		"reality",
+		"situations",
+		"arrival",
+		"process",
+		"stack",
+		"keep",
+		"after",
+		"ready",
+		"next",
+		"contact",
+	],
 };
 
 async function restoreReloadScroll(signal: AbortSignal) {
