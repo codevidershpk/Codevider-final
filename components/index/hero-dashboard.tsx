@@ -82,7 +82,7 @@ function MetricCard({
 			<p className="mt-1 font-(family-name:--mono) text-[0.95rem] font-medium tabular-nums tracking-tight text-(--dash-text)">
 				{value}
 			</p>
-			<p className="mt-0.5 text-[0.72rem] leading-snug text-(--dash-success)">
+			<p className="mt-0.5 text-[0.72rem] font-medium leading-snug text-(--dash-success)">
 				{delta}
 			</p>
 		</>

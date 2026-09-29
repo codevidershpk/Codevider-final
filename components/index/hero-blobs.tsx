@@ -33,14 +33,15 @@ const EASE = "cubic-bezier(0.37, 0, 0.63, 1)";
 
 const BLOBS: readonly BlobSpec[] = [
 	{
-		/* Primary brand blue — top-left, behind the H1 */
+		/* Primary brand blue — top-left, behind the H1.
+		   Decorative illustration color (design.md): tailored to --brand-blue. */
 		style: {
 			top: "-12%",
 			left: "-10%",
 			width: "min(60vw, 620px)",
 			height: "min(60vw, 620px)",
 			background:
-				"radial-gradient(closest-side, rgba(36, 105, 255, 0.34) 0%, rgba(36, 105, 255, 0.12) 48%, transparent 72%)",
+				"radial-gradient(closest-side, rgba(36, 105, 255, 0.45) 0%, rgba(36, 105, 255, 0.16) 48%, transparent 72%)",
 			filter: "blur(100px)",
 		},
 		drift: 70,
@@ -49,14 +50,15 @@ const BLOBS: readonly BlobSpec[] = [
 		glide: [9000, 14000],
 	},
 	{
-		/* Corner bleed — far top-right edge only, never centered behind the card */
+		/* Brand-blue corner bleed — far top-right edge only, never centered
+		   behind the card. Was indigo-tinted; now pure brand blue. */
 		style: {
 			top: "-24%",
 			right: "-14%",
 			width: "min(50vw, 560px)",
 			height: "min(50vw, 560px)",
 			background:
-				"radial-gradient(closest-side, rgba(107, 155, 255, 0.2) 0%, rgba(99, 102, 241, 0.07) 50%, transparent 72%)",
+				"radial-gradient(closest-side, rgba(36, 105, 255, 0.3) 0%, rgba(36, 105, 255, 0.1) 50%, transparent 72%)",
 			filter: "blur(110px)",
 		},
 		drift: 60,
@@ -65,14 +67,15 @@ const BLOBS: readonly BlobSpec[] = [
 		glide: [10000, 16000],
 	},
 	{
-		/* Faint grounding wash — bottom-center, keeps the fold from going flat */
+		/* Mint grounding wash — bottom-center, keeps the fold from going flat.
+		   Tailored to --brand-mint (#32fcb6) instead of pale blue. */
 		style: {
 			bottom: "-28%",
 			left: "28%",
 			width: "min(52vw, 560px)",
 			height: "min(52vw, 560px)",
 			background:
-				"radial-gradient(closest-side, rgba(56, 130, 255, 0.14) 0%, rgba(56, 130, 255, 0.05) 50%, transparent 72%)",
+				"radial-gradient(closest-side, rgba(50, 252, 182, 0.16) 0%, rgba(50, 252, 182, 0.06) 50%, transparent 72%)",
 			filter: "blur(110px)",
 		},
 		drift: 55,
@@ -81,14 +84,14 @@ const BLOBS: readonly BlobSpec[] = [
 		glide: [9000, 15000],
 	},
 	{
-		/* Center glow I — blue, upper-center gutter */
+		/* Center glow I — brand blue, upper-center gutter */
 		style: {
 			top: "18%",
 			left: "45%",
 			width: "min(38vw, 440px)",
 			height: "min(38vw, 440px)",
 			background:
-				"radial-gradient(closest-side, rgba(59, 130, 246, 0.55) 0%, rgba(37, 99, 235, 0.22) 52%, transparent 72%)",
+				"radial-gradient(closest-side, rgba(59, 130, 246, 0.62) 0%, rgba(37, 99, 235, 0.28) 52%, transparent 72%)",
 			filter: "blur(70px)",
 		},
 		drift: 45,
@@ -97,14 +100,15 @@ const BLOBS: readonly BlobSpec[] = [
 		glide: [8000, 13000],
 	},
 	{
-		/* Center glow II — cyan, lower-center gutter */
+		/* Center glow II — brand mint, lower-center gutter.
+		   Was cyan; now --brand-mint for palette contrast (blue/mint). */
 		style: {
 			bottom: "8%",
 			left: "42%",
 			width: "min(40vw, 460px)",
 			height: "min(40vw, 460px)",
 			background:
-				"radial-gradient(closest-side, rgba(34, 211, 238, 0.42) 0%, rgba(14, 165, 183, 0.15) 52%, transparent 72%)",
+				"radial-gradient(closest-side, rgba(50, 252, 182, 0.48) 0%, rgba(50, 252, 182, 0.18) 52%, transparent 72%)",
 			filter: "blur(80px)",
 		},
 		drift: 45,

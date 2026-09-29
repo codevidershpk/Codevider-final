@@ -777,7 +777,7 @@ code {
 	--hero-text-h: #f8f9fb;
 	--hero-text-lead: #b4b9c6;
 	--hero-text-muted: #8b93a3;
-	--hero-accent-text: #6b9bff;
+	--hero-accent-text: #85afff;
 	--hero-gradient-shade: #020617;
 	--hero-gradient-opacity: 1;
 	--hero-gradient-darken-top: 12%;
@@ -785,15 +785,34 @@ code {
 	--hero-gradient-darken-bottom: 18%;
 	--hero-veil-bg: #11131c;
 	--hero-veil-bottom: 48%;
-	--hero-border: rgba(255, 255, 255, 0.1);
+	--hero-border: rgba(255, 255, 255, 0.18);
 	--hero-surface: rgba(17, 19, 28, 0.8);
-	--hero-accent-border: rgba(107, 155, 255, 0.45);
-	--hero-accent-bg: rgba(107, 155, 255, 0.16);
-	--hero-focus-ring: rgba(107, 155, 255, 0.75);
+	--hero-accent-border: rgba(133, 175, 255, 0.55);
+	--hero-accent-bg: rgba(133, 175, 255, 0.22);
+	--hero-focus-ring: rgba(133, 175, 255, 0.75);
 	/* Solid CTA fills — deeper than accent blue for AA contrast with white */
 	--hero-brand-primary: #1852e6;
 	--hero-brand-primary-hover: #2469ff;
 	--hero-on-brand: #ffffff;
+	/* Contrasty mockup-style backdrop: deep navy base (tails with
+	   --surface-dark-*) plus brand-blue / brand-mint glows. Stays dark in
+	   both site themes — only the dashboard mockup follows light/dark. */
+	background:
+		radial-gradient(
+			90% 70% at 85% 0%,
+			color-mix(in srgb, var(--brand-blue) 22%, transparent),
+			transparent 60%
+		),
+		radial-gradient(
+			60% 50% at 8% 100%,
+			color-mix(in srgb, var(--brand-mint) 12%, transparent),
+			transparent 60%
+		),
+		linear-gradient(
+			135deg,
+			var(--surface-dark-start) 0%,
+			var(--surface-dark-end) 100%
+		);
 	background-color: var(--hero-veil-bg);
 	min-height: 100vh;
 	min-height: 100svh;
@@ -827,15 +846,20 @@ code {
 	--dash-surface: #ffffff;
 	--dash-text: #0a1020;
 	--dash-muted: #4f596d;
-	--dash-border: rgba(36, 65, 120, 0.1);
+	--dash-border: rgba(36, 65, 120, 0.14);
 	--dash-brand: #2469ff;
 	--dash-brand-end: #1852e6;
-	--dash-bar-soft: color-mix(in srgb, var(--dash-brand) 28%, #e8eef8);
-	--dash-success: #12c99a;
+	/* Contrasty track bars: 45% brand mix reads against the white canvas
+	   (was 28% — washed out next to the vivid peak bar). */
+	--dash-bar-soft: color-mix(in srgb, var(--dash-brand) 45%, #e8eef8);
+	/* #12c99a is 2.13:1 on white (fails). #0e8a6a is 4.32:1 — keeps the
+	   green success meaning with AA-adjacent contrast for small delta text. */
+	--dash-success: #0e8a6a;
 	--dash-warning: #c2410c;
 	--dash-bar-track: transparent;
 	--dash-shadow:
-		0 1px 2px rgba(36, 65, 120, 0.04), 0 12px 28px rgba(36, 65, 120, 0.08);
+		0 1px 2px rgba(36, 65, 120, 0.08), 0 12px 28px rgba(36, 65, 120, 0.12),
+		0 24px 48px rgba(36, 65, 120, 0.1);
 	color-scheme: light;
 }
 
@@ -845,10 +869,10 @@ code {
 	--dash-surface: #161922;
 	--dash-text: #f8fafc;
 	--dash-muted: #a1adc0;
-	--dash-border: rgba(148, 163, 184, 0.14);
+	--dash-border: rgba(148, 163, 184, 0.2);
 	--dash-brand: #6b9bff;
 	--dash-brand-end: #85afff;
-	--dash-bar-soft: color-mix(in srgb, var(--dash-brand) 28%, #252836);
+	--dash-bar-soft: color-mix(in srgb, var(--dash-brand) 42%, #252836);
 	--dash-success: #2dd4bf;
 	--dash-warning: #fbbf24;
 	--dash-bar-track: transparent;
@@ -859,6 +883,10 @@ code {
 .hero-dash-window {
 	position: relative;
 	overflow: hidden;
+	/* Crisp 1px mockup edge on the dark hero (better-ui image-outline:
+	   pure white at low opacity in dark contexts). */
+	outline: 1px solid rgba(255, 255, 255, 0.12);
+	outline-offset: -1px;
 }
 
 .hero-dash-window::before {
@@ -882,7 +910,7 @@ code {
 }
 
 .hero-dash-surface:hover {
-	border-color: color-mix(in srgb, var(--dash-brand) 35%, var(--dash-border));
+	border-color: color-mix(in srgb, var(--dash-brand) 45%, var(--dash-border));
 	box-shadow: none;
 }
 
@@ -970,7 +998,7 @@ code {
 }
 
 .hero-dash-bar--peak {
-	box-shadow: none;
+	box-shadow: 0 0 12px color-mix(in srgb, var(--dash-brand) 35%, transparent);
 }
 
 .hero-dash-bar--latest {

@@ -761,6 +761,14 @@
 	background: var(--bg);
 }
 
+/* Light mode: the soft shadow alone reads as a blurry edge on light surfaces,
+   so draw a crisp neutral hairline ring under it. */
+:root:not(.dark) .vcr-tags li {
+	box-shadow:
+		0 0 0 1px rgba(15, 23, 42, 0.1),
+		0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
 .vcr-stack__more {
 	margin: 1.25rem 0 0;
 	font-size: var(--fs-lg);
@@ -958,7 +966,7 @@
 
 	.vcr-stack__row:hover .vcr-tags li {
 		box-shadow:
-			0 0 0 1px color-mix(in srgb, var(--dash-brand) 20%, transparent),
+			0 0 0 1px color-mix(in srgb, var(--dash-brand) 35%, transparent),
 			var(--shadow-sm);
 	}
 }
@@ -990,7 +998,7 @@
 
 .vcr-stack__row:active .vcr-tags li {
 	box-shadow:
-		0 0 0 1px color-mix(in srgb, var(--dash-brand) 20%, transparent),
+		0 0 0 1px color-mix(in srgb, var(--dash-brand) 35%, transparent),
 		var(--shadow-sm);
 }
 
