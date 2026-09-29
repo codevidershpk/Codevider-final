@@ -23,20 +23,11 @@ export default function AboutHero() {
 		<section ref={ref} className="svc-hero">
 			<div className="svc-hero__glow" aria-hidden />
 			<div className="home-wrap relative z-10 pt-[clamp(6.5rem,12vw,9rem)] pb-[clamp(4rem,8vw,6rem)]">
-				<motion.p
-					className="home-eyebrow svc-hero__eyebrow"
-					initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
-					animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-					transition={stagger(0)}
-				>
-					{t("eyebrow")}
-				</motion.p>
-
 				<motion.h1
 					className="svc-hero__title max-w-[18ch]"
 					initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
 					animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-					transition={stagger(1)}
+					transition={stagger(0)}
 				>
 					{t("headline")}
 				</motion.h1>
@@ -45,7 +36,7 @@ export default function AboutHero() {
 					className="svc-hero__lead"
 					initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
 					animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-					transition={stagger(2)}
+					transition={stagger(1)}
 				>
 					{t("lead")}
 				</motion.p>
@@ -54,7 +45,7 @@ export default function AboutHero() {
 					className="svc-hero__meta"
 					initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
 					animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-					transition={stagger(3)}
+					transition={stagger(2)}
 				>
 					{META_KEYS.map((key) => (
 						<li key={key}>

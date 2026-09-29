@@ -159,7 +159,6 @@ export default function Contact({
 					)}
 				>
 					<SectionHead
-						eyebrow={t("eyebrow")}
 						headline={t("headline")}
 						description={t("description")}
 						centered

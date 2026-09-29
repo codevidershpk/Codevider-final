@@ -55,13 +55,9 @@ export default function WhoWeAre() {
 					animate={isRevealed ? "visible" : "hidden"}
 					variants={sectionRevealStagger}
 				>
-					<motion.p className="home-eyebrow" variants={itemVariants}>
-						{t("who_we_are_eyebrow")}
-					</motion.p>
-
 					<motion.h2
 						id="who-we-are-heading"
-						className="mt-3.5 max-w-xl font-sans text-balance text-[clamp(1.75rem,4vw,2.6rem)] leading-[1.12] tracking-tight text-(--text-h)"
+						className="max-w-xl font-sans text-balance text-[clamp(2rem,4.5vw,2.75rem)] font-semibold leading-[1.12] tracking-tight text-(--text-h)"
 						variants={itemVariants}
 					>
 						{t("who_we_are_headline")}

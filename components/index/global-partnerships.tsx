@@ -54,11 +54,9 @@ export default function GlobalPartnerships() {
 					)}
 				>
 					<SectionHead
-						eyebrow={t("eyebrow")}
 						headline={t("headline")}
 						description={t("description")}
 						centered
-						className="[&_.home-eyebrow]:text-(--home-eyebrow-highlight) [&_.home-eyebrow]:before:bg-(--home-eyebrow-highlight)"
 					/>
 				</motion.div>
 			</div>

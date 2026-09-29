@@ -15,9 +15,6 @@ export function RescueHero() {
 
 			<div className="vcr-wrap vcr-hero__grid">
 				<div className="vcr-hero__copy">
-					<p className="vcr-eyebrow hero-reveal hero-reveal-1">
-						Vibe-Code Rescue
-					</p>
 					<h1 className="vcr-hero__title hero-reveal hero-reveal-1">
 						We fix
 						<br />

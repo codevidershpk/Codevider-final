@@ -25,7 +25,7 @@ export default function CareerWhyJoin() {
 	return (
 		<section ref={ref} className="home-section home-section--tight">
 			<div className="home-wrap">
-				<SectionHead eyebrow={t("eyebrow")} headline={t("headline")} centered />
+				<SectionHead headline={t("headline")} centered />
 
 				<div className="home-section-lead grid gap-5 md:grid-cols-3">
 					{VALUE_IDS.map((id, index) => {

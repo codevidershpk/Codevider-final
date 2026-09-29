@@ -24,7 +24,6 @@ export default function ServicesProcess() {
 		<section ref={ref} id="how-we-work" className="svc-process">
 			<div className="home-wrap">
 				<SectionHead
-					eyebrow={t("eyebrow")}
 					headline={t("headline")}
 					description={t("description")}
 					centered

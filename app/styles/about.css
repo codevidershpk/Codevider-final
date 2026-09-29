@@ -146,17 +146,11 @@
 .about-join-cta > * {
 	position: relative;
 }
-.about-join-cta__eyebrow {
-	color: var(--brand-blue);
-}
-.about-join-cta__eyebrow::before {
-	background: var(--brand-blue);
-}
 .about-join-cta__title {
-	margin-top: clamp(0.875rem, 2vw, 1.125rem);
+	margin-top: 0;
 	font-family: var(--heading);
 	font-size: clamp(1.875rem, 4.4vw, 3.25rem);
-	font-weight: 400;
+	font-weight: 600;
 	line-height: 1.05;
 	letter-spacing: -0.02em;
 	color: #fff;

@@ -129,20 +129,15 @@ const PRESERVE = [
 ] as const;
 
 function SectionHead({
-	eyebrow,
 	title,
 	children,
 }: {
-	eyebrow: string;
 	title: ReactNode;
 	children?: ReactNode;
 }) {
 	return (
 		<header className="vcr-head">
-			<Reveal as="p" className="vcr-eyebrow">
-				{eyebrow}
-			</Reveal>
-			<Reveal as="h2" delay={0.06} className="vcr-h2">
+			<Reveal as="h2" className="vcr-h2">
 				{title}
 			</Reveal>
 			{children ? (
@@ -170,7 +165,7 @@ export function RescueReality() {
 			id="reality"
 		>
 			<div className="vcr-wrap">
-				<SectionHead eyebrow="The problem" title="It looked easy at first.">
+				<SectionHead title="It looked easy at first.">
 					<div className="vcr-reality">
 						<p>
 							AI made building the first version incredibly fast. The problem
@@ -197,7 +192,7 @@ export function RescueSituations() {
 	return (
 		<RevealGroup as="section" className="vcr-section" id="situations">
 			<div className="vcr-wrap">
-				<SectionHead eyebrow="Who it’s for" title="What can we rescue?" />
+				<SectionHead title="What can we rescue?" />
 				<ul className="vcr-grid vcr-grid--3">
 					{SITUATIONS.map((item, index) => (
 						<Reveal
@@ -256,10 +251,7 @@ export function RescueProcess() {
 			id="process"
 		>
 			<div className="vcr-wrap">
-				<SectionHead
-					eyebrow="How it works"
-					title="From wherever you are now."
-				/>
+				<SectionHead title="From wherever you are now." />
 				<ol className="vcr-grid vcr-grid--4">
 					{STEPS.map((step, index) => (
 						<Reveal
@@ -288,7 +280,7 @@ export function RescueStack() {
 	return (
 		<RevealGroup as="section" className="vcr-section" id="stack">
 			<div className="vcr-wrap">
-				<SectionHead eyebrow="Technology" title="Every stack. Every stage.">
+				<SectionHead title="Every stack. Every stage.">
 					<p>
 						We work with the stack you’ve got, not the stack we wish you’d
 						chosen, and everything in between.
@@ -350,7 +342,7 @@ export function RescueKeep() {
 		>
 			<div className="vcr-wrap">
 				<div className="vcr-split">
-					<SectionHead eyebrow="No restart" title="Keep what matters.">
+					<SectionHead title="Keep what matters.">
 						<p>
 							You don’t need to throw away months of work just because the code
 							underneath it needs help. We preserve what you’ve built and fix
@@ -375,7 +367,7 @@ export function RescueAfter() {
 	return (
 		<RevealGroup as="section" className="vcr-section" id="after">
 			<div className="vcr-wrap">
-				<SectionHead eyebrow="What’s next" title="After the rescue.">
+				<SectionHead title="After the rescue.">
 					<p>
 						Rescue can be the beginning of the next phase, not the end of the
 						project. You don’t have to figure that part out alone.
@@ -414,20 +406,15 @@ export function RescueClose() {
 		>
 			<div className="vcr-wrap">
 				<div className="vcr-cta">
-					<Reveal as="p" className="vcr-eyebrow vcr-eyebrow--center">
-						<span className="vcr-eyebrow__lines">
-							<span>Built with AI.</span> <span>Ready for engineers.</span>
-						</span>
-					</Reveal>
-					<Reveal as="h2" delay={0.06} className="vcr-h2">
+					<Reveal as="h2" className="vcr-h2">
 						Your prototype got you this far. Let’s see where it can go next.
 					</Reveal>
-					<Reveal as="p" delay={0.12} className="vcr-cta__body">
+					<Reveal as="p" delay={0.06} className="vcr-cta__body">
 						The goal isn’t to make your app look like it was never vibe-coded.
 						It’s to make it good enough to keep building. Tell us what you’ve
 						built, what’s breaking, and where you’re stuck.
 					</Reveal>
-					<Reveal delay={0.18} className="vcr-actions vcr-actions--center">
+					<Reveal delay={0.12} className="vcr-actions vcr-actions--center">
 						<a href="#contact" className="home-brand-btn vcr-btn">
 							Rescue my app
 							<ArrowRight className="size-4" aria-hidden />

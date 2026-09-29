@@ -57,11 +57,10 @@ export default function WhoWeEmpower() {
 			<div className="home-wrap">
 				<motion.div {...motionProps(0)}>
 					<SectionHead
-						eyebrow={t("eyebrow")}
 						headline={t("headline")}
 						description={t("description")}
 						centered
-						className="max-sm:mx-0 max-sm:max-w-none max-sm:text-left [&_.home-eyebrow]:max-sm:justify-start [&_p]:max-sm:mx-0"
+						className="max-sm:mx-0 max-sm:max-w-none max-sm:text-left [&_p]:max-sm:mx-0"
 						descriptionClassName="text-[0.9375rem] sm:text-base"
 					/>
 				</motion.div>

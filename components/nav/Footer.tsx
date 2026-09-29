@@ -47,6 +47,12 @@ export default function Footer() {
 							{t("services")}
 						</Link>
 						<Link
+							href="/vibecode-rescue"
+							className="block py-1.5 text-[15px] transition-colors hover:text-white"
+						>
+							{t("rescue")}
+						</Link>
+						<Link
 							href="/career"
 							className="block py-1.5 text-[15px] transition-colors hover:text-white"
 						>
@@ -57,18 +63,6 @@ export default function Footer() {
 							className="block py-1.5 text-[15px] transition-colors hover:text-white"
 						>
 							{t("blog")}
-						</Link>
-						<Link
-							href="/privacy"
-							className="block py-1.5 text-[15px] transition-colors hover:text-white"
-						>
-							{t("privacy")}
-						</Link>
-						<Link
-							href="/terms"
-							className="block py-1.5 text-[15px] transition-colors hover:text-white"
-						>
-							{t("terms")}
 						</Link>
 					</div>
 
@@ -100,10 +94,24 @@ export default function Footer() {
 					</div>
 				</div>
 
-				<div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6 text-sm">
+				<div className="mt-12 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-white/10 pt-6 text-sm">
 					<span suppressHydrationWarning>
 						{t("copyright", { year: new Date().getFullYear() })}
 					</span>
+					<nav
+						aria-label="Legal"
+						className="flex flex-wrap items-center gap-x-5 gap-y-2"
+					>
+						<Link
+							href="/privacy"
+							className="transition-colors hover:text-white"
+						>
+							{t("privacy")}
+						</Link>
+						<Link href="/terms" className="transition-colors hover:text-white">
+							{t("terms")}
+						</Link>
+					</nav>
 					<FooterSocials />
 				</div>
 			</div>

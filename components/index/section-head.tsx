@@ -1,5 +1,4 @@
 type SectionHeadProps = {
-	eyebrow: string;
 	headline: string;
 	description?: string;
 	centered?: boolean;
@@ -8,7 +7,6 @@ type SectionHeadProps = {
 };
 
 export default function SectionHead({
-	eyebrow,
 	headline,
 	description,
 	centered = false,
@@ -19,10 +17,7 @@ export default function SectionHead({
 		<div
 			className={`max-w-[36rem] ${centered ? "mx-auto text-center" : ""} ${className}`}
 		>
-			<p className={`home-eyebrow ${centered ? "home-eyebrow--center" : ""}`}>
-				{eyebrow}
-			</p>
-			<h2 className="mt-3.5 text-balance text-[clamp(1.75rem,4vw,2.6rem)] leading-[1.12] tracking-tight text-(--text-h)">
+			<h2 className="text-balance text-[clamp(2rem,4.5vw,2.75rem)] font-semibold leading-[1.12] tracking-tight text-(--text-h)">
 				{headline}
 			</h2>
 			{description ? (

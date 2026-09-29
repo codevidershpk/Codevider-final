@@ -23,7 +23,7 @@ export default function AboutWhoWeAre() {
 	return (
 		<section ref={ref} id="who-we-are" className="home-section">
 			<div className="home-wrap">
-				<SectionHead eyebrow={t("eyebrow")} headline={t("headline")} />
+				<SectionHead headline={t("headline")} />
 
 				<div className="about-cols  home-section-lead">
 					<motion.p

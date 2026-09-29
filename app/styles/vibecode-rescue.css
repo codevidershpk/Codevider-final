@@ -52,36 +52,12 @@
 
 /* ---------- Shared type ---------- */
 
-.vcr-eyebrow {
-	display: inline-flex;
-	align-items: center;
-	gap: 8px;
-	margin: 0 0 0.75rem;
-	font-size: var(--fs-xs);
-	font-weight: 600;
-	letter-spacing: 0.14em;
-	text-transform: uppercase;
-	color: var(--brand-blue);
-}
-
-.vcr-eyebrow::before {
-	content: "";
-	width: 22px;
-	height: 2px;
-	border-radius: 2px;
-	background: currentColor;
-}
-
-.vcr-eyebrow--center {
-	justify-content: center;
-}
-
 .vcr-h2 {
 	max-width: 20ch;
 	margin: 0;
 	font-family: var(--heading);
-	font-size: clamp(1.75rem, 4.2vw, 2.5rem);
-	font-weight: 400;
+	font-size: clamp(2rem, 4.5vw, 2.75rem);
+	font-weight: 600;
 	line-height: 1.12;
 	letter-spacing: -0.03em;
 	text-wrap: balance;
@@ -381,10 +357,6 @@
 .vcr-hero__copy,
 .vcr-hero__panel {
 	min-width: 0;
-}
-
-.vcr-hero .vcr-eyebrow {
-	color: var(--hero-accent-text);
 }
 
 .vcr-hero__title {
@@ -904,23 +876,6 @@
 
 	.vcr-letter .vcr-letter__solid {
 		opacity: 1 !important;
-	}
-}
-
-/* ---------- After the rescue (inside Keep) ---------- */
-
-/* Two-sentence eyebrow: one sentence per line on small screens. */
-@media (max-width: 639px) {
-	.vcr-eyebrow__lines > span {
-		display: block;
-	}
-
-	.vcr-cta .vcr-eyebrow {
-		line-height: 1.3;
-	}
-
-	.vcr-cta .vcr-eyebrow::before {
-		display: none;
 	}
 }
 

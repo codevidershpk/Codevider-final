@@ -161,7 +161,6 @@ export default function AboutMeetTeam() {
 		>
 			<div className="home-wrap">
 				<SectionHead
-					eyebrow={t("eyebrow")}
 					headline={t("headline")}
 					description={t("description")}
 					centered

@@ -115,7 +115,6 @@ export default function WhyChooseUs() {
 				<motion.div {...motionProps(0)}>
 					<SectionHead
 						centered
-						eyebrow={t("eyebrow")}
 						headline={t("headline")}
 						description={t("description")}
 						className="max-w-160"

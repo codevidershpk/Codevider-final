@@ -136,11 +136,7 @@ export default function Faq() {
 						!!shouldReduceMotion,
 					)}
 				>
-					<SectionHead
-						eyebrow={t("eyebrow")}
-						headline={t("headline")}
-						centered
-					/>
+					<SectionHead headline={t("headline")} centered />
 				</motion.div>
 
 				<div className="home-section-lead mx-auto max-w-[860px]">

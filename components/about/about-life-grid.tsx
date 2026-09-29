@@ -52,7 +52,6 @@ export default function AboutLifeGrid() {
 		<section ref={ref} id="life-at-codevider" className="home-section">
 			<div className="home-wrap">
 				<SectionHead
-					eyebrow={t("eyebrow")}
 					headline={t("headline")}
 					description={t("description")}
 					centered

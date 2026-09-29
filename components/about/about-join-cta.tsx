@@ -27,9 +27,6 @@ export default function AboutJoinCta() {
 							: { duration: 0.6, ease: revealEase }
 					}
 				>
-					<p className="home-eyebrow home-eyebrow--center about-join-cta__eyebrow">
-						{t("eyebrow")}
-					</p>
 					<h2 className="about-join-cta__title">{t("headline")}</h2>
 					<p className="about-join-cta__description">{t("description")}</p>
 					<Link

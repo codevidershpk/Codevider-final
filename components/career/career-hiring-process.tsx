@@ -34,7 +34,6 @@ export default function CareerHiringProcess() {
 		<section ref={ref} className="career-hiring">
 			<div className="home-wrap">
 				<SectionHead
-					eyebrow={t("eyebrow")}
 					headline={t("headline")}
 					description={t("description")}
 					centered

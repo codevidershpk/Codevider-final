@@ -79,7 +79,7 @@
 		"base_currency_position": "before",
 		"features": {
 			"ai": {
-				"badge": "01 – AI Integration",
+				"badge": "AI Integration",
 				"headline": "Ship AI features your users actually feel",
 				"description": "From custom LLM-powered apps and intelligent chatbots to workflow automation and actionable insights seamlessly embedded into your existing ecosystem.",
 				"bullet_1": "Custom LLM apps & assistants trained on your data",
@@ -101,7 +101,7 @@
 				}
 			},
 			"engineering": {
-				"badge": "02 – Product Engineering",
+				"badge": "Product Engineering",
 				"headline": "Clean architecture, shipped on a cadence",
 				"description": "We design and develop scalable web applications and intuitive products with clean architecture and agile release cycles ensuring faster time-to-market and long-term maintainability.",
 				"bullet_1": "Modern, typed, well-tested codebases",
@@ -114,7 +114,7 @@
 				}
 			},
 			"pod": {
-				"badge": "03 – Dedicated Pod Teams",
+				"badge": "Dedicated Pod Teams",
 				"headline": "A full squad, embedded in two weeks",
 				"description": "Quickly stand up cross-functional pods such as frontend, backend, and QA that plug into your process. Scale effortlessly with flexible, SLA-backed engagements tailored to your needs.",
 				"bullet_1": "Cross-functional from the first sprint",
@@ -136,7 +136,7 @@
 				}
 			},
 			"devops": {
-				"badge": "04 – Cloud & DevOps",
+				"badge": "Cloud & DevOps",
 				"headline": "Ship to production with confidence",
 				"description": "Streamline deployments with CI/CD pipelines, containerization, and secure cloud infrastructure on AWS ensuring high availability and operational efficiency.",
 				"bullet_1": "Automated build, test & deploy pipelines",
@@ -657,6 +657,7 @@
 		"blog": "Blogs",
 		"privacy": "Privacy Policy",
 		"terms": "Terms of Service",
+		"rescue": "Vibe-Code Rescue",
 		"address_heading": "Address",
 		"address_line_1": "Codevider",
 		"address_line_2": "Barrikada Street",
@@ -823,6 +824,7 @@
 				"date_of_birth": "Date of birth",
 				"gender": "Gender",
 				"gender_placeholder": "Select gender",
+				"date_placeholder": "Select a date",
 				"gender_male": "Male",
 				"gender_female": "Female",
 				"gender_non_binary": "Non-binary",

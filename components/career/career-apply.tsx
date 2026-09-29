@@ -222,7 +222,6 @@ export default function CareerApply() {
 				</motion.div>
 
 				<motion.header className="career-apply-page__header" {...reveal(0.06)}>
-					<p className="home-eyebrow">{t("eyebrow")}</p>
 					<h1 className="career-apply-page__title">
 						{job ? job.title : t("loading_title")}
 					</h1>

@@ -12,6 +12,8 @@ import {
 } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import CareerApplyEntrySections from "@/components/career/career-apply-entry-sections";
+import { DateField } from "@/components/ui/date-field";
+import { SelectField } from "@/components/ui/select-field";
 import {
 	TurnstileWidget,
 	type TurnstileWidgetHandle,
@@ -33,6 +35,8 @@ const inputClassName =
 
 const inputErrorClassName =
 	"border-(--dash-warning) focus:border-(--dash-warning) focus-visible:ring-(--dash-warning)/15";
+
+const todayIso = new Date().toISOString().slice(0, 10);
 
 const GENDER_OPTIONS = ["male", "female"] as const;
 
@@ -498,105 +502,72 @@ export default function CareerApplyForm({ job }: CareerApplyFormProps) {
 						/>
 					</div>
 
-					{job.is_dob_required ? (
-						<div>
-							<FormLabel htmlFor="apply-dob" required>
-								{t("date_of_birth")}
-							</FormLabel>
-							<input
-								id="apply-dob"
-								type="date"
-								className={`${inputClassName}${errors.date_of_birth ? ` ${inputErrorClassName}` : ""}`}
-								aria-invalid={errors.date_of_birth ? true : undefined}
-								aria-describedby={
-									errors.date_of_birth ? "apply-dob-error" : undefined
-								}
-								{...register("date_of_birth")}
-							/>
-							<FieldError
-								id="apply-dob-error"
-								message={errors.date_of_birth?.message}
-							/>
-						</div>
-					) : (
-						<div>
-							<FormLabel htmlFor="apply-dob" optional={t("optional")}>
-								{t("date_of_birth")}
-							</FormLabel>
-							<input
-								id="apply-dob"
-								type="date"
-								className={`${inputClassName}${errors.date_of_birth ? ` ${inputErrorClassName}` : ""}`}
-								aria-invalid={errors.date_of_birth ? true : undefined}
-								aria-describedby={
-									errors.date_of_birth ? "apply-dob-error" : undefined
-								}
-								{...register("date_of_birth")}
-							/>
-							<FieldError
-								id="apply-dob-error"
-								message={errors.date_of_birth?.message}
-							/>
-						</div>
-					)}
+					<div>
+						<FormLabel
+							htmlFor="apply-dob"
+							required={job.is_dob_required}
+							optional={job.is_dob_required ? undefined : t("optional")}
+						>
+							{t("date_of_birth")}
+						</FormLabel>
+						<Controller
+							control={control}
+							name="date_of_birth"
+							render={({ field }) => (
+								<DateField
+									id="apply-dob"
+									value={field.value ?? ""}
+									onChange={field.onChange}
+									onBlur={field.onBlur}
+									placeholder={t("date_placeholder")}
+									max={todayIso}
+									className={`${inputClassName}${errors.date_of_birth ? ` ${inputErrorClassName}` : ""}`}
+									invalid={!!errors.date_of_birth}
+									describedBy={
+										errors.date_of_birth ? "apply-dob-error" : undefined
+									}
+								/>
+							)}
+						/>
+						<FieldError
+							id="apply-dob-error"
+							message={errors.date_of_birth?.message}
+						/>
+					</div>
 
-					{job.is_gender_required ? (
-						<div>
-							<FormLabel htmlFor="apply-gender" required>
-								{t("gender")}
-							</FormLabel>
-							<select
-								id="apply-gender"
-								className={`${inputClassName}${errors.gender ? ` ${inputErrorClassName}` : ""}`}
-								aria-invalid={errors.gender ? true : undefined}
-								aria-describedby={
-									errors.gender ? "apply-gender-error" : undefined
-								}
-								defaultValue=""
-								{...register("gender")}
-							>
-								<option value="" disabled>
-									{t("gender_placeholder")}
-								</option>
-								{GENDER_OPTIONS.map((option) => (
-									<option key={option} value={option}>
-										{t(`gender_${option}`)}
-									</option>
-								))}
-							</select>
-							<FieldError
-								id="apply-gender-error"
-								message={errors.gender?.message}
-							/>
-						</div>
-					) : (
-						<div>
-							<FormLabel htmlFor="apply-gender" optional={t("optional")}>
-								{t("gender")}
-							</FormLabel>
-							<select
-								id="apply-gender"
-								className={`${inputClassName}${errors.gender ? ` ${inputErrorClassName}` : ""}`}
-								aria-invalid={errors.gender ? true : undefined}
-								aria-describedby={
-									errors.gender ? "apply-gender-error" : undefined
-								}
-								defaultValue=""
-								{...register("gender")}
-							>
-								<option value="">{t("gender_placeholder")}</option>
-								{GENDER_OPTIONS.map((option) => (
-									<option key={option} value={option}>
-										{t(`gender_${option}`)}
-									</option>
-								))}
-							</select>
-							<FieldError
-								id="apply-gender-error"
-								message={errors.gender?.message}
-							/>
-						</div>
-					)}
+					<div>
+						<FormLabel
+							htmlFor="apply-gender"
+							required={job.is_gender_required}
+							optional={job.is_gender_required ? undefined : t("optional")}
+						>
+							{t("gender")}
+						</FormLabel>
+						<Controller
+							control={control}
+							name="gender"
+							render={({ field }) => (
+								<SelectField
+									id="apply-gender"
+									value={field.value ?? ""}
+									onChange={field.onChange}
+									onBlur={field.onBlur}
+									placeholder={t("gender_placeholder")}
+									options={GENDER_OPTIONS.map((option) => ({
+										value: option,
+										label: t(`gender_${option}`),
+									}))}
+									className={`${inputClassName}${errors.gender ? ` ${inputErrorClassName}` : ""}`}
+									invalid={!!errors.gender}
+									describedBy={errors.gender ? "apply-gender-error" : undefined}
+								/>
+							)}
+						/>
+						<FieldError
+							id="apply-gender-error"
+							message={errors.gender?.message}
+						/>
+					</div>
 				</div>
 			</div>
 

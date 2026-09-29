@@ -139,19 +139,13 @@ export default function CareerOpenings() {
 				{status === "loading" || hasJobs ? (
 					<div className="career-openings-card">
 						<div className="career-openings__head">
-							<motion.p
-								className="home-eyebrow home-eyebrow--center"
-								{...headReveal(0)}
-							>
-								{t("eyebrow")}
-							</motion.p>
 							<motion.h2
-								className="mt-[clamp(0.875rem,2vw,1.125rem)] text-balance text-[clamp(1.75rem,4.6vw,2.75rem)] leading-[1.08] tracking-[-0.02em] text-(--text-h)"
-								{...headReveal(0.08)}
+								className="text-balance text-[clamp(1.75rem,4.6vw,2.75rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-(--text-h)"
+								{...headReveal(0)}
 							>
 								{t("headline_active")}
 							</motion.h2>
-							<motion.p className="career-openings__lead" {...headReveal(0.16)}>
+							<motion.p className="career-openings__lead" {...headReveal(0.08)}>
 								{status === "loading" ? t("loading") : t("description_active")}
 							</motion.p>
 						</div>
@@ -302,7 +296,7 @@ export default function CareerOpenings() {
 				{showEmptyState && !hasJobs ? (
 					<div className="career-empty">
 						<motion.h2
-							className="text-balance text-[clamp(1.75rem,4.6vw,2.75rem)] leading-[1.08] tracking-[-0.02em] text-(--text-h)"
+							className="text-balance text-[clamp(1.75rem,4.6vw,2.75rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-(--text-h)"
 							{...headReveal(0)}
 						>
 							{status === "error" ? t("error_headline") : t("headline")}

@@ -653,7 +653,7 @@ function FeatureSection({
 			ref={ref}
 			id={`core-services-${index + 1}`}
 			aria-labelledby={headlineId}
-			className="scroll-mt-[clamp(5.5rem,10vw,6.5rem)] grid items-center gap-10 lg:grid-cols-2 lg:gap-16 [&_.home-demo]:w-full"
+			className="scroll-mt-[clamp(5.5rem,10vw,6.5rem)] grid items-start gap-10 lg:grid-cols-2 lg:gap-16 [&_.home-demo]:w-full"
 		>
 			<motion.div
 				className={`flex flex-col ${feature.reverse ? "lg:order-2" : ""}`}
@@ -668,13 +668,13 @@ function FeatureSection({
 				<motion.h3
 					id={headlineId}
 					variants={reveal}
-					className="mt-4 text-balance text-2xl font-semibold tracking-tight text-(--text-h) sm:text-3xl"
+					className="mt-5 mb-4 text-balance text-2xl font-semibold tracking-tight text-(--text-h) sm:text-3xl"
 				>
 					{t("headline")}
 				</motion.h3>
 				<motion.p
 					variants={reveal}
-					className="mt-7 max-w-[52ch] text-pretty text-sm leading-relaxed text-(--text) sm:mt-8"
+					className="max-w-[52ch] text-pretty text-sm leading-relaxed text-(--text)"
 				>
 					{t("description")}
 				</motion.p>
@@ -764,7 +764,6 @@ export default function CoreServices() {
 					)}
 				>
 					<SectionHead
-						eyebrow={t("eyebrow")}
 						headline={t("headline")}
 						description={t("description")}
 						descriptionClassName="mt-7 text-sm sm:mt-8"

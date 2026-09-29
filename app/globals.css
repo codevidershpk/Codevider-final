@@ -83,7 +83,6 @@ html.theme-switching * {
 	--focus-ring: var(--brand-blue);
 	/* Pure white on brand fills — #f8f9fb fails AA on #2469ff */
 	--on-brand: #ffffff;
-	--home-eyebrow-highlight: var(--brand-blue);
 
 	/* --- Surface & text --- */
 	--text: #3a4356;
@@ -249,7 +248,6 @@ html {
 	--brand-accent-text: var(--brand-blue);
 	--focus-ring: rgba(122, 159, 235, 0.72);
 	--on-brand: #ffffff;
-	--home-eyebrow-highlight: var(--brand-blue);
 	--social-bg: rgba(47, 48, 58, 0.5);
 	--surface-tint: #181b24;
 	--surface-tint-strong: #1c2030;
@@ -1221,38 +1219,6 @@ code {
 	margin-inline: var(--home-bleed);
 	width: calc(100% + 2 * var(--home-inline));
 	max-width: none;
-}
-
-.home-eyebrow {
-	display: inline-flex;
-	align-items: center;
-	gap: 8px;
-	margin-block-end: clamp(0.375rem, 1vw, 0.5rem);
-	font-size: 13px;
-	font-weight: 600;
-	letter-spacing: 0.14em;
-	text-transform: uppercase;
-	color: var(--dash-brand);
-}
-
-.home-eyebrow::before {
-	content: "";
-	width: 22px;
-	height: 2px;
-	background: var(--dash-brand);
-	border-radius: 2px;
-}
-
-.home-eyebrow--highlight {
-	color: var(--home-eyebrow-highlight);
-}
-
-.home-eyebrow--highlight::before {
-	background: var(--home-eyebrow-highlight);
-}
-
-.home-eyebrow--center {
-	justify-content: center;
 }
 
 .home-section {
