@@ -1229,7 +1229,9 @@ code {
 	scroll-margin-top: clamp(5.5rem, 10vw, 6.5rem);
 }
 
-.deferred-section--active > .home-section {
+.deferred-section--active > .home-section,
+html[data-page-end] .home-section,
+html[data-page-end] .home-section--tight {
 	content-visibility: visible;
 }
 
@@ -2544,4 +2546,23 @@ body {
 html.reload-restoring body {
 	opacity: 0;
 	transition: none;
+}
+
+.svc-block__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	margin-top: 1.75rem;
+	font-weight: 600;
+	color: var(--brand-accent-text);
+	text-underline-offset: 3px;
+}
+.svc-block__link:hover {
+	text-decoration: underline;
+}
+.svc-block__link svg {
+	transition: translate 0.2s ease;
+}
+.svc-block__link:hover svg {
+	translate: 3px 0;
 }

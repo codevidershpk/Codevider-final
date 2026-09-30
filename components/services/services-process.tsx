@@ -1,9 +1,10 @@
 "use client";
 
-import { motion, useInView, useReducedMotion } from "motion/react";
-import { useCopy } from "@/lib/copy";
+import { motion, useReducedMotion } from "motion/react";
 import { useRef } from "react";
 import SectionHead from "@/components/index/section-head";
+import { useRevealInView } from "@/hooks/use-page-end";
+import { useCopy } from "@/lib/copy";
 
 const STEP_IDS = [
 	"discovery",
@@ -17,7 +18,7 @@ const revealEase = [0.22, 1, 0.36, 1] as const;
 export default function ServicesProcess() {
 	const t = useCopy("services.process");
 	const ref = useRef<HTMLElement>(null);
-	const inView = useInView(ref, { once: true, margin: "-10% 0px" });
+	const inView = useRevealInView(ref, { once: true, margin: "-10% 0px" });
 	const shouldReduceMotion = useReducedMotion();
 
 	return (

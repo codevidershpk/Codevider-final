@@ -1,18 +1,19 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
-import { motion, useInView, useReducedMotion } from "motion/react";
-import { useCopy } from "@/lib/copy";
+import { motion, useReducedMotion } from "motion/react";
+import Link from "next/link";
 import { useRef } from "react";
 import SectionHead from "@/components/index/section-head";
-import Link from "next/link";
+import { useRevealInView } from "@/hooks/use-page-end";
+import { useCopy } from "@/lib/copy";
 
 const revealEase = [0.22, 1, 0.36, 1] as const;
 
 export default function AboutWhoWeAre() {
 	const t = useCopy("about.who_we_are");
 	const ref = useRef<HTMLElement>(null);
-	const inView = useInView(ref, { once: true, margin: "-10% 0px" });
+	const inView = useRevealInView(ref, { once: true, margin: "-10% 0px" });
 	const shouldReduceMotion = useReducedMotion();
 
 	const stagger = (index: number) =>

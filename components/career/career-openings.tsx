@@ -10,9 +10,10 @@ import {
 	Clock3,
 	Loader2,
 } from "lucide-react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useRevealInView } from "@/hooks/use-page-end";
 import { fetchOpenJobs } from "@/lib/api/recruit-jobs";
 import { useCopy } from "@/lib/copy";
 import type { OpenJob, PaginatedMeta } from "@/lib/types/recruit";
@@ -32,7 +33,7 @@ const initialMeta: PaginatedMeta = {
 export default function CareerOpenings() {
 	const t = useCopy("career.openings");
 	const ref = useRef<HTMLElement>(null);
-	const inView = useInView(ref, { once: true, margin: "-10% 0px" });
+	const inView = useRevealInView(ref, { once: true, margin: "-10% 0px" });
 	const shouldReduceMotion = useReducedMotion();
 	const [jobs, setJobs] = useState<OpenJob[]>([]);
 	const [status, setStatus] = useState<"loading" | "ready" | "error">(
@@ -306,14 +307,20 @@ export default function CareerOpenings() {
 						</motion.p>
 						<motion.div className="career-empty__actions" {...headReveal(0.2)}>
 							{status === "error" ? (
-								<button type="button" onClick={retry} className="svc-cta__btn cursor-pointer">
+								<button
+									type="button"
+									onClick={retry}
+									className="svc-cta__btn cursor-pointer"
+								>
 									{t("retry")}
 								</button>
 							) : null}
 							<a
 								href={emailHref}
 								className={
-									status === "error" ? "career-empty__link cursor-pointer" : "svc-cta__btn cursor-pointer"
+									status === "error"
+										? "career-empty__link cursor-pointer"
+										: "svc-cta__btn cursor-pointer"
 								}
 							>
 								{t("cta")}

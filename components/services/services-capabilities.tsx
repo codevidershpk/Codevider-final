@@ -1,10 +1,11 @@
 "use client";
 
 import { ArrowRight, Check } from "lucide-react";
-import { motion, useInView, useReducedMotion } from "motion/react";
-import { useCopy } from "@/lib/copy";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useRevealInView } from "@/hooks/use-page-end";
+import { useCopy } from "@/lib/copy";
 
 const SERVICE_IDS = [
 	"custom",
@@ -14,6 +15,7 @@ const SERVICE_IDS = [
 	"systems",
 	"cloud",
 	"team",
+	"rescue",
 ] as const;
 
 type ServiceId = (typeof SERVICE_IDS)[number];
@@ -67,7 +69,7 @@ function ServiceBlock({
 }) {
 	const t = useCopy(`services.capabilities.items.${id}`);
 	const ref = useRef<HTMLElement>(null);
-	const inView = useInView(ref, { once: true, margin: "-12% 0px" });
+	const inView = useRevealInView(ref, { once: true, margin: "-12% 0px" });
 	const shouldReduceMotion = useReducedMotion();
 
 	const solutions = [t("solutions.1"), t("solutions.2"), t("solutions.3")];
@@ -102,7 +104,14 @@ function ServiceBlock({
 				</div>
 			</div>
 
-			{id === "team" ? <ServiceCta /> : null}
+			{id === "rescue" ? (
+				<Link href="/vibecode-rescue" className="svc-block__link">
+					{t("link")}
+					<ArrowRight className="size-4" aria-hidden />
+				</Link>
+			) : null}
+
+			{id === SERVICE_IDS[SERVICE_IDS.length - 1] ? <ServiceCta /> : null}
 		</motion.article>
 	);
 }

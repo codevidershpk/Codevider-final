@@ -2,8 +2,8 @@
 
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useCopy } from "@/lib/copy";
-import { useTheme } from "@/components/providers/ThemeProvider";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
 	useCallback,
 	useEffect,
@@ -11,8 +11,9 @@ import {
 	useRef,
 	useState,
 } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTheme } from "@/components/providers/ThemeProvider";
+import { resetPageEnd, usePageEnd } from "@/hooks/use-page-end";
+import { useCopy } from "@/lib/copy";
 import { CodeviderLogo } from "./CodeviderLogo";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -65,9 +66,9 @@ const navPillSpring = {
 const navLinks = [
 	{ href: "/services", key: "services" as const },
 	{ href: "/vibecode-rescue", key: "rescue" as const },
+	{ href: "/about", key: "about" as const },
 	{ href: "/blogs", key: "blog" as const },
 	{ href: "/career", key: "career" as const },
-	{ href: "/about", key: "about" as const },
 ];
 
 function isNavLinkActive(pathname: string, href: string): boolean {
@@ -277,6 +278,13 @@ function DesktopNavLinks({ appearance }: { appearance: NavAppearance }) {
 export function Navbar() {
 	const t = useCopy("navbar");
 	const pathname = usePathname();
+
+	// Keeps the page-end watcher running on every page (the navbar is in the
+	// shared layout), and clears the latch on navigation.
+	usePageEnd();
+	useLayoutEffect(() => {
+		resetPageEnd();
+	}, [pathname]);
 	const { theme } = useTheme();
 	const [mounted, setMounted] = useState(false);
 	const shouldReduceMotion = useReducedMotion();

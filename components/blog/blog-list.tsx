@@ -8,9 +8,10 @@ import {
 	Search,
 	X,
 } from "lucide-react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useRevealInView } from "@/hooks/use-page-end";
 import { fetchArticles } from "@/lib/api/blog-posts";
 import {
 	articleHref,
@@ -132,7 +133,7 @@ export default function BlogList() {
 	const ref = useRef<HTMLElement>(null);
 	const searchRef = useRef<HTMLInputElement>(null);
 	const hasLoadedOnce = useRef(false);
-	const inView = useInView(ref, { once: true, margin: "-10% 0px" });
+	const inView = useRevealInView(ref, { once: true, margin: "-10% 0px" });
 	const shouldReduceMotion = useReducedMotion();
 	const [posts, setPosts] = useState<Article[]>([]);
 	const [status, setStatus] = useState<"loading" | "ready" | "error">(

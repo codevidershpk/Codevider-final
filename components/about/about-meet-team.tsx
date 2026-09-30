@@ -1,12 +1,13 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
-import { useCopy } from "@/lib/copy";
 import { useEffect, useRef, useState } from "react";
 import SectionHead from "@/components/index/section-head";
 import { teamMembers } from "@/data/team-members";
+import { useRevealInView } from "@/hooks/use-page-end";
+import { useCopy } from "@/lib/copy";
 
 const revealEase = [0.22, 1, 0.36, 1] as const;
 
@@ -80,7 +81,7 @@ export default function AboutMeetTeam() {
 	const sectionRef = useRef<HTMLElement>(null);
 	const carouselRef = useRef<HTMLDivElement>(null);
 	const [photoCenterY, setPhotoCenterY] = useState<number | null>(null);
-	const inView = useInView(sectionRef, { once: true, margin: "-8% 0px" });
+	const inView = useRevealInView(sectionRef, { once: true, margin: "-8% 0px" });
 	const shouldReduceMotion = useReducedMotion();
 
 	useEffect(() => {
@@ -176,7 +177,7 @@ export default function AboutMeetTeam() {
 						type="button"
 						onClick={() => scroll("left")}
 						aria-label={t("scroll_left")}
-						className="about-team-carousel__nav pointer-events-auto"
+						className="about-team-carousel__nav pointer-events-auto cursor-pointer"
 					>
 						<ChevronLeft className="size-4" aria-hidden />
 					</button>
@@ -184,7 +185,7 @@ export default function AboutMeetTeam() {
 						type="button"
 						onClick={() => scroll("right")}
 						aria-label={t("scroll_right")}
-						className="about-team-carousel__nav pointer-events-auto"
+						className="about-team-carousel__nav pointer-events-auto cursor-pointer"
 					>
 						<ChevronRight className="size-4" aria-hidden />
 					</button>
@@ -212,7 +213,7 @@ export default function AboutMeetTeam() {
 										type="button"
 										onClick={() => scrollToCard(index)}
 										tabIndex={isClone ? -1 : undefined}
-										className="group block w-full text-left"
+										className="group block w-full cursor-pointer text-left"
 									>
 										<div className="about-team-carousel__photo overflow-hidden">
 											<Image

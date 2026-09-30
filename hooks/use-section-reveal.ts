@@ -6,6 +6,7 @@ import {
 	useReducedMotion,
 } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { usePageEnd } from "@/hooks/use-page-end";
 
 /**
  * Returns true only after the component has mounted on the client.
@@ -163,11 +164,13 @@ export function useSectionReveal<T extends Element = HTMLElement>(
 	const [mode, setMode] = useState<RevealMode>("pending");
 	const margin = options.margin ?? "-10% 0px";
 	const marginForMeasure = typeof margin === "string" ? margin : "-10% 0px";
-	const inView = useInView(ref, {
+	const inViewport = useInView(ref, {
 		once: true,
 		margin,
 		amount: options.amount,
 	});
+	const atPageEnd = usePageEnd();
+	const inView = inViewport || atPageEnd;
 	const shouldReduceMotion = useReducedMotion();
 
 	useLayoutEffect(() => {

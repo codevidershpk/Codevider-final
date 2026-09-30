@@ -35,12 +35,6 @@ export default function Footer() {
 							{t("company")}
 						</h4>
 						<Link
-							href="/about"
-							className="block py-1.5 text-[15px] transition-colors hover:text-white"
-						>
-							{t("about")}
-						</Link>
-						<Link
 							href="/services"
 							className="block py-1.5 text-[15px] transition-colors hover:text-white"
 						>
@@ -53,16 +47,22 @@ export default function Footer() {
 							{t("rescue")}
 						</Link>
 						<Link
-							href="/career"
+							href="/about"
 							className="block py-1.5 text-[15px] transition-colors hover:text-white"
 						>
-							{t("careers")}
+							{t("about")}
 						</Link>
 						<Link
 							href="/blogs"
 							className="block py-1.5 text-[15px] transition-colors hover:text-white"
 						>
 							{t("blog")}
+						</Link>
+						<Link
+							href="/career"
+							className="block py-1.5 text-[15px] transition-colors hover:text-white"
+						>
+							{t("careers")}
 						</Link>
 					</div>
 

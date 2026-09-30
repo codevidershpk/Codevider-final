@@ -9,6 +9,7 @@ import "@/app/styles/legal.css";
 
 const PRIVACY_SECTIONS = [
 	"collection",
+	"cookies",
 	"legal_basis",
 	"transfers",
 	"retention",

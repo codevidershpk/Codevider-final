@@ -8,6 +8,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { usePageEnd } from "@/hooks/use-page-end";
 import {
 	DEFERRED_SECTION_ATTR,
 	getReloadScrollAnchor,
@@ -118,7 +119,9 @@ export function createDeferredHomeSection(
 			return () => observer.disconnect();
 		}, [forceMount]);
 
-		const shouldMount = forceMount || (idleReady && nearViewport);
+		const atPageEnd = usePageEnd();
+		const shouldMount =
+			forceMount || (idleReady && (nearViewport || atPageEnd));
 
 		return (
 			<div

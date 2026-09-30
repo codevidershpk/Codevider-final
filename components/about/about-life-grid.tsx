@@ -1,10 +1,11 @@
 "use client";
 
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
-import { useCopy } from "@/lib/copy";
 import { useRef } from "react";
 import SectionHead from "@/components/index/section-head";
+import { useRevealInView } from "@/hooks/use-page-end";
+import { useCopy } from "@/lib/copy";
 
 type LifeGridPhoto = {
 	src: string;
@@ -45,7 +46,7 @@ const revealEase = [0.22, 1, 0.36, 1] as const;
 export default function AboutLifeGrid() {
 	const t = useCopy("about.life");
 	const ref = useRef<HTMLElement>(null);
-	const inView = useInView(ref, { once: true, margin: "-10% 0px" });
+	const inView = useRevealInView(ref, { once: true, margin: "-10% 0px" });
 	const shouldReduceMotion = useReducedMotion();
 
 	return (

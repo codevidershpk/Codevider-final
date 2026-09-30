@@ -1,9 +1,10 @@
 "use client";
 
 import { BarChart3, FileCheck, Users } from "lucide-react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useRef } from "react";
 import SectionHead from "@/components/index/section-head";
+import { useRevealInView } from "@/hooks/use-page-end";
 import { useCopy } from "@/lib/copy";
 
 const VALUE_IDS = ["ownership", "growth", "culture"] as const;
@@ -19,7 +20,7 @@ const revealEase = [0.22, 1, 0.36, 1] as const;
 export default function CareerWhyJoin() {
 	const t = useCopy("career.why_join");
 	const ref = useRef<HTMLElement>(null);
-	const inView = useInView(ref, { once: true, margin: "-10% 0px" });
+	const inView = useRevealInView(ref, { once: true, margin: "-10% 0px" });
 	const shouldReduceMotion = useReducedMotion();
 
 	return (

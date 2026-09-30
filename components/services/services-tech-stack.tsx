@@ -6,7 +6,6 @@ import {
 	useInView,
 	useReducedMotion,
 } from "motion/react";
-import { useCopy } from "@/lib/copy";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import SectionHead from "@/components/index/section-head";
 import {
@@ -16,6 +15,8 @@ import {
 	type TechStackCategoryId,
 	type TechStackItem,
 } from "@/data/tech-stack";
+import { useRevealInView } from "@/hooks/use-page-end";
+import { useCopy } from "@/lib/copy";
 
 type CategoryId = TechStackCategoryId;
 
@@ -152,7 +153,7 @@ function TechCategorySection({
 export default function ServicesTechStack() {
 	const t = useCopy("services.tech");
 	const ref = useRef<HTMLElement>(null);
-	const inView = useInView(ref, { once: true, margin: "-10% 0px" });
+	const inView = useRevealInView(ref, { once: true, margin: "-10% 0px" });
 	const isVisible = useInView(ref, { margin: "-10% 0px" });
 	const shouldReduceMotion = useReducedMotion();
 	const [activeIndex, setActiveIndex] = useState(0);
