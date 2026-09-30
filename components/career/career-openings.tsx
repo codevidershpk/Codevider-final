@@ -306,14 +306,14 @@ export default function CareerOpenings() {
 						</motion.p>
 						<motion.div className="career-empty__actions" {...headReveal(0.2)}>
 							{status === "error" ? (
-								<button type="button" onClick={retry} className="svc-cta__btn">
+								<button type="button" onClick={retry} className="svc-cta__btn cursor-pointer">
 									{t("retry")}
 								</button>
 							) : null}
 							<a
 								href={emailHref}
 								className={
-									status === "error" ? "career-empty__link" : "svc-cta__btn"
+									status === "error" ? "career-empty__link cursor-pointer" : "svc-cta__btn cursor-pointer"
 								}
 							>
 								{t("cta")}

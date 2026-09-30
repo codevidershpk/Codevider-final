@@ -98,6 +98,7 @@ export default function Footer() {
 					<span suppressHydrationWarning>
 						{t("copyright", { year: new Date().getFullYear() })}
 					</span>
+					<FooterSocials />
 					<nav
 						aria-label="Legal"
 						className="flex flex-wrap items-center gap-x-5 gap-y-2"
@@ -112,7 +113,6 @@ export default function Footer() {
 							{t("terms")}
 						</Link>
 					</nav>
-					<FooterSocials />
 				</div>
 			</div>
 		</footer>
