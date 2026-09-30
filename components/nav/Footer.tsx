@@ -105,11 +105,14 @@ export default function Footer() {
 					>
 						<Link
 							href="/privacy"
-							className="transition-colors hover:text-white"
+							className="inline-block py-1 transition-colors hover:text-white"
 						>
 							{t("privacy")}
 						</Link>
-						<Link href="/terms" className="transition-colors hover:text-white">
+						<Link
+							href="/terms"
+							className="inline-block py-1 transition-colors hover:text-white"
+						>
 							{t("terms")}
 						</Link>
 					</nav>

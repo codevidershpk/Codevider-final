@@ -802,7 +802,7 @@
 	background: var(--bg);
 	padding: 0.875rem 1rem;
 	font: inherit;
-	font-size: 0.9375rem;
+	font-size: 1rem;
 	color: var(--uk-text);
 	caret-color: var(--uk-brand-hover);
 	transition:

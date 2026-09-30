@@ -11,7 +11,7 @@ import type {
 import type { JobApplicationFormValues } from "@/lib/schemas/job-application";
 
 const inputClassName =
-	"w-full rounded-[10px] border-[1.5px] border-(--border) bg-(--bg) px-4 py-3 text-sm text-inherit placeholder:text-(--text-subtle) transition-[border-color,box-shadow] focus:border-(--dash-brand) focus:outline-none focus-visible:ring-[3px] focus-visible:ring-(--dash-brand)/15";
+	"w-full rounded-[10px] border-[1.5px] border-(--border) bg-(--bg) px-4 py-3 text-base text-inherit sm:text-sm placeholder:text-(--text-subtle) transition-[border-color,box-shadow] focus:border-(--dash-brand) focus:outline-none focus-visible:ring-[3px] focus-visible:ring-(--dash-brand)/15";
 
 type Translate = (key: string) => string;
 
