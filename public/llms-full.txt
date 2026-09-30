@@ -344,38 +344,6 @@ https://www.codevider.com/terms
 
 ---
 
-# Language Versions
-
-English
-
-https://www.codevider.com/en
-
-German
-
-https://www.codevider.com/de
-
-French
-
-https://www.codevider.com/fr
-
-Spanish
-
-https://www.codevider.com/es
-
-Italian
-
-https://www.codevider.com/it
-
-Albanian
-
-https://www.codevider.com/sq
-
-Chinese
-
-https://www.codevider.com/zh
-
----
-
 # AI Crawling Guidance
 
 This document is intended for:

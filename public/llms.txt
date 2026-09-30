@@ -15,17 +15,7 @@
 
 ## Documentation
 
-- [Complete Company Knowledge](https://www.codevider.com/en/llms-full.txt): Full technical capabilities, delivery process, industries, and FAQ
-
-## Languages
-
-- [English](https://www.codevider.com/en)
-- [Deutsch](https://www.codevider.com/de)
-- [Français](https://www.codevider.com/fr)
-- [Español](https://www.codevider.com/es)
-- [Italiano](https://www.codevider.com/it)
-- [Shqip](https://www.codevider.com/sq)
-- [中文](https://www.codevider.com/zh)
+- [Complete Company Knowledge](https://www.codevider.com/llms-full.txt): Full technical capabilities, delivery process, industries, and FAQ
 
 ## What Codevider Does
 
@@ -48,4 +38,4 @@ React • Next.js • Angular • Vue • Node.js • NestJS • Python • Fast
 
 For detailed technical capabilities, delivery process, industries, and technology stack, see the complete documentation:
 
-- [Codevider Full Knowledge Base](https://www.codevider.com/en/llms-full.txt)
+- [Codevider Full Knowledge Base](https://www.codevider.com/llms-full.txt)
