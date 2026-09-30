@@ -273,6 +273,7 @@
 	border: 1px solid var(--uk-line-strong);
 	border-radius: 1.25rem;
 	background: color-mix(in srgb, var(--bg) 82%, transparent);
+	-webkit-backdrop-filter: blur(12px);
 	backdrop-filter: blur(12px);
 	color: var(--uk-text);
 	max-width: 26rem;
@@ -465,14 +466,12 @@
 	transform: translateX(0.9em) rotate(-1deg);
 }
 
-.uk-blocks:hover .uk-block,
-.uk-blocks:focus-visible .uk-block {
+.uk-blocks:hover .uk-block {
 	transform: none;
 	border-color: rgba(255, 255, 255, 0.55);
 }
 
-.uk-blocks:hover .uk-block--2,
-.uk-blocks:focus-visible .uk-block--2 {
+.uk-blocks:hover .uk-block--2 {
 	color: #fff;
 }
 
@@ -989,6 +988,14 @@
 }
 
 .uk-success {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	max-width: 36rem;
+	aspect-ratio: 16 / 10;
+	margin-inline: auto;
 	text-align: center;
 }
 

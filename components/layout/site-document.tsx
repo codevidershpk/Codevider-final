@@ -5,14 +5,15 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const alexandria = Alexandria({
 	variable: "--font-sans",
-	subsets: ["latin", "latin-ext"],
+	subsets: ["latin"],
 	weight: ["400", "500", "600", "700"],
 });
 
 const merriweather = Merriweather({
 	variable: "--font-heading",
-	subsets: ["latin", "latin-ext"],
+	subsets: ["latin"],
 	style: ["normal", "italic"],
+	preload: false,
 	weight: ["400", "500", "600", "700"],
 });
 

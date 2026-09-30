@@ -18,7 +18,6 @@ export function generateMetadata(): Metadata {
 	return createPageMetadata({
 		title: TITLE,
 		description: DESCRIPTION,
-		page: "home",
 		path: "/uk",
 	});
 }
@@ -34,7 +33,7 @@ export default function UkPage() {
 			<StructuredData
 				title={TITLE}
 				description={DESCRIPTION}
-				image={getOgImageUrl("home")}
+				image={getOgImageUrl("/uk")}
 				url={getPageUrl("/uk")}
 			/>
 		</div>

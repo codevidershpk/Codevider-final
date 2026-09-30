@@ -172,7 +172,7 @@ export function RescueReality() {
 							starts when the product becomes real, and the code that got you to
 							the prototype starts slowing everything down.
 						</p>
-						<ul className="vcr-pressure">
+						<ul role="list" className="vcr-pressure">
 							{PRESSURE.map(({ label, icon }) => (
 								<li key={label}>
 									<IconBadge icon={icon} />
@@ -193,7 +193,7 @@ export function RescueSituations() {
 		<RevealGroup as="section" className="vcr-section" id="situations">
 			<div className="vcr-wrap">
 				<SectionHead title="What can we rescue?" />
-				<ul className="vcr-grid vcr-grid--3">
+				<ul role="list" className="vcr-grid vcr-grid--3">
 					{SITUATIONS.map((item, index) => (
 						<Reveal
 							as="li"
@@ -232,7 +232,7 @@ export function RescueArrival() {
 						<Code2 className="size-4" aria-hidden />
 						We step into projects built with
 					</p>
-					<ul className="vcr-tools">
+					<ul role="list" className="vcr-tools">
 						{TOOLS.map((tool) => (
 							<li key={tool}>{tool}</li>
 						))}
@@ -252,7 +252,7 @@ export function RescueProcess() {
 		>
 			<div className="vcr-wrap">
 				<SectionHead title="From wherever you are now." />
-				<ol className="vcr-grid vcr-grid--4">
+				<ol role="list" className="vcr-grid vcr-grid--4">
 					{STEPS.map((step, index) => (
 						<Reveal
 							as="li"
@@ -298,7 +298,7 @@ export function RescueStack() {
 								<h3 className="vcr-h3">{group.title}</h3>
 							</div>
 							<div className="vcr-stack__techs">
-								<ul className="vcr-tags">
+								<ul role="list" className="vcr-tags">
 									{group.items.map((item) => (
 										<li key={item}>{item}</li>
 									))}
@@ -373,7 +373,7 @@ export function RescueAfter() {
 						project. You don’t have to figure that part out alone.
 					</p>
 				</SectionHead>
-				<ol className="vcr-grid vcr-grid--3">
+				<ol role="list" className="vcr-grid vcr-grid--3">
 					{AFTER.map((item, index) => (
 						<Reveal
 							as="li"

@@ -289,6 +289,7 @@ export default function CareerApply() {
 											{t("skills")}
 										</p>
 										<ul
+											role="list"
 											className="career-apply-page__skill-list"
 											aria-label={t("skills")}
 										>

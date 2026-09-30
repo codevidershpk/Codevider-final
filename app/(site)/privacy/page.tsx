@@ -23,7 +23,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	return createPageMetadata({
 		title: t("metadata.privacy.title"),
 		description: t("metadata.privacy.description"),
-		page: "privacy",
+		path: "/privacy",
 	});
 }
 
@@ -35,7 +35,7 @@ export default async function PrivacyPage() {
 			<StructuredData
 				title={t("metadata.privacy.title")}
 				description={t("metadata.privacy.description")}
-				image={getOgImageUrl("privacy")}
+				image={getOgImageUrl("/privacy")}
 				url={getPageUrl("/privacy")}
 			/>
 			<LegalHero namespace="legal.privacy" />

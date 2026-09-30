@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	return createPageMetadata({
 		title: t("metadata.terms.title"),
 		description: t("metadata.terms.description"),
-		page: "terms",
+		path: "/terms",
 	});
 }
 
@@ -34,7 +34,7 @@ export default async function TermsPage() {
 			<StructuredData
 				title={t("metadata.terms.title")}
 				description={t("metadata.terms.description")}
-				image={getOgImageUrl("terms")}
+				image={getOgImageUrl("/terms")}
 				url={getPageUrl("/terms")}
 			/>
 			<LegalHero namespace="legal.terms" />

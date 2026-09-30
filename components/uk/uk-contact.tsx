@@ -10,7 +10,7 @@ import {
 	TurnstileWidget,
 	type TurnstileWidgetHandle,
 } from "@/components/ui/turnstile-widget";
-import { submitContactLead } from "@/lib/api/contact-lead";
+import { submitUkContactLead } from "@/lib/api/contact-lead";
 
 const INTERESTS = [
 	{ value: "fix", label: "Fix an app" },
@@ -59,9 +59,6 @@ const ukSchema = z.object({
 
 type UkFormValues = z.infer<typeof ukSchema>;
 
-const interestLabel = (value: UkFormValues["interest"]) =>
-	INTERESTS.find((i) => i.value === value)?.label ?? value;
-
 function FieldError({ message }: { message?: string }) {
 	if (!message) return null;
 	return (
@@ -107,25 +104,9 @@ export function UkContact() {
 			return;
 		}
 
-		const meta = [
-			`[UK show page · Business Show London · Stand B1350]`,
-			`Company: ${data.company || "n/a"}`,
-			`Role: ${data.role || "n/a"}`,
-			`Interested in: ${interestLabel(data.interest)}`,
-			`Timeline: ${data.timeline || "n/a"}`,
-			`Budget: ${data.budget || "n/a"}`,
-			`Phone/WhatsApp: ${data.phone || "n/a"}`,
-		].join("\n");
-
 		try {
-			await submitContactLead(
-				{
-					name: data.name,
-					email: data.email,
-					details: `${data.problem}\n\n${meta}`,
-				},
-				turnstileToken,
-			);
+			const { consent: _consent, ...values } = data;
+			await submitUkContactLead(values, turnstileToken);
 			setSubmitted(true);
 			reset();
 			setTurnstileToken(null);

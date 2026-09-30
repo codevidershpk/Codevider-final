@@ -105,6 +105,7 @@
 	border: 1px solid var(--border);
 	background: color-mix(in srgb, var(--bg) 88%, transparent);
 	color: var(--text-h);
+	-webkit-backdrop-filter: blur(8px);
 	backdrop-filter: blur(8px);
 	box-shadow: var(--shadow-sm);
 	transition:

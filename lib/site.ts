@@ -33,30 +33,25 @@ export const SITE_ROUTES = [
 	"/uk",
 ] as const;
 
-/** List of pages that have custom Open Graph images. */
-export const OG_PAGES = [
-	"home",
-	"about",
-	"services",
-	"career",
-	"blog",
-	"privacy",
-	"terms",
-] as const;
+/** A site route path. */
+export type SiteRoute = (typeof SITE_ROUTES)[number];
 
-/** Type representing a page that has a custom Open Graph image. */
-export type OgPage = (typeof OG_PAGES)[number];
-
-/** Maps OG page keys to their corresponding site routes. */
-const OG_PAGE_TO_ROUTE: Record<OgPage, (typeof SITE_ROUTES)[number]> = {
-	home: "",
-	about: "/about",
-	services: "/services",
-	career: "/career",
-	blog: "/blogs",
-	privacy: "/privacy",
-	terms: "/terms",
-};
+/**
+ * Routes with their own image at `public/images/og/<route>/og.png`
+ * (home lives at `public/images/og/og.png`). Other paths fall back to the
+ * nearest ancestor route listed here, then to home.
+ */
+const OG_ROUTES: ReadonlySet<string> = new Set<SiteRoute>([
+	"",
+	"/about",
+	"/services",
+	"/career",
+	"/blogs",
+	"/privacy",
+	"/terms",
+	"/vibe-code-rescue",
+	"/uk",
+]);
 
 /**
  * Builds a fully qualified URL for a site path.
@@ -72,25 +67,29 @@ export function getPageUrl(
 }
 
 /**
- * Gets the path to the Open Graph image for a page.
+ * Gets the path to the Open Graph image for a route.
  */
-export function getOgImagePath(page: OgPage): string {
-	return `/images/og/english/${page}/og.png`;
+export function getOgImagePath(path: string): string {
+	let route = path === "/" ? "" : path.replace(/\/$/, "");
+	while (route && !OG_ROUTES.has(route)) {
+		route = route.slice(0, route.lastIndexOf("/"));
+	}
+	return `/images/og${route}/og.png`;
 }
 
 /**
- * Gets the full URL to the Open Graph image for a page.
+ * Gets the full URL to the Open Graph image for a route.
  */
-export function getOgImageUrl(page: OgPage): string {
-	return `${getSiteUrl()}${getOgImagePath(page)}`;
+export function getOgImageUrl(path: string): string {
+	return `${getSiteUrl()}${getOgImagePath(path)}`;
 }
 
 /** Input options for creating page metadata. */
 type PageMetadataInput = {
 	title: string;
 	description: string;
-	page: OgPage;
-	path?: string;
+	/** Route path, e.g. `/about`; `""` for home. Drives canonical and OG image. */
+	path: SiteRoute | string;
 };
 
 /**
@@ -99,14 +98,10 @@ type PageMetadataInput = {
 export function createPageMetadata({
 	title,
 	description,
-	page,
-	path: pathOverride,
+	path,
 }: PageMetadataInput): Metadata {
-	const siteRoute = OG_PAGE_TO_ROUTE[page];
-	const canonical = pathOverride
-		? getPageUrl(pathOverride)
-		: getPageUrl(siteRoute);
-	const ogImageUrl = getOgImageUrl(page);
+	const canonical = getPageUrl(path);
+	const ogImageUrl = getOgImageUrl(path);
 
 	return {
 		title,

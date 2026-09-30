@@ -13,7 +13,6 @@ export async function generateMetadata(): Promise<Metadata> {
 	return createPageMetadata({
 		title: t("metadata.blog_post.title"),
 		description: t("metadata.blog_post.description"),
-		page: "blog",
 		path: "/blogs/post",
 	});
 }
@@ -26,7 +25,7 @@ export default async function BlogPostPage() {
 			<StructuredData
 				title={t("metadata.blog_post.title")}
 				description={t("metadata.blog_post.description")}
-				image={getOgImageUrl("blog")}
+				image={getOgImageUrl("/blogs/post")}
 				url={getPageUrl("/blogs/post")}
 			/>
 			<Suspense>

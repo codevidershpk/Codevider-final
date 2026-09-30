@@ -115,7 +115,7 @@ export function UkServices() {
 						Build software your business can actually grow on.
 					</Reveal>
 				</div>
-				<ol className="uk-caps">
+				<ol role="list" className="uk-caps">
 					{CAPABILITIES.map((c, i) => (
 						<Reveal as="li" key={c.title} delay={0.06 * i}>
 							<span className="uk-caps__n" aria-hidden>
@@ -164,7 +164,7 @@ export function UkRescue() {
 					</Reveal>
 					<Reveal as="h2" delay={0.04} className="uk-rescue__h">
 						<span className="uk-rescue__we">We fix</span>
-						<span className="uk-blocks" tabIndex={0}>
+						<span className="uk-blocks">
 							<span className="uk-block uk-block--1">vibe</span>
 							<span className="uk-block uk-block--2">coded</span>
 							<span className="uk-block uk-block--3">apps.</span>
@@ -184,7 +184,7 @@ export function UkRescue() {
 					</Reveal>
 				</div>
 				<div className="uk-rescue__side">
-					<Reveal delay={0.1} as="ol" className="uk-steps">
+					<Reveal delay={0.1} as="ol" role="list" className="uk-steps">
 						{RESCUE_STEPS.map((step, index) => (
 							<li key={step.title}>
 								<span className="uk-steps__n" aria-hidden>

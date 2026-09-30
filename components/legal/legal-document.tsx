@@ -62,7 +62,7 @@ export default function LegalDocument({
 				<div className="legal-doc__layout">
 					<nav className="legal-doc__toc" aria-label={tShared("toc_label")}>
 						<p className="legal-doc__toc-heading">{tShared("toc_heading")}</p>
-						<ol>
+						<ol role="list">
 							{sections.map((section, index) => (
 								<li key={section}>
 									<a

@@ -4,11 +4,14 @@
 
 ## Primary Resources
 
-- [Homepage](https://www.codevider.com/en): Main landing page and company overview
-- [About](https://www.codevider.com/en/about): Company story, culture, and team
-- [Services](https://www.codevider.com/en/services): AI, product engineering, cloud, and delivery offerings
-- [Careers](https://www.codevider.com/en/career): Open roles and hiring process
-- [Contact](https://www.codevider.com/en/contact): Get in touch with Codevider
+- [Homepage](https://www.codevider.com/): Main landing page and company overview
+- [About](https://www.codevider.com/about): Company story, culture, and team
+- [Services](https://www.codevider.com/services): AI, product engineering, cloud, and delivery offerings
+- [Vibe-Code Rescue](https://www.codevider.com/vibe-code-rescue): Fixing and productionising AI-generated apps built with Lovable, Bolt, Cursor, Replit, v0, or Claude Code
+- [The Business Show London](https://www.codevider.com/uk): Meet Codevider at ExCeL London, 11–12 Nov 2026, Stand B1350
+- [Careers](https://www.codevider.com/career): Open roles and hiring process
+- [Blog](https://www.codevider.com/blogs): Engineering and AI articles
+- [Contact](https://www.codevider.com/#contact): Get in touch with Codevider
 
 ## Documentation
 
@@ -29,6 +32,7 @@
 Codevider provides:
 
 - AI Application Development
+- Vibe-Code Rescue (stabilising AI-generated apps for production)
 - Custom Software Development
 - Web Development
 - Mobile App Development

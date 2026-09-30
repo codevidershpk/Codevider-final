@@ -140,6 +140,40 @@ Practices:
 
 ---
 
+## Vibe-Code Rescue
+
+Page: https://www.codevider.com/vibe-code-rescue
+
+Codevider fixes vibe-coded apps: products built quickly with AI tools such as Lovable, Bolt, Cursor, Replit, v0, and Claude Code that have become hard to change. When features start breaking each other and the AI keeps going in circles, senior engineers step in, make sense of the codebase, and get the product moving again, from AI-generated prototype to production software.
+
+Typical situations:
+
+- A stalled project where every new feature creates another problem
+- A growing product whose users outpace the architecture
+- An inherited codebase after a previous developer or agency left
+- An expensive AI stack
+- An unmaintainable product
+- A product ready for its next stage
+
+Process:
+
+1. Understand: get inside the product, the codebase, and how it currently works
+2. Assess: identify technical risks, blockers, and areas needing immediate attention
+3. Rescue & rebuild: fix what blocks the product and rework parts that cannot support the next stage
+4. Move forward: continue development with Codevider or hand the improved system back to your team
+
+---
+
+# Events
+
+## The Business Show London
+
+Page: https://www.codevider.com/uk
+
+Codevider exhibits at The Business Show London, 11–12 November 2026, ExCeL London, Stand B1350. Meet senior engineers and talk about AI agents, product engineering, and vibe-code rescue.
+
+---
+
 # Databases
 
 Relational:
@@ -278,23 +312,35 @@ https://www.codevider.com/
 
 About
 
-https://www.codevider.com/en/about
+https://www.codevider.com/about
 
 Services
 
-https://www.codevider.com/en/services
+https://www.codevider.com/services
+
+Vibe-Code Rescue
+
+https://www.codevider.com/vibe-code-rescue
+
+The Business Show London (Stand B1350)
+
+https://www.codevider.com/uk
 
 Careers
 
-https://www.codevider.com/en/career
+https://www.codevider.com/career
+
+Blog
+
+https://www.codevider.com/blogs
 
 Privacy Policy
 
-https://www.codevider.com/en/privacy
+https://www.codevider.com/privacy
 
 Terms
 
-https://www.codevider.com/en/terms
+https://www.codevider.com/terms
 
 ---
 

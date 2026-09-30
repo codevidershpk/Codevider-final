@@ -184,6 +184,7 @@
 	place-items: center;
 	border-radius: var(--ui-radius-xl);
 	background: color-mix(in srgb, var(--bg) 72%, transparent);
+	-webkit-backdrop-filter: blur(2px);
 	backdrop-filter: blur(2px);
 	color: var(--text-h);
 }

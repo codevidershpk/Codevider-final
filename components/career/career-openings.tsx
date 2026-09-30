@@ -157,7 +157,7 @@ export default function CareerOpenings() {
 								aria-busy={isPageLoading}
 								aria-live="polite"
 							>
-								<ul className="career-jobs">
+								<ul role="list" className="career-jobs">
 									{jobs.map((job, index) => {
 										const transition = shouldReduceMotion
 											? { duration: 0 }
@@ -184,6 +184,7 @@ export default function CareerOpenings() {
 															{job.title}
 														</h3>
 														<ul
+															role="list"
 															className="career-job-card__meta"
 															aria-label={t("meta_label")}
 														>

@@ -35,7 +35,7 @@ function ServiceList({
 	variant: "solutions" | "outcomes";
 }) {
 	return (
-		<ul className="svc-list">
+		<ul role="list" className="svc-list">
 			{items.map((item) => (
 				<li key={item} className="svc-list__item">
 					<span
