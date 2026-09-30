@@ -175,6 +175,7 @@ function DesktopNavLinks({ appearance }: { appearance: NavAppearance }) {
 		});
 	}, []);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: appearance and pathname re-measure the pill after theme or route changes
 	useEffect(() => {
 		syncPill(highlightHref);
 
@@ -282,6 +283,7 @@ export function Navbar() {
 	// Keeps the page-end watcher running on every page (the navbar is in the
 	// shared layout), and clears the latch on navigation.
 	usePageEnd();
+	// biome-ignore lint/correctness/useExhaustiveDependencies: pathname clears the page-end latch on every navigation
 	useLayoutEffect(() => {
 		resetPageEnd();
 	}, [pathname]);

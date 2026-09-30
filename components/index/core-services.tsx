@@ -455,14 +455,15 @@ function PodDemo() {
 	);
 }
 
+const stages = ["build", "test", "deploy"] as const;
+const stageIcons: Record<(typeof stages)[number], typeof Package> = {
+	build: Package,
+	test: FlaskConical,
+	deploy: Rocket,
+};
+
 function PipelineDemo() {
 	const t = useCopy("home.features.devops.demo");
-	const stages = ["build", "test", "deploy"] as const;
-	const stageIcons: Record<(typeof stages)[number], typeof Package> = {
-		build: Package,
-		test: FlaskConical,
-		deploy: Rocket,
-	};
 	const [running, setRunning] = useState(false);
 	const [doneCount, setDoneCount] = useState(0);
 	const [activeStage, setActiveStage] = useState(-1);
@@ -504,7 +505,7 @@ function PipelineDemo() {
 		};
 
 		next();
-	}, [running, shouldReduceMotion, t]);
+	}, [running, shouldReduceMotion]);
 
 	useEffect(() => {
 		if (isRevealed && !started.current && !shouldReduceMotion) {

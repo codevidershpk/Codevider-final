@@ -44,6 +44,7 @@ export function ThemeToggle({
 	// View Transitions live in the browser top layer and swallow clicks. A
 	// transparent popover hit-target is re-stacked above each reveal so the
 	// toggle stays interruptible like the "d" shortcut.
+	// biome-ignore lint/correctness/useExhaustiveDependencies: theme re-stacks the hit-target after each theme transition
 	useLayoutEffect(() => {
 		const hit = hitRef.current;
 		const button = buttonRef.current;

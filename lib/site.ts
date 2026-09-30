@@ -30,6 +30,7 @@ export const SITE_ROUTES = [
 	"/privacy",
 	"/terms",
 	"/vibe-code-rescue",
+	"/uk",
 ] as const;
 
 /** List of pages that have custom Open Graph images. */

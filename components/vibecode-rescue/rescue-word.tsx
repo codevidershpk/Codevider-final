@@ -118,6 +118,9 @@ function RescueLetter({
 	);
 }
 
+const reducedMotion = () =>
+	window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 export function RescueWord() {
 	const [broken, setBroken] = useState<boolean[]>(() =>
 		LETTERS.map(() => false),
@@ -129,9 +132,6 @@ export function RescueWord() {
 		for (const id of timers.current) window.clearTimeout(id);
 		timers.current = [];
 	}, []);
-
-	const reducedMotion = () =>
-		window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 	// Snap letters back one by one, last letter first.
 	const reassemble = useCallback(

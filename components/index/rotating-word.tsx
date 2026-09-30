@@ -41,6 +41,7 @@ export default function RotatingWord({
 
 	// Keep the first (server-rendered) word in place so it stays visible on
 	// load; only shuffle the words that come after it.
+	// biome-ignore lint/correctness/useExhaustiveDependencies: keyed on wordsKey so a new array with the same words doesn't reshuffle
 	useEffect(() => {
 		const [first, ...rest] = words;
 		for (let i = rest.length - 1; i > 0; i--) {
@@ -49,7 +50,6 @@ export default function RotatingWord({
 		}
 		setShuffled(first === undefined ? [] : [first, ...rest]);
 		setIndex(0);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [wordsKey]);
 	const shouldReduceMotion = useReducedMotion();
 

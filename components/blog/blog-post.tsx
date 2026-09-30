@@ -172,6 +172,7 @@ function BlogTocNav({
 		});
 	}, []);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: re-run when the TOC changes so the highlight re-syncs to new entries
 	useEffect(() => {
 		syncHighlight(highlightId);
 
@@ -197,6 +198,7 @@ function BlogTocNav({
 	// Keep the active entry visible inside the TOC rail without scrolling
 	// the page: nudge the list's own scroll position (vertical on desktop,
 	// horizontal pills on mobile).
+	// biome-ignore lint/correctness/useExhaustiveDependencies: re-run when the TOC changes so the active entry is re-measured
 	useEffect(() => {
 		if (hoveredId || !activeTocId) return;
 		const list = listRef.current;
@@ -542,6 +544,7 @@ export default function BlogPost() {
 
 	// Tracks how much of the article body has been read (0 → 1). The slim
 	// TOC rail line fills top to bottom as the reader scrolls.
+	// biome-ignore lint/correctness/useExhaustiveDependencies: re-run when the TOC changes so the read-progress targets refresh
 	useEffect(() => {
 		if (loadState.status !== "ready") {
 			setReadProgress(0);

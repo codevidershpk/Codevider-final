@@ -90,7 +90,7 @@ Use the base scale for component gaps, padding and margins. Values off the scale
 |---|---|---|
 | `--header-height` | the real header height | Measure it; don't guess |
 | `--header-offset` | `calc(var(--header-height) + 1rem)`, currently equal to `clamp(5.5rem, 10vw, 6.5rem)` | Used for `scroll-margin-top` and anchor landing |
-| `--page-hero-pt` | `clamp(6.5rem, 12vw, 9rem)` | Top padding of an inner-page hero |
+| `--page-hero-pt` | `clamp(8rem, 14vw, 11rem)` | Top padding of an inner-page hero (about, services, career, blog, legal, career apply, vibe-code rescue). Blog articles use a lighter `clamp(7rem, 12vw, 9rem)`. |
 | `--page-hero-pb` | `clamp(4rem, 8vw, 6rem)` | Bottom padding of an inner-page hero |
 
 ---
@@ -121,8 +121,8 @@ The 1023px and 1024px breakpoints are merged into lg (use `max-width: 1023px`). 
 
 ## Typography
 
-- **Sans (body):** Sora, via `--font-sans` / `--sans`
-- **Serif (headings):** Lora, weight 400, via `--font-heading` / `--heading`
+- **Sans (body):** Alexandria, via `--font-sans` / `--sans`
+- **Serif (headings):** Merriweather, via `--font-heading` / `--heading`. Loaded at 400–700 with italics. Hero and page titles use 400; section titles use 500.
 - **Mono:** `ui-monospace, Consolas, monospace`
 - **Root size:** 18px, or 16px at 1024px and below. Line height 145%. Body letter spacing is 0.18px and is set on `body` only.
 
@@ -132,7 +132,7 @@ Type tokens are in `rem`, so they scale with the root size.
 |---|---|---|---|
 | `--fs-display` | `clamp(3.25rem, 8vw, 4.75rem)` | serif | Home hero only |
 | `--fs-h1` | `clamp(2.25rem, 5.5vw, 3.5rem)` | serif | Page titles, letter spacing about -0.03em |
-| `--fs-h2` | `clamp(1.75rem, 4.2vw, 2.5rem)` | serif | **The** section heading. Replaces the roughly 8 variant clamps. |
+| `--fs-h2` | `clamp(1.4rem, 1.15rem + 1vw, 1.7rem)` | serif | **The** section heading, weight 500, line height 1.15. Currently shipped as `.section-title` in `globals.css` (used by `SectionHead`) and mirrored in `.svc-block__title`. `.vcr-h2` and `.about-join-cta__title` still use larger clamps and should migrate. |
 | `--fs-h3` | `clamp(1.125rem, 2vw, 1.25rem)` | serif or sans | Card and step titles |
 | `--fs-body` | `1rem` | sans | |
 | `--fs-lead` | `clamp(1rem, 1.4vw, 1.125rem)` | sans | Intro paragraphs |
@@ -144,6 +144,10 @@ Type tokens are in `rem`, so they scale with the root size.
 - Typography uses the type tokens. Arbitrary `font-size: 13px` / `14px` / `15px` values are not allowed; map them to `--fs-body-sm` or `--fs-caption`.
 - Pixel values are fine for borders (`1px`) and component-specific decorative dimensions (for example the eyebrow rule).
 - Headings keep fluid `clamp()` sizing. The problem is having several clamps for one role, not using clamps.
+- The global `h1, h2` rule in `globals.css` is unlayered, so it overrides Tailwind utility classes on those elements. Size a section `<h2>` with `.section-title` (or a component class), not Tailwind `text-*` / `font-*` utilities.
+- Section heads (`SectionHead`) cap at `48rem` so titles set on one line on desktop; descriptions cap at `70ch`.
+- Page heroes show a title and a lead only, with no meta or label row underneath.
+- Card titles and stat numbers sit below the section title in size. On desktop, the "Who we are" stats are `1.5rem`.
 
 ---
 
@@ -207,7 +211,7 @@ There is one base card plus controlled variants. Don't create a new card family 
 - **`.card` (base):** `--surface` background, `1px solid --border-subtle`, `--radius-lg`, `--shadow-sm`, `--card-padding`.
 - **`.card--compact`:** `--card-padding-compact`, `--radius-md`.
 - **`.card--interactive`:** on hover, lift by 2px, use `--shadow-md`, and apply a `--dur-normal` transition.
-- **`.card--feature`:** `--radius-xl`, with border-glow / accent treatment.
+- **`.card--feature`:** `--radius-xl`, with an accent treatment. The old border-glow component has been removed.
 
 Mapping: `surface-card` becomes the base; `stat-card`, `blog-related-card` and `career-job-card` become compact and/or interactive; `home-ecard` becomes feature; `blog-card` becomes interactive. Variants control padding, hover and layout. The base controls background, border, radius and shadow.
 

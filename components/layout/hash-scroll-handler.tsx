@@ -119,6 +119,7 @@ export function HashScrollHandler() {
 	const pathname = usePathname();
 	const [locationHash, setLocationHash] = useState("");
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: pathname re-reads the hash after client-side navigation
 	useEffect(() => {
 		const syncHash = () => setLocationHash(window.location.hash);
 
@@ -208,6 +209,7 @@ export function HashScrollHandler() {
 		};
 	}, [pathname]);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: pathname re-triggers hash scrolling after client-side navigation
 	useEffect(() => {
 		if (!locationHash) return;
 
