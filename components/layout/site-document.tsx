@@ -1,15 +1,15 @@
-import { Lora, Sora } from "next/font/google";
+import { Alexandria, Merriweather } from "next/font/google";
 import type { ReactNode } from "react";
 import "@/app/globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
-const sora = Sora({
+const alexandria = Alexandria({
 	variable: "--font-sans",
 	subsets: ["latin", "latin-ext"],
 	weight: ["400", "500", "600", "700"],
 });
 
-const lora = Lora({
+const merriweather = Merriweather({
 	variable: "--font-heading",
 	subsets: ["latin", "latin-ext"],
 	style: ["normal", "italic"],
@@ -45,7 +45,7 @@ export function SiteDocument({ children }: Props) {
 			lang="en"
 			data-scroll-behavior="smooth"
 			suppressHydrationWarning
-			className={`${sora.variable} ${lora.variable} h-full antialiased`}
+			className={`${alexandria.variable} ${merriweather.variable} h-full antialiased`}
 		>
 			<head>
 				<script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />

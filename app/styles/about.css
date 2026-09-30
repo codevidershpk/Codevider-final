@@ -150,7 +150,7 @@
 	margin-top: 0;
 	font-family: var(--heading);
 	font-size: clamp(1.875rem, 4.4vw, 3.25rem);
-	font-weight: 600;
+	font-weight: 500;
 	line-height: 1.05;
 	letter-spacing: -0.02em;
 	color: #fff;

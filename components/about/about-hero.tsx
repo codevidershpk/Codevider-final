@@ -7,8 +7,6 @@ import { useCopy } from "@/lib/copy";
 
 const revealEase = [0.22, 1, 0.36, 1] as const;
 
-const META_KEYS = ["meta_years", "meta_projects", "meta_location"] as const;
-
 export default function AboutHero() {
 	const t = useCopy("about.hero");
 	const ref = useRef<HTMLElement>(null);
@@ -23,7 +21,7 @@ export default function AboutHero() {
 	return (
 		<section ref={ref} className="svc-hero">
 			<div className="svc-hero__glow" aria-hidden />
-			<div className="home-wrap relative z-10 pt-[clamp(6.5rem,12vw,9rem)] pb-[clamp(4rem,8vw,6rem)]">
+			<div className="home-wrap relative z-10 pt-[clamp(8rem,14vw,11rem)] pb-[clamp(4rem,8vw,6rem)]">
 				<motion.h1
 					className="svc-hero__title max-w-[18ch]"
 					initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
@@ -41,20 +39,6 @@ export default function AboutHero() {
 				>
 					{t("lead")}
 				</motion.p>
-
-				<motion.ul
-					className="svc-hero__meta"
-					initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-					animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-					transition={stagger(2)}
-				>
-					{META_KEYS.map((key) => (
-						<li key={key}>
-							<span className="svc-hero__dot" aria-hidden />
-							{t(key)}
-						</li>
-					))}
-				</motion.ul>
 			</div>
 		</section>
 	);

@@ -140,10 +140,7 @@ export default function WhyChooseUs() {
 										<Visual t={t} />
 									</div>
 									<div className="p-[clamp(1.25rem,2.5vw,1.75rem)] pt-5">
-										<span className="font-(family-name:--mono) text-xs text-(--dash-brand)">
-											0{index + 1}
-										</span>
-										<h3 className="mt-2 text-balance text-[clamp(1.125rem,2vw,1.25rem)] font-semibold leading-snug tracking-[-0.02em] text-(--text-h)">
+										<h3 className="text-balance text-[clamp(1.125rem,2vw,1.25rem)] font-semibold leading-snug tracking-[-0.02em] text-(--text-h)">
 											{t(`pillars.${id}.title`)}
 										</h3>
 										<p className="mt-2 text-pretty text-[0.9375rem] leading-relaxed text-(--text)">

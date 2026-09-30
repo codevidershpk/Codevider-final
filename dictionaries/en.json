@@ -418,7 +418,7 @@
 						{
 							"type": "ul",
 							"items": [
-								"Server and Delivery Logs: Like any website, our hosting and content delivery infrastructure may record standard request data such as your IP address, browser and device type, the page requested, and the date and time of the request. These logs are used for security, troubleshooting, and keeping the website available.",
+								"Request Data: To deliver pages to you, our hosting providers necessarily process technical request details such as your IP address, browser type, and the page requested. We do not store website access logs or build usage profiles from this data.",
 								"Spam and Bot Protection: Our contact and application forms are protected by Cloudflare Turnstile. When you use a form, Turnstile processes technical signals from your browser and device (such as your IP address and browser characteristics) to confirm that you are a human and not an automated bot."
 							]
 						}
@@ -490,9 +490,9 @@
 							"type": "ul",
 							"items": [
 								"Website Hosting and Delivery: Amazon Web Services (AWS) hosts and delivers this website.",
-								"Our Backend Systems: Form submissions and application files are sent to and stored on Codevider's own backend systems, which are accessible only to authorized team members.",
+								"Backend, CRM, and Recruitment Systems: Form submissions and application files are stored in Codevider's internal CRM and recruitment system, hosted by Hetzner Online GmbH in the European Union, and accessible only to authorized team members.",
 								"Bot Protection: Cloudflare, Inc. provides the Turnstile check on our forms.",
-								"Email: Our email provider processes messages you send to us directly."
+								"Email: Google Workspace (Google) provides our email service, so messages you send to us directly are processed by Google."
 							]
 						},
 						{
@@ -501,7 +501,7 @@
 						},
 						{
 							"type": "p",
-							"text": "Codevider is based in Albania, and some of our service providers are located in the United States or other countries. If you are in the EU/EEA or the UK, your data may therefore be processed outside your country. Where this happens, we rely on appropriate safeguards, such as the European Commission's Standard Contractual Clauses or an applicable adequacy decision."
+							"text": "Codevider is based in Albania. Your form data is stored on servers in the European Union (Hetzner), while some of our other service providers (AWS, Cloudflare, and Google) may process data in the United States or other countries. Where personal data is transferred outside the EU/EEA or the UK, we rely on appropriate safeguards, such as the European Commission's Standard Contractual Clauses or an applicable adequacy decision."
 						}
 					]
 				},
@@ -517,7 +517,7 @@
 							"items": [
 								"Contact Messages: Kept for as long as we are in contact with you, and deleted no later than two (2) years after our last communication if no business relationship follows.",
 								"Job Applications: If you are not hired, your application and uploaded files are deleted twelve (12) months after the hiring process for the role ends, unless you agree to let us keep them for future roles. If you are hired, relevant information becomes part of your employee record.",
-								"Technical Logs: Server and delivery logs are kept only for a limited period needed for security and troubleshooting, after which they are deleted automatically."
+								"Technical Data: We do not keep website access logs. Request data is processed only as long as needed to deliver the page, and Cloudflare Turnstile data is handled according to Cloudflare's own retention policy."
 							]
 						}
 					]
@@ -701,10 +701,7 @@
 		"hero": {
 			"eyebrow": "About us",
 			"headline": "Crafting software that means business",
-			"lead": "Strategy, design, and engineering working in harmony to drive your roadmap forward.",
-			"meta_years": "6+ years delivering software",
-			"meta_projects": "45+ enterprise global projects",
-			"meta_location": "Tirana, Albania · EU"
+			"lead": "Strategy, design, and engineering working in harmony to drive your roadmap forward."
 		},
 		"who_we_are": {
 			"eyebrow": "Who we are",
@@ -1033,10 +1030,7 @@
 		"hero": {
 			"eyebrow": "Our capabilities",
 			"headline": "Services that move your roadmap forward",
-			"lead": "Explore how we design, build, and scale reliable products. Clean architecture, clear delivery, and a team that plugs straight into yours.",
-			"meta_capabilities": "7 core capabilities",
-			"meta_engagement": "Hourly or dedicated monthly",
-			"meta_location": "EU-based, working worldwide"
+			"lead": "Explore how we design, build, and scale reliable products. Clean architecture, clear delivery, and a team that plugs straight into yours."
 		},
 		"capabilities": {
 			"solutions_heading": "Our solutions",

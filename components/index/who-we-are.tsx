@@ -57,7 +57,7 @@ export default function WhoWeAre() {
 				>
 					<motion.h2
 						id="who-we-are-heading"
-						className="max-w-xl font-sans text-balance text-[clamp(2rem,4.5vw,2.75rem)] font-semibold leading-[1.12] tracking-tight text-(--text-h)"
+						className="section-title max-w-3xl text-balance"
 						variants={itemVariants}
 					>
 						{t("who_we_are_headline")}
@@ -112,7 +112,7 @@ export default function WhoWeAre() {
 								<dt className="max-w-[18rem] text-pretty text-sm leading-snug text-(--text-muted)">
 									{t(labelKey, { value })}
 								</dt>
-								<dd className="shrink-0 font-sans text-[clamp(1.75rem,3vw,2.25rem)] font-medium tabular-nums tracking-tight text-(--dash-brand)">
+								<dd className="shrink-0 font-sans text-[1.75rem] font-medium tabular-nums lg:text-[1.5rem] tracking-tight text-(--dash-brand)">
 									{t(valueKey, { value })}
 								</dd>
 							</motion.div>

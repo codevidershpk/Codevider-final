@@ -24,7 +24,7 @@ export function generateMetadata(): Metadata {
 			title: TITLE,
 			description: DESCRIPTION,
 			page: "services",
-			path: "/vibecode-rescue",
+			path: "/vibe-code-rescue",
 		}),
 		robots: {
 			index: false,

@@ -21,7 +21,7 @@ export default function BlogHero() {
 	return (
 		<section ref={ref} className="svc-hero blog-hero">
 			<div className="svc-hero__glow" aria-hidden />
-			<div className="home-wrap relative z-10 pt-[clamp(6.5rem,12vw,9rem)] pb-[clamp(4rem,8vw,6rem)]">
+			<div className="home-wrap relative z-10 pt-[clamp(8rem,14vw,11rem)] pb-[clamp(4rem,8vw,6rem)]">
 				<motion.h1
 					className="svc-hero__title blog-hero__title"
 					initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}

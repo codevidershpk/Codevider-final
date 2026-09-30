@@ -54,8 +54,9 @@ html.theme-switching * {
 }
 
 @theme {
-	--font-sans: var(--font-sans), Sora, system-ui, sans-serif;
-	--font-serif: var(--font-heading), Lora, Georgia, "Times New Roman", serif;
+	--font-sans: var(--font-sans), Alexandria, system-ui, sans-serif;
+	--font-serif:
+		var(--font-heading), Merriweather, Georgia, "Times New Roman", serif;
 	--breakpoint-navbar: 936px;
 }
 
@@ -182,8 +183,9 @@ html.theme-switching * {
 	}
 
 	/* --- Type stacks --- */
-	--sans: var(--font-sans), Sora, system-ui, sans-serif;
-	--heading: var(--font-heading), Lora, Georgia, "Times New Roman", serif;
+	--sans: var(--font-sans), Alexandria, system-ui, sans-serif;
+	--heading:
+		var(--font-heading), Merriweather, Georgia, "Times New Roman", serif;
 	--mono: ui-monospace, Consolas, monospace;
 
 	/* --- Base typography --- */
@@ -335,6 +337,13 @@ h2 {
 	@media (max-width: 1024px) {
 		font-size: 20px;
 	}
+}
+
+/* Section titles (SectionHead). Unlayered like h2 above, so it must follow it. */
+.section-title {
+	font-size: clamp(1.4rem, 1.15rem + 1vw, 1.7rem);
+	font-weight: 500;
+	line-height: 1.15;
 }
 
 p {
@@ -1930,15 +1939,6 @@ html[data-page-end] .home-section--tight {
 	}
 }
 
-.border-glow {
-	position: relative;
-	display: grid;
-	isolation: isolate;
-	height: 100%;
-	transform: translate3d(0, 0, 0.01px);
-	border: 1px solid color-mix(in srgb, var(--text-h) 8%, transparent);
-}
-
 .home-empower {
 	display: flex;
 	flex-direction: column;
@@ -1989,55 +1989,6 @@ html[data-page-end] .home-section--tight {
 	min-height: 100%;
 }
 
-.home-ecard.border-glow {
-	display: grid;
-	place-items: center;
-	/* BorderGlow owns the ring; keep soft elevation only */
-	border: 1px solid transparent;
-	box-shadow:
-		0 1px 2px -1px rgba(0, 0, 0, 0.06),
-		0 2px 4px 0 rgba(0, 0, 0, 0.04);
-}
-
-.border-glow__border,
-.border-glow__fill {
-	position: absolute;
-	inset: 0;
-	border-radius: inherit;
-	z-index: -1;
-	pointer-events: none;
-}
-
-.border-glow__halo {
-	position: absolute;
-	z-index: 1;
-	border-radius: inherit;
-	pointer-events: none;
-	/* Normal reads clearer on light surfaces; plus-lighter blooms on dark */
-	mix-blend-mode: normal;
-}
-
-.dark .border-glow__halo {
-	mix-blend-mode: plus-lighter;
-}
-
-.border-glow__halo-inner {
-	position: absolute;
-	border-radius: inherit;
-	pointer-events: none;
-}
-
-.border-glow__content {
-	position: relative;
-	z-index: 1;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: inherit;
-	min-width: 0;
-	width: 100%;
-}
-
 .home-ecard {
 	--ecard-pad: 1.5rem;
 	--ecard-radius: 12px;
@@ -2063,49 +2014,13 @@ html[data-page-end] .home-section--tight {
 }
 
 /* Mobile: featured AI card matches the compact card UI */
-.home-ecard--featured.border-glow {
-	place-items: stretch;
-	/* beat BorderGlow inline radius/bg so it matches sibling cards */
-	border-radius: var(--ecard-radius) !important;
-	background: var(--bg) !important;
-	box-shadow:
-		0 0 0 1px rgba(0, 0, 0, 0.06),
-		0 1px 2px -1px rgba(0, 0, 0, 0.06),
-		0 2px 4px 0 rgba(0, 0, 0, 0.04);
-}
-
-.home-ecard--featured .border-glow__content {
-	width: 100%;
-	align-items: flex-start;
-	justify-content: flex-start;
-	text-align: left;
-	gap: inherit;
-}
-
-.home-ecard--featured .border-glow__border,
-.home-ecard--featured .border-glow__fill,
-.home-ecard--featured .border-glow__halo {
-	display: none;
-}
 
 .dark .home-ecard {
 	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
-.dark .home-ecard.border-glow,
-.dark .home-ecard--featured.border-glow {
-	box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
-}
-
 .home-ecard:hover {
 	transform: translateY(-2px);
-	box-shadow:
-		0 0 0 1px color-mix(in srgb, var(--dash-brand) 20%, transparent),
-		0 4px 12px rgba(0, 0, 0, 0.07),
-		0 2px 4px rgba(0, 0, 0, 0.04);
-}
-
-.home-ecard.border-glow:hover {
 	box-shadow:
 		0 0 0 1px color-mix(in srgb, var(--dash-brand) 20%, transparent),
 		0 4px 12px rgba(0, 0, 0, 0.07),
@@ -2134,12 +2049,6 @@ html[data-page-end] .home-section--tight {
 .home-empower .home-ecard:not(.home-ecard--featured):hover {
 	border-color: color-mix(in srgb, var(--dash-brand) 45%, var(--border));
 	box-shadow: none;
-}
-
-.dark .home-ecard.border-glow:hover {
-	box-shadow:
-		0 0 0 1px color-mix(in srgb, var(--dash-brand) 34%, transparent),
-		0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
 .home-ecard-head {
@@ -2185,18 +2094,6 @@ html[data-page-end] .home-section--tight {
 
 /* Desktop: featured AI card gets the larger centered treatment */
 @media (min-width: 768px) {
-	.home-ecard--featured .border-glow__content {
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-	}
-
-	.home-ecard--featured .border-glow__border,
-	.home-ecard--featured .border-glow__fill,
-	.home-ecard--featured .border-glow__halo {
-		display: block;
-	}
-
 	.home-ecard--featured {
 		justify-content: center;
 		gap: 0.875rem;
@@ -2211,44 +2108,9 @@ html[data-page-end] .home-section--tight {
 			0 4px 16px 0 rgba(0, 0, 0, 0.04);
 	}
 
-	.home-ecard--featured.border-glow {
-		place-items: center;
-		border-radius: var(--ecard-radius) !important;
-		background: color-mix(in srgb, var(--dash-brand) 6%, var(--bg)) !important;
-		/* inline backgroundColor drives the mask punch-out; keep elevation soft */
-		box-shadow:
-			0 2px 8px -2px rgba(0, 0, 0, 0.06),
-			0 4px 16px 0 rgba(0, 0, 0, 0.04);
-	}
-
-	.dark .home-ecard--featured.border-glow {
-		background: color-mix(in srgb, var(--dash-brand) 14%, var(--bg)) !important;
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
-	}
-
-	.dark .home-ecard.border-glow {
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
-	}
-
-	.home-ecard.border-glow:hover {
-		box-shadow:
-			0 4px 12px rgba(0, 0, 0, 0.07),
-			0 2px 4px rgba(0, 0, 0, 0.04);
-	}
-
-	.dark .home-ecard.border-glow:hover {
-		box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
-	}
-
 	.home-ecard--featured:hover {
 		box-shadow:
 			0 0 0 1px color-mix(in srgb, var(--dash-brand) 28%, transparent),
-			0 6px 18px rgba(0, 0, 0, 0.08),
-			0 2px 6px rgba(0, 0, 0, 0.04);
-	}
-
-	.home-ecard--featured.border-glow:hover {
-		box-shadow:
 			0 6px 18px rgba(0, 0, 0, 0.08),
 			0 2px 6px rgba(0, 0, 0, 0.04);
 	}
@@ -2257,10 +2119,6 @@ html[data-page-end] .home-section--tight {
 		box-shadow:
 			0 0 0 1px color-mix(in srgb, var(--dash-brand) 42%, transparent),
 			0 8px 24px rgba(0, 0, 0, 0.4);
-	}
-
-	.dark .home-ecard--featured.border-glow:hover {
-		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 	}
 
 	.home-ecard--featured .home-ecard-head {
@@ -2303,10 +2161,7 @@ html[data-page-end] .home-section--tight {
 
 @media (prefers-reduced-motion: reduce) {
 	.home-ecard,
-	.home-ecard-icon,
-	.border-glow__border,
-	.border-glow__fill,
-	.border-glow__halo {
+	.home-ecard-icon {
 		transition: none;
 	}
 

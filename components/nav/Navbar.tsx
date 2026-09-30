@@ -65,7 +65,7 @@ const navPillSpring = {
 
 const navLinks = [
 	{ href: "/services", key: "services" as const },
-	{ href: "/vibecode-rescue", key: "rescue" as const },
+	{ href: "/vibe-code-rescue", key: "rescue" as const },
 	{ href: "/about", key: "about" as const },
 	{ href: "/blogs", key: "blog" as const },
 	{ href: "/career", key: "career" as const },

@@ -41,7 +41,7 @@ export default function Footer() {
 							{t("services")}
 						</Link>
 						<Link
-							href="/vibecode-rescue"
+							href="/vibe-code-rescue"
 							className="block py-1.5 text-[15px] transition-colors hover:text-white"
 						>
 							{t("rescue")}

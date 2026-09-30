@@ -141,7 +141,7 @@ export default function CareerOpenings() {
 					<div className="career-openings-card">
 						<div className="career-openings__head">
 							<motion.h2
-								className="text-balance text-[clamp(1.75rem,4.6vw,2.75rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-(--text-h)"
+								className="section-title text-balance"
 								{...headReveal(0)}
 							>
 								{t("headline_active")}
@@ -297,7 +297,7 @@ export default function CareerOpenings() {
 				{showEmptyState && !hasJobs ? (
 					<div className="career-empty">
 						<motion.h2
-							className="text-balance text-[clamp(1.75rem,4.6vw,2.75rem)] font-semibold leading-[1.08] tracking-[-0.02em] text-(--text-h)"
+							className="section-title text-balance"
 							{...headReveal(0)}
 						>
 							{status === "error" ? t("error_headline") : t("headline")}

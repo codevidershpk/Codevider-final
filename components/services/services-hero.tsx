@@ -13,12 +13,6 @@ export default function ServicesHero() {
 	const inView = useRevealInView(ref, { once: true, margin: "-8% 0px" });
 	const shouldReduceMotion = useReducedMotion();
 
-	const metaItems = [
-		t("meta_capabilities"),
-		t("meta_engagement"),
-		t("meta_location"),
-	];
-
 	const stagger = (index: number) =>
 		shouldReduceMotion
 			? { duration: 0 }
@@ -27,7 +21,7 @@ export default function ServicesHero() {
 	return (
 		<section ref={ref} className="svc-hero">
 			<div className="svc-hero__glow" aria-hidden />
-			<div className="home-wrap relative z-10 pt-[clamp(6.5rem,12vw,9rem)] pb-[clamp(4rem,8vw,6rem)]">
+			<div className="home-wrap relative z-10 pt-[clamp(8rem,14vw,11rem)] pb-[clamp(4rem,8vw,6rem)]">
 				<motion.h1
 					className="svc-hero__title"
 					initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
@@ -45,20 +39,6 @@ export default function ServicesHero() {
 				>
 					{t("lead")}
 				</motion.p>
-
-				<motion.ul
-					className="svc-hero__meta"
-					initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
-					animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-					transition={stagger(2)}
-				>
-					{metaItems.map((item) => (
-						<li key={item}>
-							<span className="svc-hero__dot" aria-hidden />
-							{item}
-						</li>
-					))}
-				</motion.ul>
 			</div>
 		</section>
 	);

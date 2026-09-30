@@ -105,7 +105,7 @@ function ServiceBlock({
 			</div>
 
 			{id === "rescue" ? (
-				<Link href="/vibecode-rescue" className="svc-block__link">
+				<Link href="/vibe-code-rescue" className="svc-block__link">
 					{t("link")}
 					<ArrowRight className="size-4" aria-hidden />
 				</Link>

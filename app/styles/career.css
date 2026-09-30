@@ -314,7 +314,7 @@
 	}
 }
 .career-apply-page {
-	padding-block: clamp(6.5rem, 12vw, 9rem) var(--home-section-y);
+	padding-block: clamp(8rem, 14vw, 11rem) var(--home-section-y);
 }
 .career-apply-page__inner {
 	width: 100%;
