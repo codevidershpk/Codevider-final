@@ -69,7 +69,6 @@ function createCurvedPath(
 
 function AnimatedPath({
 	d,
-	index,
 	isRevealed,
 	shouldAnimate,
 	shouldReduceMotion,
@@ -77,7 +76,6 @@ function AnimatedPath({
 	glowStrokeWidth,
 }: {
 	d: string;
-	index: number;
 	isRevealed: boolean;
 	shouldAnimate: boolean;
 	shouldReduceMotion: boolean | null;
@@ -98,7 +96,6 @@ function AnimatedPath({
 				animate={isRevealed ? { pathLength: 1 } : { pathLength: 0 }}
 				transition={revealTransition(shouldAnimate, {
 					duration: 1.5,
-					delay: 0.3 * index,
 					ease: "easeOut" as const,
 				})}
 			/>
@@ -113,7 +110,6 @@ function AnimatedPath({
 				animate={isRevealed ? { pathLength: 1 } : { pathLength: 0 }}
 				transition={revealTransition(shouldAnimate, {
 					duration: 1.5,
-					delay: 0.3 * index,
 					ease: "easeOut" as const,
 				})}
 			/>
@@ -176,7 +172,6 @@ export default function WorldMap({ dots = [] }: WorldMapProps) {
 						<AnimatedPath
 							key={`path-${i}`}
 							d={createCurvedPath(startPoint, endPoint)}
-							index={i}
 							isRevealed={isRevealed}
 							shouldAnimate={shouldAnimate}
 							shouldReduceMotion={shouldReduceMotion}

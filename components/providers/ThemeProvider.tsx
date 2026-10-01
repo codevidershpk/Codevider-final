@@ -26,7 +26,38 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const STORAGE_KEY = "theme";
 const THEME_TRANSITION_MS = 750;
-const THEME_TRANSITION_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+type RevealCircle = { x: number; y: number; endRadius: number; start: number };
+
+type Reveal = {
+	transition: ViewTransition;
+	circles: RevealCircle[];
+	style: HTMLStyleElement | null;
+	frame: number;
+};
+
+/** cubic-bezier(0.22, 1, 0.36, 1), solved for y at time x. */
+function easeReveal(t: number) {
+	const x1 = 0.22;
+	const y1 = 1;
+	const x2 = 0.36;
+	const y2 = 1;
+	const bezier = (u: number, p1: number, p2: number) =>
+		3 * p1 * u * (1 - u) ** 2 + 3 * p2 * u ** 2 * (1 - u) + u ** 3;
+	let lo = 0;
+	let hi = 1;
+	for (let i = 0; i < 20; i++) {
+		const mid = (lo + hi) / 2;
+		if (bezier(mid, x1, x2) < t) lo = mid;
+		else hi = mid;
+	}
+	return bezier((lo + hi) / 2, y1, y2);
+}
+
+function circlePath(x: number, y: number, r: number) {
+	if (r <= 0) return `M${x} ${y}Z`;
+	return `M${x - r} ${y}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z`;
+}
 
 function supportsRadialViewTransition(): boolean {
 	if (typeof document.startViewTransition !== "function") {
@@ -97,10 +128,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 		getServerThemeSnapshot,
 	);
 	const [isThemeTransitioning, setIsThemeTransitioning] = useState(false);
+	// Theme the latest press is heading to while a reveal is still running.
+	const [pendingTheme, setPendingTheme] = useState<Theme | null>(null);
 	const themeRef = useRef(theme);
-	const transitionGeneration = useRef(0);
-	const activeTransition = useRef<ViewTransition | null>(null);
-	const activeRevealAnimation = useRef<Animation | null>(null);
+	const targetThemeRef = useRef<Theme | null>(null);
+	const activeReveal = useRef<Reveal | null>(null);
 	themeRef.current = theme;
 
 	useEffect(() => {
@@ -116,92 +148,112 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 	}, []);
 
 	const toggleTheme = useCallback((coords?: ThemeCoords) => {
-		const nextTheme = themeRef.current === "dark" ? "light" : "dark";
+		const currentTheme = targetThemeRef.current ?? themeRef.current;
+		const nextTheme: Theme = currentTheme === "dark" ? "light" : "dark";
 		const prefersReducedMotion = window.matchMedia(
 			"(prefers-reduced-motion: reduce)",
 		).matches;
 		const canAnimate = supportsRadialViewTransition() && !prefersReducedMotion;
-
-		const updateTheme = (holdTransitions = false) => {
-			flushSync(() => {
-				localStorage.setItem(STORAGE_KEY, nextTheme);
-				applyTheme(nextTheme, { holdTransitions });
-			});
+		const x = coords?.x ?? window.innerWidth / 2;
+		const y = coords?.y ?? window.innerHeight / 2;
+		const circle: RevealCircle = {
+			x,
+			y,
+			endRadius: getRevealRadius(x, y),
+			start: performance.now(),
 		};
 
-		if (!canAnimate) {
-			activeRevealAnimation.current?.cancel();
-			activeRevealAnimation.current = null;
-			if (activeTransition.current) {
-				try {
-					activeTransition.current.skipTransition();
-				} catch {
-					/* ignore */
-				}
-				activeTransition.current = null;
-			}
-			updateTheme();
-			setIsThemeTransitioning(false);
+		localStorage.setItem(STORAGE_KEY, nextTheme);
+
+		const running = activeReveal.current;
+		if (running && canAnimate) {
+			// Every press mid-reveal adds another circle expanding from the press
+			// point. Overlapping circles alternate themes (even-odd), so each press
+			// visibly radiates the next theme instead of snapping.
+			running.circles.push(circle);
+			targetThemeRef.current = nextTheme;
+			setPendingTheme(nextTheme);
 			return;
 		}
 
-		// Interrupt any in-flight reveal so the next press applies immediately.
-		activeRevealAnimation.current?.cancel();
-		activeRevealAnimation.current = null;
-		if (activeTransition.current) {
-			try {
-				activeTransition.current.skipTransition();
-			} catch {
-				// Already finished or unsupported — safe to ignore.
-			}
-			activeTransition.current = null;
+		if (!canAnimate) {
+			running?.transition.skipTransition();
+			flushSync(() => applyTheme(nextTheme));
+			return;
 		}
 
-		const generation = ++transitionGeneration.current;
+		const baseTheme = themeRef.current;
+		const liveTheme = nextTheme;
+		const reveal: Reveal = {
+			transition: document.startViewTransition(() => {
+				flushSync(() => applyTheme(liveTheme, { holdTransitions: true }));
+			}),
+			circles: [circle],
+			style: null,
+			frame: 0,
+		};
+		activeReveal.current = reveal;
+		targetThemeRef.current = nextTheme;
+		setPendingTheme(nextTheme);
 		setIsThemeTransitioning(true);
 
 		const finish = () => {
-			if (generation !== transitionGeneration.current) return;
+			if (activeReveal.current !== reveal) return;
+			cancelAnimationFrame(reveal.frame);
+			reveal.style?.remove();
+			activeReveal.current = null;
+			targetThemeRef.current = null;
 			releaseThemeSwitching();
-			activeTransition.current = null;
-			activeRevealAnimation.current = null;
+			setPendingTheme(null);
 			setIsThemeTransitioning(false);
 		};
 
-		const transition = document.startViewTransition(() => {
-			updateTheme(true);
-		});
-		activeTransition.current = transition;
+		const tick = () => {
+			const now = performance.now();
+			let done = true;
+			const paths = reveal.circles.map((c) => {
+				const progress = Math.min(
+					1,
+					Math.max(0, (now - c.start) / THEME_TRANSITION_MS),
+				);
+				if (progress < 1) done = false;
+				return circlePath(c.x, c.y, c.endRadius * easeReveal(progress));
+			});
 
-		const x = coords?.x ?? window.innerWidth / 2;
-		const y = coords?.y ?? window.innerHeight / 2;
-		const endRadius = getRevealRadius(x, y);
+			if (done) {
+				// Fully covered: the circle count's parity decides the final theme.
+				const finalTheme =
+					reveal.circles.length % 2 === 1 ? liveTheme : baseTheme;
+				if (finalTheme !== liveTheme) {
+					applyTheme(finalTheme, { holdTransitions: true });
+				}
+				reveal.transition.skipTransition();
+				finish();
+				return;
+			}
 
-		transition.ready
+			if (reveal.style) {
+				reveal.style.textContent = `::view-transition-new(root){clip-path:path(evenodd,"${paths.join(" ")}")}`;
+			}
+			reveal.frame = requestAnimationFrame(tick);
+		};
+
+		reveal.transition.ready
 			.then(() => {
-				if (generation !== transitionGeneration.current) return;
-
-				requestAnimationFrame(() => {
-					if (generation !== transitionGeneration.current) return;
-
-					activeRevealAnimation.current = document.documentElement.animate(
-						{
-							clipPath: [
-								`circle(0px at ${x}px ${y}px)`,
-								`circle(${endRadius}px at ${x}px ${y}px)`,
-							],
-						},
-						{
-							duration: THEME_TRANSITION_MS,
-							easing: THEME_TRANSITION_EASING,
-							pseudoElement: "::view-transition-new(root)",
-						},
-					);
-				});
+				if (activeReveal.current !== reveal) return;
+				const style = document.createElement("style");
+				document.head.appendChild(style);
+				reveal.style = style;
+				// Keeps the transition alive while the rAF loop drives the clip.
+				document.documentElement.animate(
+					{ opacity: [1, 1] },
+					{ duration: 60_000, pseudoElement: "::view-transition-new(root)" },
+				);
+				tick();
 			})
 			.catch(finish);
 
-		void transition.finished.finally(finish);
+		void reveal.transition.finished.finally(finish);
 	}, []);
 
 	useEffect(() => {
@@ -222,7 +274,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 	return (
 		<ThemeContext.Provider
-			value={{ theme, isThemeTransitioning, setTheme, toggleTheme }}
+			value={{
+				theme: pendingTheme ?? theme,
+				isThemeTransitioning,
+				setTheme,
+				toggleTheme,
+			}}
 		>
 			{children}
 		</ThemeContext.Provider>

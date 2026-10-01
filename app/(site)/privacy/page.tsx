@@ -5,6 +5,7 @@ import LegalHero from "@/components/legal/legal-hero";
 import { StructuredData } from "@/components/seo/structured-data";
 import { createPageMetadata, getOgImageUrl, getPageUrl } from "@/lib/site";
 import "@/app/styles/inner-pages.css";
+import "@/app/styles/article-toc.css";
 import "@/app/styles/legal.css";
 
 const PRIVACY_SECTIONS = [

@@ -376,8 +376,10 @@
 	},
 	"legal": {
 		"shared": {
-			"toc_label": "Table of contents",
-			"toc_heading": "Contents"
+			"toc_label": "Page sections",
+			"toc_heading": "On this page",
+			"progress_label": "Reading progress",
+			"progress_status": "{percent}% read"
 		},
 		"privacy": {
 			"eyebrow": "Legal",

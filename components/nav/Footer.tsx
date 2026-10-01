@@ -1,7 +1,7 @@
 "use client";
 
-import { useCopy } from "@/lib/copy";
 import Link from "next/link";
+import { useCopy } from "@/lib/copy";
 import { CodeviderLogo } from "./CodeviderLogo";
 import { FooterSocials } from "./footer-socials";
 
@@ -28,6 +28,9 @@ export default function Footer() {
 						<p className="mt-[18px] max-w-[30ch] text-[15px] leading-relaxed">
 							{t("description")}
 						</p>
+						<div className="mt-7">
+							<FooterSocials />
+						</div>
 					</div>
 
 					<div>
@@ -94,14 +97,13 @@ export default function Footer() {
 					</div>
 				</div>
 
-				<div className="mt-12 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-white/10 pt-6 text-sm">
+				<div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm sm:flex-row sm:items-center sm:justify-between">
 					<span suppressHydrationWarning>
 						{t("copyright", { year: new Date().getFullYear() })}
 					</span>
-					<FooterSocials />
 					<nav
 						aria-label="Legal"
-						className="flex flex-wrap items-center gap-x-5 gap-y-2"
+						className="flex shrink-0 flex-wrap items-center gap-x-5 gap-y-2"
 					>
 						<Link
 							href="/privacy"

@@ -161,7 +161,14 @@ export async function scrollToHashTargetWhenReady(
 	signal?: AbortSignal,
 ) {
 	const existing = document.getElementById(id);
-	const readyNow = !!existing && isHashTargetReady(existing);
+	// Sections still loading above the target would grow mid-scroll, so the
+	// target only counts as ready once every deferred section has content.
+	const readyNow =
+		!!existing &&
+		isHashTargetReady(existing) &&
+		[
+			...document.querySelectorAll<HTMLElement>("[data-deferred-section]"),
+		].every((section) => section.childElementCount > 0);
 
 	const el = await waitForHashTarget(id, 50, 8000, signal);
 	if (!el || signal?.aborted) return;

@@ -1,7 +1,11 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import ArticleTocNav, {
+	scrollToHeading,
+	type TocEntry,
+} from "@/components/blog/article-toc-nav";
 import LegalContentBlocks from "@/components/legal/legal-content-blocks";
 import { useRevealInView } from "@/hooks/use-page-end";
 import { useCopy } from "@/lib/copy";
@@ -24,64 +28,143 @@ export default function LegalDocument({
 	const ref = useRef<HTMLElement>(null);
 	const inView = useRevealInView(ref, { once: true, margin: "-8% 0px" });
 	const shouldReduceMotion = useReducedMotion();
-	const [activeSection, setActiveSection] = useState<string>(sections[0]);
+	const contentRef = useRef<HTMLDivElement>(null);
+	const [activeSection, setActiveSection] = useState<string | null>(
+		sections[0] ?? null,
+	);
+	const [readProgress, setReadProgress] = useState(0);
+	const lockRef = useRef<string | null>(null);
+	const lockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+	const toc = useMemo<TocEntry[]>(
+		() =>
+			sections.map((section) => ({
+				id: section,
+				label: t(`sections.${section}.title`),
+				level: 1,
+			})),
+		[sections, t],
+	);
+
+	// Scroll-spy + reading progress, same behaviour as blog articles.
+	useEffect(() => {
+		let frame = 0;
+
+		const sync = () => {
+			frame = 0;
+
+			if (lockRef.current) {
+				setActiveSection(lockRef.current);
+			} else {
+				const threshold = window.innerHeight * 0.4;
+				let current: string | null = sections[0] ?? null;
+				for (const section of sections) {
+					const el = document.getElementById(section);
+					if (el && el.getBoundingClientRect().top <= threshold) {
+						current = section;
+					}
+				}
+				setActiveSection((prev) => (prev === current ? prev : current));
+			}
+
+			const el = contentRef.current;
+			if (el && el.offsetHeight > 0) {
+				const top = el.getBoundingClientRect().top + window.scrollY;
+				const total = Math.max(el.offsetHeight, 1);
+				const viewportBottom = window.scrollY + window.innerHeight;
+				setReadProgress(
+					Math.min(Math.max(viewportBottom - top, 0), total) / total,
+				);
+			}
+		};
+
+		const onScrollOrResize = () => {
+			if (frame) return;
+			frame = window.requestAnimationFrame(sync);
+		};
+
+		sync();
+		window.addEventListener("scroll", onScrollOrResize, { passive: true });
+		window.addEventListener("resize", onScrollOrResize);
+
+		return () => {
+			if (frame) window.cancelAnimationFrame(frame);
+			window.removeEventListener("scroll", onScrollOrResize);
+			window.removeEventListener("resize", onScrollOrResize);
+		};
+	}, [sections]);
+
+	// Lift the floating CTA above the mobile bottom TOC bar while on screen.
+	useEffect(() => {
+		const el = contentRef.current;
+		if (!el) return;
+		const root = document.documentElement;
+		const io = new IntersectionObserver(([entry]) => {
+			if (entry.isIntersecting) root.dataset.articleTocBar = "";
+			else delete root.dataset.articleTocBar;
+		});
+		io.observe(el);
+		return () => {
+			io.disconnect();
+			delete root.dataset.articleTocBar;
+		};
+	}, []);
 
 	useEffect(() => {
-		const observers: IntersectionObserver[] = [];
-		const visible = new Map<string, number>();
+		return () => {
+			if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
+		};
+	}, []);
 
-		sections.forEach((section) => {
-			const el = document.getElementById(section);
-			if (!el) return;
-			const obs = new IntersectionObserver(
-				([entry]) => {
-					if (entry.isIntersecting) {
-						visible.set(section, entry.intersectionRatio);
-					} else {
-						visible.delete(section);
-					}
-					if (visible.size > 0) {
-						const top = [...visible.entries()].reduce((a, b) =>
-							a[1] >= b[1] ? a : b,
-						)[0];
-						setActiveSection(top);
-					}
-				},
-				{ rootMargin: "-10% 0px -60% 0px", threshold: [0, 0.25, 0.5, 1] },
-			);
-			obs.observe(el);
-			observers.push(obs);
-		});
+	const selectSection = useCallback(
+		(id: string) => {
+			scrollToHeading(id, !shouldReduceMotion);
+			setActiveSection(id);
+			lockRef.current = id;
+			if (lockTimerRef.current) clearTimeout(lockTimerRef.current);
+			// Hold the highlight through the smooth scroll.
+			lockTimerRef.current = setTimeout(() => {
+				lockRef.current = null;
+				lockTimerRef.current = null;
+			}, 1200);
+		},
+		[shouldReduceMotion],
+	);
 
-		return () => observers.forEach((o) => o.disconnect());
-	}, [sections]);
+	const readPercent = Math.round(Math.min(Math.max(readProgress, 0), 1) * 100);
 
 	return (
 		<section ref={ref} className="legal-doc">
 			<div className="home-wrap">
 				<div className="legal-doc__layout">
-					<nav className="legal-doc__toc" aria-label={tShared("toc_label")}>
-						<p className="legal-doc__toc-heading">{tShared("toc_heading")}</p>
-						<ol role="list">
-							{sections.map((section, index) => (
-								<li key={section}>
-									<a
-										href={`#${section}`}
-										className={`legal-doc__toc-link${activeSection === section ? " legal-doc__toc-link--active" : ""}`}
-									>
-										<span className="legal-doc__toc-num" aria-hidden>
-											{String(index + 1).padStart(2, "0")}
-										</span>
-										<span className="legal-doc__toc-text">
-											{t(`sections.${section}.title`)}
-										</span>
-									</a>
-								</li>
-							))}
-						</ol>
-					</nav>
+					<aside className="blog-article__toc legal-doc__toc">
+						<div
+							className="blog-toc-progress"
+							role="progressbar"
+							aria-valuemin={0}
+							aria-valuemax={100}
+							aria-valuenow={readPercent}
+							aria-label={tShared("progress_label")}
+						>
+							<div
+								className="blog-toc-progress__fill"
+								style={{ "--read": readPercent / 100 } as React.CSSProperties}
+								aria-hidden="true"
+							/>
+							<span className="sr-only">
+								{tShared("progress_status", { percent: readPercent })}
+							</span>
+						</div>
+						<ArticleTocNav
+							toc={toc}
+							activeTocId={activeSection}
+							onSelect={selectSection}
+							label={tShared("toc_heading")}
+							navLabel={tShared("toc_label")}
+						/>
+					</aside>
 
-					<div className="legal-doc__content">
+					<div ref={contentRef} className="legal-doc__content">
 						{sections.map((section, index) => {
 							const blocks = t.raw(`sections.${section}.blocks`);
 							const transition = shouldReduceMotion

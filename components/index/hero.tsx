@@ -17,8 +17,8 @@ const HERO_DESKTOP_VIEWPORT_QUERY = "(min-width: 1024px)";
  * Entrance animations use CSS @starting-style — triggers the transition when
  * elements first paint, requiring zero JS and producing zero layout shift.
  *
- * Background, veil, and copy stay on the dark hero palette regardless of site
- * theme — only the dashboard mockup follows light/dark mode.
+ * Background, veil, copy, and dashboard mockup all follow the site theme —
+ * light on white, dark on the deep navy palette.
  *
  * Ambient motion comes from slowly drifting blurred blobs. Reduced-motion
  * pauses those drifts.
@@ -101,7 +101,7 @@ export default function Hero() {
 							</Link>
 						</div>
 
-						<div className="hero-reveal hero-reveal-4 mt-12 grid w-full grid-cols-3 gap-6 border-t border-(--hero-border) pt-8">
+						<div className="hero-reveal hero-reveal-4 mt-12 grid w-full grid-cols-3 gap-6 pt-8">
 							{stats.map(({ value, label }) => (
 								<div key={label} className="text-center lg:text-left">
 									<p className="font-(family-name:--mono) text-3xl font-medium tabular-nums tracking-tight text-(--hero-accent-text) sm:text-4xl">

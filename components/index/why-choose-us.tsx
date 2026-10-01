@@ -123,38 +123,39 @@ export default function WhyChooseUs() {
 				</motion.div>
 
 				<div className="home-section-lead grid gap-4">
-					<div className="grid gap-4 min-[960px]:grid-cols-3" role="list">
+					<ul className="grid gap-4 min-[960px]:grid-cols-3" role="list">
 						{PILLARS.map((id, index) => {
 							const Visual = VISUALS[id];
 							return (
-								<motion.article
+								<motion.li
 									key={id}
-									role="listitem"
 									{...motionProps(0.08 + index * 0.08)}
 									className={`${surface} flex flex-col overflow-hidden rounded-2xl transition-shadow duration-300 hover:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--dash-brand)_40%,transparent)] dark:hover:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--dash-brand)_40%,transparent)]`}
 								>
-									<div
-										aria-hidden
-										className="flex min-h-44 flex-col justify-center border-b border-[color-mix(in_srgb,var(--text-h)_8%,transparent)] bg-[radial-gradient(120%_90%_at_0%_0%,color-mix(in_srgb,var(--dash-brand)_6%,transparent),transparent_60%)] dark:bg-[radial-gradient(120%_90%_at_0%_0%,color-mix(in_srgb,var(--dash-brand)_14%,transparent),transparent_60%)] p-5 text-[0.8125rem] text-(--text-muted)"
-									>
-										<Visual t={t} />
-									</div>
-									<div className="p-[clamp(1.25rem,2.5vw,1.75rem)] pt-5">
-										<h3 className="text-balance text-[clamp(1.125rem,2vw,1.25rem)] font-semibold leading-snug tracking-[-0.02em] text-(--text-h)">
-											{t(`pillars.${id}.title`)}
-										</h3>
-										<p className="mt-2 text-pretty text-[0.9375rem] leading-relaxed text-(--text)">
-											{t(`pillars.${id}.description`)}
-										</p>
-									</div>
-								</motion.article>
+									<article className="flex flex-1 flex-col">
+										<div
+											aria-hidden
+											className="flex min-h-44 flex-col justify-center border-b border-[color-mix(in_srgb,var(--text-h)_8%,transparent)] bg-[radial-gradient(120%_90%_at_0%_0%,color-mix(in_srgb,var(--dash-brand)_6%,transparent),transparent_60%)] dark:bg-[radial-gradient(120%_90%_at_0%_0%,color-mix(in_srgb,var(--dash-brand)_14%,transparent),transparent_60%)] p-5 text-[0.8125rem] text-(--text-muted)"
+										>
+											<Visual t={t} />
+										</div>
+										<div className="p-[clamp(1.25rem,2.5vw,1.75rem)] pt-5">
+											<h3 className="text-balance text-[clamp(1.125rem,2vw,1.25rem)] font-semibold leading-snug tracking-[-0.02em] text-(--text-h)">
+												{t(`pillars.${id}.title`)}
+											</h3>
+											<p className="mt-2 text-pretty text-[0.9375rem] leading-relaxed text-(--text)">
+												{t(`pillars.${id}.description`)}
+											</p>
+										</div>
+									</article>
+								</motion.li>
 							);
 						})}
-					</div>
+					</ul>
 
 					<motion.dl
 						{...motionProps(0.4)}
-						className="mt-4 grid grid-cols-2 gap-y-6 border-t border-[color-mix(in_srgb,var(--text-h)_10%,transparent)] pt-6 md:grid-cols-4"
+						className="mt-4 grid grid-cols-2 gap-y-6 pt-6 md:grid-cols-4"
 					>
 						{STATS.map((id) => (
 							<div

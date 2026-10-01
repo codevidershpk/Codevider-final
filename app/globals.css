@@ -34,25 +34,6 @@ html.theme-switching * {
 	isolation: isolate;
 }
 
-/* Top-layer hit target stacked above the view-transition overlay. */
-.theme-toggle-hit {
-	position: fixed;
-	inset: unset;
-	margin: 0;
-	padding: 0;
-	border: none;
-	opacity: 0;
-	cursor: pointer;
-	background: transparent;
-	overflow: hidden;
-}
-
-.theme-toggle-hit:popover-open {
-	position: fixed;
-	inset: unset;
-	margin: 0;
-}
-
 @theme {
 	--font-sans: var(--font-sans), Alexandria, system-ui, sans-serif;
 	--font-serif:
@@ -210,8 +191,10 @@ html {
 	scroll-padding-top: 88px;
 }
 
+/* Not while the page is hidden (reload-restoring): a native fragment scroll
+   would animate toward a target that moves as sections mount. */
 @media (prefers-reduced-motion: no-preference) {
-	html {
+	html:not(.reload-restoring) {
 		scroll-behavior: smooth;
 	}
 }
@@ -369,8 +352,8 @@ code {
    FOOTER SOCIAL LINKS
    ============================================================ */
 .footer-social-link {
-	border: 1px solid rgb(255 255 255 / 0.1);
-	color: rgb(219 234 254 / 0.7);
+	border: 1px solid rgb(255 255 255 / 0.12);
+	color: rgb(219 234 254 / 0.75);
 	background: transparent;
 	transition:
 		border-color 150ms ease,
@@ -380,21 +363,25 @@ code {
 }
 
 .footer-social-link:hover {
-	border-color: #fff;
+	border-color: rgb(255 255 255 / 0.24);
 	color: #fff;
-	background: rgb(255 255 255 / 0.05);
+	background: rgb(255 255 255 / 0.08);
+}
+
+.footer-social-link:active {
+	transform: scale(0.94);
 }
 
 .dark .footer-social-link {
 	border-color: var(--border);
 	color: var(--text);
-	background: var(--social-bg);
+	background: transparent;
 }
 
 .dark .footer-social-link:hover {
-	border-color: var(--text-h);
+	border-color: color-mix(in srgb, var(--text-h) 30%, transparent);
 	color: var(--text-h);
-	background: var(--accent-bg);
+	background: color-mix(in srgb, var(--text-h) 8%, transparent);
 }
 
 /* ============================================================
@@ -781,15 +768,46 @@ code {
    HERO DASHBOARD SURFACE
    ============================================================ */
 .home-hero {
+	/* Light by default — follows the site theme like the /uk hero.
+	   `.dark .home-hero` below restores the deep navy palette. */
+	--hero-text-h: var(--text-h);
+	--hero-text-lead: var(--text-muted);
+	--hero-text-muted: var(--text-muted);
+	--hero-accent-text: var(--brand-primary);
+	--hero-veil-bg: var(--bg);
+	--hero-veil-bottom: 0%;
+	--hero-border: var(--border-subtle);
+	--hero-surface: color-mix(in srgb, var(--bg) 80%, transparent);
+	--hero-accent-border: color-mix(in srgb, var(--brand-blue) 45%, transparent);
+	--hero-accent-bg: color-mix(in srgb, var(--brand-blue) 8%, transparent);
+	--hero-focus-ring: var(--brand-blue);
+	/* Solid CTA fills — deeper than accent blue for AA contrast with white */
+	--hero-brand-primary: #1852e6;
+	--hero-brand-primary-hover: #2469ff;
+	--hero-on-brand: #ffffff;
+	background:
+		radial-gradient(
+			90% 70% at 85% 0%,
+			color-mix(in srgb, var(--brand-blue) 8%, transparent),
+			transparent 60%
+		),
+		radial-gradient(
+			60% 50% at 8% 100%,
+			color-mix(in srgb, var(--brand-mint) 8%, transparent),
+			transparent 60%
+		),
+		var(--bg);
+	background-color: var(--hero-veil-bg);
+	min-height: 100vh;
+	min-height: 100svh;
+	contain: layout style paint;
+}
+
+.dark .home-hero {
 	--hero-text-h: #f8f9fb;
 	--hero-text-lead: #b4b9c6;
 	--hero-text-muted: #8b93a3;
 	--hero-accent-text: #85afff;
-	--hero-gradient-shade: #020617;
-	--hero-gradient-opacity: 1;
-	--hero-gradient-darken-top: 12%;
-	--hero-gradient-darken-mid: 6%;
-	--hero-gradient-darken-bottom: 18%;
 	--hero-veil-bg: #11131c;
 	--hero-veil-bottom: 48%;
 	--hero-border: rgba(255, 255, 255, 0.18);
@@ -797,13 +815,7 @@ code {
 	--hero-accent-border: rgba(133, 175, 255, 0.55);
 	--hero-accent-bg: rgba(133, 175, 255, 0.22);
 	--hero-focus-ring: rgba(133, 175, 255, 0.75);
-	/* Solid CTA fills — deeper than accent blue for AA contrast with white */
-	--hero-brand-primary: #1852e6;
-	--hero-brand-primary-hover: #2469ff;
-	--hero-on-brand: #ffffff;
-	/* Contrasty mockup-style backdrop: deep navy base (tails with
-	   --surface-dark-*) plus brand-blue / brand-mint glows. Stays dark in
-	   both site themes — only the dashboard mockup follows light/dark. */
+	/* Deep navy base (tails with --surface-dark-*) plus brand glows. */
 	background:
 		radial-gradient(
 			90% 70% at 85% 0%,
@@ -821,9 +833,11 @@ code {
 			var(--surface-dark-end) 100%
 		);
 	background-color: var(--hero-veil-bg);
-	min-height: 100vh;
-	min-height: 100svh;
-	contain: layout style paint;
+}
+
+/* Blobs are tuned for the navy backdrop — tone them down on white. */
+:root:not(.dark) .home-hero__blob {
+	opacity: 0.35;
 }
 
 .home-hero h1 {
@@ -861,7 +875,7 @@ code {
 	--dash-bar-soft: color-mix(in srgb, var(--dash-brand) 45%, #e8eef8);
 	/* #12c99a is 2.13:1 on white (fails). #0e8a6a is 4.32:1 — keeps the
 	   green success meaning with AA-adjacent contrast for small delta text. */
-	--dash-success: #0e8a6a;
+	--dash-success: #0a7a5c;
 	--dash-warning: #c2410c;
 	--dash-bar-track: transparent;
 	--dash-shadow:
@@ -890,10 +904,14 @@ code {
 .hero-dash-window {
 	position: relative;
 	overflow: hidden;
-	/* Crisp 1px mockup edge on the dark hero (better-ui image-outline:
-	   pure white at low opacity in dark contexts). */
-	outline: 1px solid rgba(255, 255, 255, 0.12);
+	/* Crisp 1px mockup edge (better-ui image-outline): dark ink on the
+	   light hero, white at low opacity on the dark one. */
+	outline: 1px solid rgba(10, 16, 32, 0.1);
 	outline-offset: -1px;
+}
+
+.dark .hero-dash-window {
+	outline-color: rgba(255, 255, 255, 0.12);
 }
 
 .hero-dash-window::before {
@@ -1138,7 +1156,7 @@ code {
 	--dash-border: rgba(36, 65, 120, 0.14);
 	--dash-brand: #2469ff;
 	--dash-brand-end: #1852e6;
-	--dash-success: #0f9f7a;
+	--dash-success: #0a7a5c;
 	--dash-warning: #c2410c;
 	--dash-bar-track: #d4e2f6;
 	--dash-shadow:
@@ -1155,7 +1173,7 @@ code {
 	--dash-border: rgba(36, 65, 120, 0.14);
 	--dash-brand: #2469ff;
 	--dash-brand-end: #1852e6;
-	--dash-success: #0f9f7a;
+	--dash-success: #0a7a5c;
 	--dash-warning: #c2410c;
 	--dash-bar-track: #d4e2f6;
 	--dash-shadow:

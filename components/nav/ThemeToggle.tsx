@@ -1,9 +1,9 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
 import { Moon, Sun } from "lucide-react";
-import { useCopy } from "@/lib/copy";
+import { useEffect, useRef } from "react";
 import { useTheme } from "@/components/providers/ThemeProvider";
+import { useCopy } from "@/lib/copy";
 
 type ThemeToggleProps = {
 	variant?: "light" | "dark";
@@ -21,7 +21,6 @@ export function ThemeToggle({
 	const isDark = theme === "dark";
 	const modeLabel = isDark ? t("light_mode") : t("dark_mode");
 	const buttonRef = useRef<HTMLButtonElement>(null);
-	const hitRef = useRef<HTMLButtonElement>(null);
 
 	const buttonClasses = `relative flex cursor-pointer items-center rounded-full border active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--focus-ring) ${
 		fullWidth
@@ -41,37 +40,48 @@ export function ThemeToggle({
 		});
 	};
 
-	// View Transitions live in the browser top layer and swallow clicks. A
-	// transparent popover hit-target is re-stacked above each reveal so the
-	// toggle stays interruptible like the "d" shortcut.
-	// biome-ignore lint/correctness/useExhaustiveDependencies: theme re-stacks the hit-target after each theme transition
-	useLayoutEffect(() => {
-		const hit = hitRef.current;
+	// The View Transition overlay swallows hit-testing, so the button can't
+	// receive clicks or show its cursor mid-reveal. Hit-test it by coordinates
+	// at the window level instead, keeping the toggle interruptible like "d".
+	// biome-ignore lint/correctness/useExhaustiveDependencies: triggerToggle only reads stable refs/callbacks
+	useEffect(() => {
 		const button = buttonRef.current;
-		if (!hit || !button || typeof hit.showPopover !== "function") return;
+		if (!isThemeTransitioning || !button) return;
 
-		if (!isThemeTransitioning) {
-			if (hit.matches(":popover-open")) {
-				hit.hidePopover();
-			}
-			return;
-		}
+		const root = document.documentElement;
+		const isOverButton = (event: PointerEvent) => {
+			const rect = button.getBoundingClientRect();
+			return (
+				rect.width > 0 &&
+				event.clientX >= rect.left &&
+				event.clientX <= rect.right &&
+				event.clientY >= rect.top &&
+				event.clientY <= rect.bottom
+			);
+		};
 
-		const rect = button.getBoundingClientRect();
-		hit.style.top = `${rect.top}px`;
-		hit.style.left = `${rect.left}px`;
-		hit.style.width = `${rect.width}px`;
-		hit.style.height = `${rect.height}px`;
+		const handlePointerMove = (event: PointerEvent) => {
+			root.style.cursor = isOverButton(event) ? "pointer" : "";
+		};
 
-		try {
-			if (hit.matches(":popover-open")) {
-				hit.hidePopover();
-			}
-			hit.showPopover();
-		} catch {
-			/* Popover API unavailable or already open */
-		}
-	}, [isThemeTransitioning, theme]);
+		const handlePointerDown = (event: PointerEvent) => {
+			if (event.button !== 0) return;
+			// Let the button's own handler run if the event reached it.
+			if (button.contains(event.target as Node)) return;
+			if (!isOverButton(event)) return;
+			event.preventDefault();
+			event.stopPropagation();
+			triggerToggle(button);
+		};
+
+		window.addEventListener("pointermove", handlePointerMove, true);
+		window.addEventListener("pointerdown", handlePointerDown, true);
+		return () => {
+			window.removeEventListener("pointermove", handlePointerMove, true);
+			window.removeEventListener("pointerdown", handlePointerDown, true);
+			root.style.cursor = "";
+		};
+	}, [isThemeTransitioning]);
 
 	return (
 		<div className={fullWidth ? "min-w-0 flex-1" : ""}>
@@ -102,19 +112,6 @@ export function ThemeToggle({
 					{fullWidth ? <span className="truncate">{modeLabel}</span> : null}
 				</span>
 			</button>
-			<button
-				ref={hitRef}
-				type="button"
-				popover="manual"
-				tabIndex={-1}
-				aria-hidden
-				className="theme-toggle-hit"
-				onPointerDown={(event) => {
-					if (event.button !== 0) return;
-					event.preventDefault();
-					triggerToggle(event.currentTarget);
-				}}
-			/>
 		</div>
 	);
 }

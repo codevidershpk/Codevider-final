@@ -9,6 +9,7 @@ import {
 	saveReloadScrollAnchor,
 } from "@/lib/reload-scroll-restore";
 import {
+	scrollToHashTarget,
 	scrollToHashTargetWhenReady,
 	waitForStableLayout,
 } from "@/lib/wait-for-stable-layout";
@@ -83,7 +84,8 @@ async function restoreReloadScroll(signal: AbortSignal) {
 
 	const anchor = getReloadScrollAnchor();
 	if (!anchor) {
-		reveal();
+		// A URL hash is revealed by landOnHashTarget once it has jumped there.
+		if (window.location.hash.length <= 1) reveal();
 		return;
 	}
 
@@ -110,6 +112,41 @@ async function restoreReloadScroll(signal: AbortSignal) {
 	// the layout settles or the user scrolls.
 	await waitForStableLayout(400, 50, 3000, signal);
 	if (!signal.aborted) scrollToAnchor();
+}
+
+/**
+ * Page loaded with a hash: the page is hidden (see site-document), so jump
+ * straight to the target once it has rendered and fade in. A smooth scroll
+ * here would start against the short pre-mount page and get restarted
+ * mid-flight once the sections above the target grow (move, stop, move).
+ */
+async function landOnHashTarget(id: string, signal: AbortSignal) {
+	// Aborts here only come from effect cleanup (e.g. StrictMode's re-run),
+	// which starts a fresh landing — so leave the page hidden for that one.
+	if (!document.getElementById(id)?.childElementCount) {
+		await waitForDeferredSections(signal);
+	}
+	await waitForStableLayout(200, 50, 3000, signal);
+	if (signal.aborted) return;
+
+	const el = document.getElementById(id);
+	if (el) scrollToHashTarget(el, "instant");
+	document.documentElement.classList.remove("reload-restoring");
+	if (!el) return;
+
+	// Late images/fonts can still shift things; re-pin the target once the
+	// layout settles, unless the user has started scrolling.
+	let userScrolled = false;
+	const onUser = () => {
+		userScrolled = true;
+	};
+	const events = ["wheel", "touchstart", "keydown"] as const;
+	for (const type of events) {
+		window.addEventListener(type, onUser, { once: true, passive: true });
+	}
+	await waitForStableLayout(400, 50, 3000, signal);
+	for (const type of events) window.removeEventListener(type, onUser);
+	if (!signal.aborted && !userScrolled) scrollToHashTarget(el, "instant");
 }
 
 /**
@@ -150,6 +187,50 @@ export function HashScrollHandler() {
 			window.removeEventListener("touchstart", stop);
 			window.removeEventListener("keydown", stop);
 		};
+	}, []);
+
+	// Same-page hash links: skip the browser's native smooth scroll. It starts
+	// before deferred sections mount, so the page grows mid-flight and the
+	// drift correction restarts the scroll (move, stop, move). Instead update
+	// the hash ourselves; hashchange mounts the sections and the handler below
+	// scrolls once the layout has settled.
+	useEffect(() => {
+		const onClick = (event: MouseEvent) => {
+			if (
+				event.defaultPrevented ||
+				event.button !== 0 ||
+				event.metaKey ||
+				event.ctrlKey ||
+				event.shiftKey ||
+				event.altKey
+			)
+				return;
+			const link = (event.target as Element | null)?.closest?.("a[href]");
+			if (!(link instanceof HTMLAnchorElement) || link.target) return;
+			const url = new URL(link.href, window.location.href);
+			if (
+				!url.hash ||
+				url.origin !== window.location.origin ||
+				url.pathname !== window.location.pathname ||
+				url.search !== window.location.search
+			)
+				return;
+
+			event.preventDefault();
+			const oldURL = window.location.href;
+			if (url.hash === window.location.hash) {
+				const el = document.getElementById(url.hash.slice(1));
+				if (el) scrollToHashTarget(el);
+				return;
+			}
+			window.history.pushState(window.history.state, "", url.href);
+			window.dispatchEvent(
+				new HashChangeEvent("hashchange", { oldURL, newURL: url.href }),
+			);
+		};
+
+		document.addEventListener("click", onClick, true);
+		return () => document.removeEventListener("click", onClick, true);
 	}, []);
 
 	// Scroll spy: keep the URL hash in sync with the section in view.
@@ -217,8 +298,13 @@ export function HashScrollHandler() {
 		if (!id) return;
 
 		const controller = new AbortController();
+		const landing =
+			document.documentElement.classList.contains("reload-restoring");
 
-		void scrollToHashTargetWhenReady(id, controller.signal);
+		void (landing ? landOnHashTarget : scrollToHashTargetWhenReady)(
+			id,
+			controller.signal,
+		);
 
 		return () => controller.abort();
 	}, [pathname, locationHash]);

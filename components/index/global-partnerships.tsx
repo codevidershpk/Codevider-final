@@ -62,7 +62,7 @@ export default function GlobalPartnerships() {
 			</div>
 
 			<motion.div
-				className="relative z-1 mt-(--home-stack) w-full home-inline-x max-md:mt-(--home-stack-sm)"
+				className="home-wrap relative z-1 mt-(--home-stack) max-md:mt-(--home-stack-sm)"
 				initial={
 					shouldReduceMotion || !shouldAnimate
 						? false

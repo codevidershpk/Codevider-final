@@ -1,0 +1,233 @@
+/* ============================================================
+   ARTICLE TOC RAIL (blog posts, legal pages)
+   ============================================================ */
+/* Sticky rail is the grid child so it tracks the article column height. */
+.blog-article__toc {
+	display: flex;
+	align-items: stretch;
+	gap: clamp(0.875rem, 2vw, 1.125rem);
+	min-width: 0;
+}
+.blog-article__toc .blog-toc {
+	flex: 1;
+	min-width: 0;
+}
+@media (min-width: 1024px) {
+	.blog-article__toc {
+		position: sticky;
+		top: clamp(5.5rem, 10vw, 6.5rem);
+		align-self: start;
+		max-height: calc(100vh - clamp(5.5rem, 10vw, 6.5rem) - 1.5rem);
+		overflow-y: auto;
+		scrollbar-width: thin;
+	}
+}
+/* Mobile: TOC is placed after the article and sticks to the viewport
+   bottom, so it rides along only until the article ends. The section
+   pills scroll horizontally. */
+@media (max-width: 1023px) {
+	.blog-article__toc {
+		order: 1;
+		position: sticky;
+		bottom: 0;
+		z-index: 30;
+		margin-inline: calc(-1 * var(--home-inline));
+		padding: 0.6rem var(--home-inline)
+			calc(0.7rem + env(safe-area-inset-bottom, 0px));
+		background: var(--bg);
+		border-top: 1px solid var(--border);
+	}
+
+	.blog-toc__label {
+		display: none;
+	}
+}
+.blog-toc {
+	min-width: 0;
+}
+.blog-toc__label {
+	margin: 0 0 0.75rem;
+	font-size: var(--fs-2xs);
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--text-muted);
+}
+.blog-toc__list {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+@media (max-width: 1023px) {
+	.blog-toc__list {
+		flex-direction: row;
+		flex-wrap: nowrap;
+		gap: 0.5rem;
+		overflow-x: auto;
+		padding-block-end: 0.25rem;
+		scrollbar-width: none;
+	}
+
+	.blog-toc__list::-webkit-scrollbar {
+		display: none;
+	}
+
+	.blog-toc__highlight {
+		display: none;
+	}
+
+	/* Quiet chips: only the active section gets a fill. */
+	.blog-toc__link {
+		padding: 0.4rem 0.8rem;
+		border-radius: var(--ui-radius-pill);
+		font-size: var(--fs-sm);
+		color: var(--text-muted);
+		transition:
+			color 220ms cubic-bezier(0.22, 1, 0.36, 1),
+			background-color 220ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+
+	.blog-toc__link--active {
+		color: var(--brand-accent-text);
+		background: var(--accent-bg);
+	}
+
+	/* Fade the chip row at both edges instead of a hard crop. */
+	.blog-toc__list {
+		mask-image: linear-gradient(
+			to right,
+			transparent,
+			#000 0.75rem,
+			#000 calc(100% - 2rem),
+			transparent
+		);
+		padding-inline: 0.75rem 2rem;
+		margin-inline: -0.75rem;
+		padding-block-end: 0;
+	}
+
+	/* Reading progress becomes a hairline along the strip's top edge. */
+	.blog-article__toc .blog-toc-progress {
+		position: absolute;
+		inset-inline: 0;
+		top: -1px;
+		width: auto;
+		height: 2px;
+		border-radius: 0;
+		background: transparent;
+	}
+
+	.blog-article__toc .blog-toc-progress__fill {
+		transform: scaleX(var(--read, 0));
+		transform-origin: left center;
+	}
+}
+.blog-toc__highlight {
+	pointer-events: none;
+	position: absolute;
+	inset-inline: 0;
+	top: 0;
+	z-index: 0;
+	border-radius: var(--ui-radius-md);
+	background: color-mix(
+		in srgb,
+		var(--brand-blue) 10%,
+		var(--home-surface-muted)
+	);
+	box-shadow: var(--shadow-sm);
+	will-change: transform, height;
+}
+.blog-toc__highlight--active {
+	background: var(--accent-bg);
+	box-shadow: none;
+}
+.blog-toc__item {
+	position: relative;
+	z-index: 1;
+}
+.blog-toc__link {
+	position: relative;
+	display: block;
+	padding: 0.55rem 0.7rem;
+	border-radius: var(--ui-radius-md);
+	font-size: var(--fs-md);
+	line-height: 1.4;
+	color: var(--text);
+	text-decoration: none;
+	white-space: nowrap;
+	transition: color 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.blog-toc__text {
+	position: relative;
+}
+@media (min-width: 1024px) {
+	.blog-toc__link {
+		white-space: normal;
+	}
+
+	.blog-toc__item--l2 .blog-toc__link {
+		padding-inline-start: 1.15rem;
+	}
+
+	.blog-toc__item--l3 .blog-toc__link {
+		padding-inline-start: 1.6rem;
+		font-size: var(--fs-sm);
+	}
+}
+.blog-toc__link--hot {
+	color: var(--text-h);
+}
+.blog-toc__link--active {
+	color: var(--brand-accent-text);
+	font-weight: 600;
+}
+.blog-toc__link:focus-visible {
+	outline: 2px solid var(--focus-ring);
+	outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+	.blog-toc__link {
+		transition: none;
+	}
+
+	.blog-toc__highlight {
+		will-change: auto;
+	}
+}
+/* --- Slim TOC reading-progress line (top to bottom, no card) --- */
+.blog-toc-progress {
+	position: relative;
+	flex: none;
+	width: 3px;
+	overflow: hidden;
+	border-radius: var(--ui-radius-pill);
+	background: color-mix(in srgb, var(--brand-blue) 14%, transparent);
+}
+.blog-toc-progress__fill {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 100%;
+	border-radius: inherit;
+	background: var(--brand-blue);
+	transform: scaleY(var(--read, 0));
+	transform-origin: top center;
+	transition: transform 200ms ease;
+}
+@media (prefers-reduced-motion: reduce) {
+	.blog-article__toc .blog-toc-progress__fill {
+		transition: none;
+	}
+}
+/* Lift the floating "Book a call" CTA above the mobile bottom TOC bar
+   while the article (and so the bar) is on screen. */
+@media (max-width: 1023px) {
+	html[data-article-toc-bar] .floating-book-call {
+		bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+	}
+}

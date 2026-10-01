@@ -20,7 +20,7 @@ export function FooterSocialLink({
 			target={isExternal ? "_blank" : undefined}
 			rel={isExternal ? "noopener noreferrer" : undefined}
 			aria-label={label}
-			className="footer-social-link grid size-[38px] place-items-center rounded-[10px] hover:-translate-y-0.5"
+			className="footer-social-link grid size-10 place-items-center rounded-(--ui-radius-sm) [&_svg]:size-4"
 		>
 			{children}
 		</Link>
